@@ -1,159 +1,777 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu Nombre | Game & Systems Programmer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Gameplay & Systems Programmer | Portfolio</title>
+
+  <!-- Tipografía editorial y de interfaz limpia -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    code, pre { font-family: 'JetBrains Mono', monospace; }
+    :root {
+      --bg-main: #0B0E11;
+      --bg-surface: #14181E;
+      --bg-card: #1A2027;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --text-main: #EDF0EA;
+      --text-muted: #8E98A0;
+      --accent: #38BDF8;
+      --accent-glow: rgba(56, 189, 248, 0.12);
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap,
+    .wrap-wide {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .wrap-wide {
+      max-width: 1260px;
+    }
+
+    /* Navegación */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: rgba(11, 14, 17, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .brand span {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .btn-contact-nav {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Rail lateral flotante */
+    .social-rail {
+      position: fixed;
+      left: 1.5rem;
+      bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      z-index: 90;
+    }
+
+    .rail-item {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .rail-item:hover {
+      background: var(--bg-card);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Cinemático */
+    .title-hero {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 7rem 1.5rem 4rem;
+    }
+
+    .title-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: 1;
+      filter: brightness(0.35) contrast(1.1);
+    }
+
+    .title-veil {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(11, 14, 17, 0.4) 0%, var(--bg-main) 92%);
+      z-index: 2;
+    }
+
+    .title-inner {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      max-width: 820px;
+    }
+
+    .title-inner h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .title-tagline {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.8rem;
+    }
+
+    /* Secciones */
+    .section-wrap {
+      padding: 5rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .ph-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr 280px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .ph-mascot img {
+      width: 100%;
+      border-radius: 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      object-fit: cover;
+      aspect-ratio: 4/5;
+      display: block;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      display: inline-block;
+      margin-bottom: 0.35rem;
+    }
+
+    .ph-intro h2 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.2rem;
+    }
+
+    .project-years {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .project-lede {
+      font-size: 0.98rem;
+      color: #CAD2D9;
+      margin-bottom: 0.75rem;
+    }
+
+    .task-heading {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 1.8rem 0 0.8rem;
+      color: var(--text-main);
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .task-list li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 1.25rem;
+    }
+
+    .task-list li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .task-list strong {
+      color: var(--text-main);
+    }
+
+    /* Miniaturas / Snippets / Diagramas */
+    .ph-shots {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .ph-shot-box {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      aspect-ratio: 16/10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.75rem;
+    }
+
+    .ph-shot-box span {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .ph-shot-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Botones */
+    .project-actions {
+      display: flex;
+      gap: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      font-family: var(--font-display);
+    }
+
+    .btn-solid {
+      background: var(--text-main);
+      color: var(--bg-main);
+    }
+
+    .btn-solid:hover {
+      background: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--border-hover);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Caja de Arquitectura y Métricas (Case Study técnico) */
+    .arch-grid {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .arch-grid h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+    }
+
+    .arch-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      list-style: none;
+    }
+
+    .arch-cards li {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .arch-cards .lead {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    .arch-cards span:not(.lead) {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #07090B;
+      padding: 4rem 0 2rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-columns {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-columns h5 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+
+    .footer-columns ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-columns a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .footer-columns a:hover {
+      color: var(--text-main);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 1024px) {
+      .ph-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ph-mascot {
+        max-width: 280px;
+        margin: 0 auto;
+      }
+
+      .social-rail {
+        display: none;
+      }
+
+      .footer-columns {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-cyan-500 selection:text-black">
 
-  <!-- Header / Nav -->
-  <header class="max-w-5xl mx-auto px-6 py-12 flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-zinc-800">
-    <div>
-      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Tu Nombre</h1>
-      <p class="text-cyan-400 font-mono text-sm mt-1">Gameplay & Systems Programmer | C++ & Unreal Engine</p>
+<body>
+
+  <!-- Barra de navegación -->
+  <nav class="site-nav">
+    <div class="wrap nav-inner">
+      <a href="#" class="brand">Gameplay & Systems<span> / Dev</span></a>
+      <ul class="nav-links">
+        <li><a href="#projects">Proyectos</a></li>
+        <li><a href="#toolkit">Arquitectura & Stack</a></li>
+        <li><a href="./cv.pdf" target="_blank">CV</a></li>
+        <li><a href="mailto:tu-correo@ejemplo.com" class="btn-contact-nav">Contacto</a></li>
+      </ul>
     </div>
-    <div class="flex items-center gap-4 text-sm font-medium">
-      <a href="https://github.com/tu-usuario" target="_blank" class="hover:text-cyan-400 transition-colors">GitHub</a>
-      <span class="text-zinc-600">•</span>
-      <a href="https://linkedin.com/in/tu-usuario" target="_blank" class="hover:text-cyan-400 transition-colors">LinkedIn</a>
-      <span class="text-zinc-600">•</span>
-      <a href="mailto:tu-correo@ejemplo.com" class="hover:text-cyan-400 transition-colors">Email</a>
-      <span class="text-zinc-600">•</span>
-      <a href="./cv.pdf" target="_blank" class="px-3 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-white transition-colors border border-zinc-700">Resume (PDF)</a>
-    </div>
-  </header>
+  </nav>
 
-  <main class="max-w-5xl mx-auto px-6 py-16 space-y-24">
+  <!-- Rail lateral flotante -->
+  <aside class="social-rail" aria-label="Social links">
+    <a class="rail-item" href="https://github.com/tu-usuario" target="_blank" rel="noopener" title="GitHub">GH</a>
+    <a class="rail-item" href="https://linkedin.com/in/tu-usuario" target="_blank" rel="noopener"
+      title="LinkedIn">IN</a>
+    <a class="rail-item" href="./cv.pdf" target="_blank" rel="noopener" title="Resume">CV</a>
+  </aside>
 
-    <!-- Section: Featured Projects -->
-    <section>
-      <h2 class="text-xs font-mono uppercase tracking-widest text-zinc-400 mb-8 border-b border-zinc-800 pb-2">// Selected Projects</h2>
-      
-      <div class="space-y-16">
+  <main>
 
-        <!-- 1. The Breach -->
-        <article class="grid md:grid-cols-12 gap-8 items-start bg-zinc-900/40 p-6 rounded-xl border border-zinc-800/80">
-          <div class="md:col-span-5 bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 aspect-video flex items-center justify-center">
-            <!-- Reemplaza con un iframe de YouTube, video mp4 en bucle o imagen -->
-            <span class="text-zinc-500 font-mono text-xs">[ Gameplay Video / Preview ]</span>
-          </div>
-          <div class="md:col-span-7 space-y-3">
-            <div class="flex items-baseline justify-between">
-              <h3 class="text-xl font-bold text-white">The Breach</h3>
-              <span class="text-xs font-mono text-zinc-400">1 Year Experience</span>
+    <!-- Hero de entrada cinemático enfocado en Sistemas y Motor -->
+    <section class="title-hero">
+      <video class="title-bg" autoplay muted loop playsinline poster="assets/engine-bg.jpg">
+        <!-- <source src="assets/gameplay-showreel.mp4" type="video/mp4"> -->
+      </video>
+      <div class="title-veil"></div>
+      <div class="title-inner">
+        <h1>Gameplay & Systems Programmer</h1>
+        <p class="title-tagline">
+          Especializado en arquitectura de software en <strong>C++</strong>, desarrollo en <strong>Unreal Engine
+            5</strong>, sistemas de combate por estados (FSM) y networking cliente-servidor de baja latencia.
+        </p>
+        <div class="project-actions" style="justify-content: center;">
+          <a class="btn btn-solid" href="#projects">Explorar Proyectos</a>
+          <a class="btn btn-outline" href="./cv.pdf" target="_blank">Descargar CV (PDF)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proyecto 1: The Breach (Experiencia en Estudio Comercial) -->
+    <section id="projects" class="section-wrap">
+      <div class="wrap-wide">
+        <div class="ph-grid">
+
+          <div class="ph-mascot">
+            <div class="ph-shot-box" style="aspect-ratio: 4/5;">
+              <span>[ Key Art / Engine Capture ]</span>
             </div>
-            <p class="text-sm font-mono text-cyan-400">Gameplay Programmer</p>
-            <p class="text-zinc-300 text-sm leading-relaxed">
-              Descripción breve del juego y tus principales contribuciones en desarrollo, rendimiento y mecánicas centrales.
+          </div>
+
+          <div class="ph-intro">
+            <span class="eyebrow">Unreal Engine / C++ / Commercial Prototype</span>
+            <h2>The Breach</h2>
+            <p class="project-years">Jul 2025 – Jun 2026 • Junior Gameplay Programmer</p>
+
+            <p class="project-lede">
+              Prototipo comercial desarrollado bajo estrictos estándares de producción de estudio, con foco en control
+              de respuesta ágil, escalabilidad de código y optimización de fotogramas.
             </p>
-            <div class="flex flex-wrap gap-2 pt-2">
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">Unreal Engine</span>
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">C++</span>
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">Gameplay Mechanics</span>
-            </div>
-          </div>
-        </article>
+            <p class="project-lede">
+              Responsable de implementar mecánicas centrales de control, modularidad de sistemas de interacción y el
+              mantenimiento de estándares de código desacoplado.
+            </p>
 
-        <!-- 2. Lyra -->
-        <article class="grid md:grid-cols-12 gap-8 items-start bg-zinc-900/40 p-6 rounded-xl border border-zinc-800/80">
-          <div class="md:col-span-5 bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 aspect-video flex items-center justify-center">
-            <span class="text-zinc-500 font-mono text-xs">[ Gameplay Video / Demo ]</span>
-          </div>
-          <div class="md:col-span-7 space-y-3">
-            <div class="flex items-baseline justify-between">
-              <h3 class="text-xl font-bold text-white">Lyra</h3>
-              <span class="text-xs font-mono text-emerald-400">★ Best TFG DemoDay 2026</span>
-            </div>
-            <p class="text-sm font-mono text-cyan-400">Character Programmer & Producer</p>
-            <ul class="text-zinc-300 text-sm list-disc list-inside space-y-1">
-              <li>Diseño del controller de personaje y mecánicas de interacción en Unreal Engine.</li>
-              <li>Arquitectura de interfaces desacopladas para integrar la IA de dragones con cero conflictos de estado.</li>
-              <li>Implementación de una FSM modular y robusta para la lógica de combate.</li>
-              <li>Coordinación de hitos y comunicación técnica entre 7 desarrolladores.</li>
+            <h3 class="task-heading">Responsabilidades Técnicas</h3>
+            <ul class="task-list">
+              <li>Ingeniería de <strong>mecánicas de control de personajes</strong> optimizadas para minimizar input
+                latency en Unreal Engine.</li>
+              <li>Refactorización y desacoplamiento de dependencias críticas bajo principios <strong>SOLID</strong> para
+                acelerar la iteración entre programadores y diseñadores.</li>
+              <li>Depuración y perfilado de rendimiento de CPU/memoria utilizando herramientas nativas de UE y Rider.
+              </li>
             </ul>
-            <div class="flex flex-wrap gap-2 pt-2">
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">Unreal Engine</span>
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">C++</span>
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">FSM Architecture</span>
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">Production</span>
-            </div>
-            <div class="pt-3">
-              <a href="https://github.com/tu-usuario/lyra" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-mono text-white hover:text-cyan-400 transition-colors">
-                View Source Code →
-              </a>
-            </div>
-          </div>
-        </article>
 
-        <!-- 3. NetworkMiddleware -->
-        <article class="grid md:grid-cols-12 gap-8 items-start bg-zinc-900/40 p-6 rounded-xl border border-zinc-800/80">
-          <div class="md:col-span-5 bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 aspect-video flex items-center justify-center">
-            <span class="text-zinc-500 font-mono text-xs">[ Network Architecture Diagram ]</span>
-          </div>
-          <div class="md:col-span-7 space-y-3">
-            <div class="flex items-baseline justify-between">
-              <h3 class="text-xl font-bold text-white">NetworkMiddleware</h3>
-              <span class="text-xs font-mono text-zinc-400">Independent Project</span>
+            <div class="project-actions">
+              <span class="btn btn-outline" style="opacity: 0.7; cursor: default;">Proyecto bajo NDA</span>
             </div>
-            <p class="text-sm font-mono text-cyan-400">Authoritative Server Networking Layer</p>
-            <ul class="text-zinc-300 text-sm list-disc list-inside space-y-1">
-              <li>C++20 server-authoritative networking diseñado para partidas multijugador MOBA.</li>
-              <li>Client-side prediction, server reconciliation y compresión delta de estado.</li>
-              <li>Pipeline de CI/CD automatizado en Azure con 254 pruebas unitarias e integración.</li>
+          </div>
+
+          <div class="ph-shots">
+            <div class="ph-shot-box"><span>[ Profiling / Unreal Insights ]</span></div>
+            <div class="ph-shot-box"><span>[ Character Movement Loop ]</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Proyecto 2: Lyra (Case Study de Ingeniería y FSM) -->
+    <section class="section-wrap">
+      <div class="wrap-wide">
+        <div class="ph-grid">
+
+          <div class="ph-mascot">
+            <div class="ph-shot-box" style="aspect-ratio: 4/5;">
+              <span>[ Key Art Lyra ]</span>
+            </div>
+          </div>
+
+          <div class="ph-intro">
+            <span class="eyebrow">Unreal Engine 5 / C++ / Best TFG DemoDay 2026</span>
+            <h2>Lyra</h2>
+            <p class="project-years">2025 – 2026 • Character Programmer & Producer (7 Devs)</p>
+
+            <p class="project-lede">
+              Aventura 3D centrada en mecánicas cooperativas de interacción y puzzles físicos. Ganador del premio a
+              <strong>Millor TFG en ENTI DemoDay 2026</strong>.
+            </p>
+            <p class="project-lede">
+              Diseñé la arquitectura completa del controlador de personaje y la máquina de estados desacoplada que
+              gestiona las transiciones de interacción, además de estructurar el pipeline de versionado en Perforce
+              (P4V).
+            </p>
+
+            <h3 class="task-heading">Implementación & Sistemas</h3>
+            <ul class="task-list">
+              <li>Desarrollo de una <strong>Finite State Machine (FSM)</strong> jerárquica y modular en C++ para
+                gobernar el combate y las acciones del jugador.</li>
+              <li>Arquitectura basada en <strong>interfaces abstractas</strong> que aisló la lógica del jugador de la IA
+                de los dragones, evitando dependencias circulares.</li>
+              <li>Configuración del flujo de integración continua, directrices de branching en <strong>Perforce
+                  (P4V)</strong> y resolución de conflictos para un equipo de 7 personas.</li>
             </ul>
-            <div class="flex flex-wrap gap-2 pt-2">
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">C++20</span>
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">Multiplayer Networking</span>
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">TDD</span>
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">Azure CI/CD</span>
-            </div>
-            <div class="pt-3">
-              <a href="https://github.com/tu-usuario/network-middleware" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-mono text-white hover:text-cyan-400 transition-colors">
-                View Repository →
-              </a>
+
+            <div class="project-actions">
+              <a class="btn btn-solid" href="https://github.com/tu-usuario/lyra" target="_blank">Repositorio en
+                GitHub</a>
+              <a class="btn btn-outline" href="https://itch.io" target="_blank">Build en Itch.io</a>
             </div>
           </div>
-        </article>
+
+          <div class="ph-shots">
+            <div class="ph-shot-box"><span>[ FSM State Diagram ]</span></div>
+            <div class="ph-shot-box"><span>[ Gameplay Interaction Loop ]</span></div>
+            <div class="ph-shot-box"><span>[ Perforce Branching Strategy ]</span></div>
+          </div>
+
+        </div>
+
+        <!-- Bloque de desglose de arquitectura técnica -->
+        <div class="arch-grid">
+          <h3>Decisiones de Arquitectura & Calidad</h3>
+          <ul class="arch-cards">
+            <li>
+              <span class="lead">Desacoplamiento Estricto</span>
+              <span>Uso de interfaces puras en C++ (`IInteractable`, `ICombatEntity`) garantizando que ninguna clase de
+                gameplay conozca detalles concretos de implementación de los objetos con los que interactúa.</span>
+            </li>
+            <li>
+              <span class="lead">Robustez de Estado</span>
+              <span>La FSM previene estados inválidos mediante transiciones explícitas, facilitando la adición de nuevas
+                habilidades sin riesgo de regresiones en los controles base.</span>
+            </li>
+            <li>
+              <span class="lead">Pipeline de Producción Técnico</span>
+              <span>Reglas de integración de assets y bloqueos en P4V que permitieron a los equipos de arte trabajar en
+                paralelo sin desestabilizar la rama de código activa.</span>
+            </li>
+          </ul>
+        </div>
 
       </div>
     </section>
 
-    <!-- Section: Technical Skills -->
-    <section>
-      <h2 class="text-xs font-mono uppercase tracking-widest text-zinc-400 mb-6 border-b border-zinc-800 pb-2">// Technical Skills</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
-        <div>
-          <h4 class="font-mono text-xs text-zinc-400 mb-2">LANGUAGES</h4>
-          <p class="text-zinc-200">C++ (Modern / C++20)<br>C#<br>HLSL / Shaders</p>
+    <!-- Proyecto 3: NetworkMiddleware (Networking & TDD) -->
+    <section class="section-wrap">
+      <div class="wrap-wide">
+        <div class="ph-grid">
+
+          <div class="ph-mascot">
+            <div class="ph-shot-box" style="aspect-ratio: 4/5;">
+              <span>[ Network Topology Diagram ]</span>
+            </div>
+          </div>
+
+          <div class="ph-intro">
+            <span class="eyebrow">C++20 / Server-Authoritative / CI/CD</span>
+            <h2>NetworkMiddleware</h2>
+            <p class="project-years">Solo Project • 254 Automated Unit/Integration Tests</p>
+
+            <p class="project-lede">
+              Middleware de red autoritativo enfocado en partidas multijugador competitivas estilo MOBA, priorizando la
+              equidad competitiva, el bajo consumo de ancho de banda y la robustez frente a pérdidas de paquetes.
+            </p>
+
+            <h3 class="task-heading">Ingeniería de Red</h3>
+            <ul class="task-list">
+              <li><strong>Client-Side Prediction & Server Reconciliation:</strong> Simulación local inmediata del input
+                del jugador con corrección de estado interpolada desde el servidor autoritativo.</li>
+              <li><strong>Compresión Delta de Estado:</strong> Serialización binaria empaquetando únicamente las
+                diferencias mutadas entre ticks, reduciendo drásticamente la carga de ancho de banda UDP.</li>
+              <li><strong>TDD & Automatización CI/CD:</strong> Suite de <strong>254 tests automatizados</strong> que
+                validan la serialización, orden de paquetes y reconciliación física en cada commit vía GitHub Actions y
+                Azure.</li>
+            </ul>
+
+            <div class="project-actions">
+              <a class="btn btn-solid" href="https://github.com/tu-usuario/network-middleware" target="_blank">Ver
+                Código & Tests en GitHub</a>
+            </div>
+          </div>
+
+          <div class="ph-shots">
+            <div class="ph-shot-box"><span>[ GitHub Actions CI Pipeline ]</span></div>
+            <div class="ph-shot-box"><span>[ Tick Reconciliation Graph ]</span></div>
+          </div>
+
         </div>
-        <div>
-          <h4 class="font-mono text-xs text-zinc-400 mb-2">ENGINES & TOOLS</h4>
-          <p class="text-zinc-200">Unreal Engine 5<br>Rider / WSL<br>Git & GitHub</p>
-        </div>
-        <div>
-          <h4 class="font-mono text-xs text-zinc-400 mb-2">SYSTEMS & ARCH</h4>
-          <p class="text-zinc-200">Gameplay Mechanics<br>Multiplayer Networking<br>FSM & AI Logic<br>SOLID & TDD</p>
-        </div>
-        <div>
-          <h4 class="font-mono text-xs text-zinc-400 mb-2">DEVOPS & CLOUD</h4>
-          <p class="text-zinc-200">GitHub Actions<br>CI/CD Pipelines<br>Microsoft Azure</p>
+      </div>
+    </section>
+
+    <!-- Stack y Toolkit Técnico -->
+    <section id="toolkit" class="section-wrap">
+      <div class="wrap">
+        <span class="eyebrow">Competencias</span>
+        <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 2rem;">Habilidades Técnicas</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem;">
+          <div
+            style="background: var(--bg-surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+            <h4 style="font-family: var(--font-display); margin-bottom: 0.75rem; color: var(--accent);">Lenguajes</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">C++ (C++20)<br>C#<br>Java / SFML
+            </p>
+          </div>
+          <div
+            style="background: var(--bg-surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+            <h4 style="font-family: var(--font-display); margin-bottom: 0.75rem; color: var(--accent);">Motores &
+              Entorno</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">Unreal Engine 5<br>JetBrains Rider
+              (WSL)<br>Git / Perforce (P4V)</p>
+          </div>
+          <div
+            style="background: var(--bg-surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+            <h4 style="font-family: var(--font-display); margin-bottom: 0.75rem; color: var(--accent);">Arquitectura &
+              Sistemas</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">SOLID & GRASP<br>Finite State
+              Machines (FSM)<br>Test-Driven Development (TDD)</p>
+          </div>
+          <div
+            style="background: var(--bg-surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+            <h4 style="font-family: var(--font-display); margin-bottom: 0.75rem; color: var(--accent);">Infraestructura
+              & Red</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">Client-Server
+              Multiplayer<br>GitHub Actions (CI/CD)<br>Microsoft Azure</p>
+          </div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <footer class="border-t border-zinc-800/80 py-8 text-center text-xs font-mono text-zinc-500">
-    Built with clean HTML & Tailwind CSS. Hosted on GitHub Pages.
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap footer-columns">
+      <div>
+        <h5>Enfoque Técnico</h5>
+        <p style="color: var(--text-muted); max-width: 380px;">
+          Especializado en escribir código limpio, predecible y optimizado para videojuegos en tiempo real mediante
+          arquitectura desacoplada y tests automatizados.
+        </p>
+      </div>
+      <div>
+        <h5>Proyectos Clave</h5>
+        <ul>
+          <li><a href="#projects">The Breach (Commercial Prototype)</a></li>
+          <li><a href="#projects">Lyra (Best TFG ENTI 2026)</a></li>
+          <li><a href="#projects">NetworkMiddleware (C++20 Netcode)</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contacto & Enlaces</h5>
+        <ul>
+          <li><a href="https://github.com/tu-usuario" target="_blank">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/tu-usuario" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:tu-correo@ejemplo.com">tu-correo@ejemplo.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© 2026 • Gameplay & Systems Programmer Portfolio</span>
+      <span>Alojado en GitHub Pages</span>
+    </div>
   </footer>
 
 </body>
+
 </html>
