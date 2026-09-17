@@ -217,6 +217,8 @@
       border-radius: 999px;
       text-decoration: none;
       transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
     }
 
     .nav-cta:hover {
@@ -532,7 +534,7 @@
       display: block;
     }
 
-    /* EXPERIÈNCIA CARDS (SIMPLIFICADAS) */
+    /* EXPERIÈNCIA CARDS */
     .featured-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
@@ -583,6 +585,46 @@
       line-height: 1.7;
     }
 
+    .nda-notice {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--border-subtle);
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .spec-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .spec-bullets li {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 1.25rem;
+      line-height: 1.6;
+    }
+
+    .spec-bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .spec-bullets strong {
+      color: var(--text-main);
+    }
+
     .featured-visual {
       position: relative;
       background: var(--bg-card);
@@ -602,7 +644,6 @@
       transform: scale(1.03);
     }
 
-    /* BOTÓN INTERNO DE DETALLES DE PROYECTO */
     .btn-project-details {
       background: transparent;
       color: var(--accent);
@@ -627,33 +668,231 @@
       box-shadow: 0 0 12px var(--accent-glow);
     }
 
-    /* FOOTER / CONTACTO SIMPLE */
+    /* ACTION DRAWER LATERAL DE CONTACTO */
+    .contact-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 8, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .contact-drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .contact-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-subtle);
+      z-index: 999;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -20px 0 50px rgba(0, 0, 0, 0.7);
+      overflow-y: auto;
+    }
+
+    .contact-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .drawer-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .drawer-close {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-close:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .drawer-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .drawer-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .drawer-lede {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    /* Formularios compartidos */
+    .drawer-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .subject-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .subject-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .subject-chip:hover,
+    .subject-chip.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .form-input,
+    .form-textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-dim);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .hidden-custom-subject {
+      display: none;
+      margin-top: 0.5rem;
+    }
+
+    .hidden-custom-subject.show {
+      display: block;
+    }
+
+    .drawer-submit-btn {
+      background: var(--accent);
+      color: #07090D;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .drawer-submit-btn:hover {
+      background: #7DD3FC;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    /* FOOTER CON LOS BOTONES DE GITHUB/LINKEDIN Y EL FORMULARIO INTEGRADO */
     .site-footer {
       background: #040608;
       padding: 6rem 0 4rem;
       border-top: 1px solid var(--border-subtle);
-      text-align: center;
     }
 
-    .footer-simple-content {
+    .footer-contact-wrap {
+      max-width: 600px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 2rem;
     }
 
-    .footer-simple-content h3 {
+    .footer-contact-wrap h3 {
       font-family: var(--font-display);
       font-size: clamp(2rem, 4vw, 2.8rem);
       font-weight: 700;
       color: var(--text-main);
       letter-spacing: -0.02em;
+      text-align: center;
     }
 
     .footer-socials-centered {
       display: flex;
       gap: 1.25rem;
       align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
     }
 
     .footer-social-btn {
@@ -669,6 +908,7 @@
       font-size: 0.9rem;
       text-decoration: none;
       transition: all 0.2s ease;
+      cursor: pointer;
     }
 
     .footer-social-btn:hover {
@@ -684,11 +924,26 @@
       height: 20px;
     }
 
+    .footer-heading-direct {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .footer-contact-wrap .drawer-lede {
+      text-align: center;
+      margin-top: -1rem;
+    }
+
     .footer-copyright {
-      margin-top: 3rem;
+      margin-top: 4rem;
       font-family: var(--font-mono);
       font-size: 0.75rem;
       color: var(--text-muted);
+      text-align: center;
     }
 
     @media (max-width: 960px) {
@@ -754,6 +1009,7 @@
         flex-direction: column;
         width: 100%;
         max-width: 280px;
+        margin: 0 auto;
       }
 
       .footer-social-btn {
@@ -795,7 +1051,7 @@
 
         <div class="nav-buttons-group">
           <a class="nav-cv-btn" href="cv.pdf" target="_blank" data-i18n="home.hero_cta_cv">CV</a>
-          <a class="nav-cta" href="#contact" data-i18n="nav.contact">Contacta'm</a>
+          <button type="button" class="nav-cta" data-i18n="nav.contact">Contacta'm</button>
         </div>
       </div>
     </div>
@@ -809,8 +1065,9 @@
     <a class="dock-btn" href="https://linkedin.com" target="_blank" rel="noopener" title="LinkedIn">
       <img src="https://cdn.simpleicons.org/linkedin/38BDF8" alt="IN">
     </a>
-    <a class="dock-btn" href="mailto:alexrubioplana14@gmail.com" title="Email">
-      <svg viewBox="0 0 24 24" fill="currentColor">
+    <a class="dock-btn" href="#contact" title="Email"
+      style="background:rgba(14, 19, 26, 0.9); border:1px solid var(--border-subtle);">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
         <path
           d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.24-8 4.76-8-4.76V6l8 4.76L20 6Z" />
       </svg>
@@ -930,7 +1187,7 @@
       </div>
     </section>
 
-    <!-- EXPERIÈNCIA (RESUMIDA) -->
+    <!-- EXPERIÈNCIA -->
     <section id="experience" class="section-pad" style="border-top: 1px solid var(--border-subtle);">
       <div class="wrap">
         <span class="section-label" data-i18n="home.exp_label">// PRODUCCIÓN &amp; TRAYECTORIA</span>
@@ -941,26 +1198,40 @@
         <!-- SUBAPARTADO 1: EXPERIENCIA PROFESIONAL -->
         <div class="experience-subsection-title" data-i18n="home.sub_exp_prof">Experiencia Profesional</div>
         <div class="experience-group">
-          <!-- The Breach Studios -->
-          <article class="featured-card">
-            <div class="featured-content">
+          <article class="featured-card" style="grid-template-columns: 1fr;">
+            <div class="featured-content" style="padding: 3rem;">
               <div>
                 <div class="featured-tag" data-i18n="home.tbs_tag">// THE BREACH STUDIOS</div>
                 <h3 data-i18n="home.tbs_title">The Breach Studios</h3>
-                <p class="featured-role" data-i18n="home.tbs_role">Software Engineer (Remote)</p>
+                <p class="featured-role" data-i18n="home.tbs_role">Junior Game Programmer • Part-time (Remote) • Jul
+                  2025 - Jun 2026</p>
                 <p class="featured-summary" data-i18n="home.tbs_summary">
-                  Colaboración en remoto desarrollando sistemas de juego y herramientas modulares para un prototipo
-                  comercial bajo NDA, utilizando flujos Agile (Jira), Fibery y Gitea.
+                  Contributed to gameplay programming tasks for an unannounced commercial title, working remotely as
+                  part of a distributed team and collaborating using Agile workflows (Jira) and version control (Gitea)
+                  in a professional studio environment.
                 </p>
+                <div class="nda-notice">
+                  <strong data-i18n="home.tbs_nda_title">PROYECTO BAJO NDA</strong><br>
+                  <span data-i18n="home.tbs_nda_desc">Por motivos de confidencialidad comercial, no es posible mostrar
+                    material visual ni código fuente del título en desarrollo.</span>
+                </div>
+                <ul class="spec-bullets">
+                  <li data-i18n="home.tbs_task1"><strong>Custom Map Generation & Serialization Tool:</strong> Engineered
+                    an internal system in Unity/C# combining procedural asset spawning with manual placement rules,
+                    serializing layout data into custom ScriptableObjects to ensure reproducible maps and support
+                    prototype replayability.</li>
+                  <li data-i18n="home.tbs_task2"><strong>Dynamic Multi-Camera Architecture:</strong> Implemented a
+                    robust camera management system supporting smooth runtime blending, transitions, and contextual zoom
+                    logic to meet precise gameplay framing requirements.</li>
+                  <li data-i18n="home.tbs_task3"><strong>Production & Workflow Independence:</strong> Collaborated
+                    directly with the Technical Lead to translate mechanics design into standalone implementations,
+                    tracking iterations in Fibery and managing version control through a self-hosted Gitea environment.
+                  </li>
+                  <li data-i18n="home.tbs_task4"><strong>Core USP Validation:</strong> Delivered the foundational map
+                    and asset management architecture required to validate one of the prototype's primary selling points
+                    for stakeholders.</li>
+                </ul>
               </div>
-              <div>
-                <a href="project-the-breach.html" class="btn-project-details" data-i18n="common.btn_details">Ver
-                  detalles del proyecto ➔</a>
-              </div>
-            </div>
-            <div class="featured-visual">
-              <img src="assets/img/thebreach-key.jpg" alt="The Breach Studios"
-                onerror="this.src='https://via.placeholder.com/600x400/0E131A/38BDF8?text=The+Breach+Studios'">
             </div>
           </article>
         </div>
@@ -968,9 +1239,9 @@
         <!-- SUBAPARTADO 2: PROYECTOS PERSONALES -->
         <div class="experience-subsection-title" data-i18n="home.sub_exp_pers" style="margin-top: 4rem;">Proyectos
           Personales</div>
-        <div class="experience-group">
+        <div class="experience-group" id="projects">
           <!-- NetworkMiddleware -->
-          <article class="featured-card">
+          <article class="featured-card" id="network-middleware">
             <div class="featured-content">
               <div>
                 <div class="featured-tag" data-i18n="home.nm_tag">// XARXA APLICADA EN C++20</div>
@@ -1023,9 +1294,9 @@
 
   </main>
 
-  <!-- FOOTER / CONTACTO SIMPLE -->
+  <!-- FOOTER CON LOS BOTONES DE GITHUB/LINKEDIN Y EL FORMULARIO INTEGRADO -->
   <footer class="site-footer" id="contact">
-    <div class="wrap footer-simple-content">
+    <div class="wrap footer-contact-wrap">
       <h3 data-i18n="home.footer_cta_title">¿Quieres contactar?</h3>
       <div class="footer-socials-centered">
         <a class="footer-social-btn" href="https://github.com" target="_blank" rel="noopener">
@@ -1034,16 +1305,81 @@
         <a class="footer-social-btn" href="https://linkedin.com" target="_blank" rel="noopener">
           <img src="https://cdn.simpleicons.org/linkedin/38BDF8" alt="LinkedIn"> LinkedIn
         </a>
-        <a class="footer-social-btn" href="mailto:alexrubioplana14@gmail.com">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-            <path
-              d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.24-8 4.76-8-4.76V6l8 4.76L20 6Z" />
-          </svg> Email
-        </a>
       </div>
+      <h4 class="footer-heading-direct" data-i18n="drawer.title">Hablemos directamente</h4>
+      <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
+
+      <form class="drawer-form" id="footer-contact-form">
+        <div class="form-group">
+          <div class="subject-chips footer-chips">
+            <button type="button" class="subject-chip active" data-subject="Oportunidad laboral"
+              data-i18n="drawer.sub_job">Oportunidad laboral</button>
+            <button type="button" class="subject-chip" data-subject="Colaboración técnica"
+              data-i18n="drawer.sub_collab">Colaboración técnica</button>
+            <button type="button" class="subject-chip" data-subject="Hacer networking" data-i18n="drawer.sub_net">Hacer
+              networking</button>
+            <button type="button" class="subject-chip" data-subject="custom"
+              data-i18n="drawer.sub_other">Otro...</button>
+          </div>
+          <div class="hidden-custom-subject footer-custom-wrap">
+            <input type="text" class="form-input footer-custom-input" placeholder="Escribe el motivo..."
+              data-i18n-placeholder="drawer.placeholder_subject">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="footer-msg" data-i18n="drawer.msg_label">Mensaje</label>
+          <textarea class="form-textarea footer-textarea" id="footer-msg" required
+            placeholder="Escribe tu mensaje aquí..." data-i18n-placeholder="drawer.placeholder_msg"></textarea>
+        </div>
+
+        <button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Enviar mensaje</button>
+      </form>
+
       <div class="footer-copyright" data-i18n="common.footer_copyright">Copyright © 2026 Alejandro Rubio Plana</div>
     </div>
   </footer>
+
+  <!-- ACTION DRAWER LATERAL DE CONTACTO -->
+  <div class="contact-drawer-overlay" id="contact-drawer-overlay"></div>
+  <aside class="contact-drawer" id="contact-drawer" role="dialog" aria-modal="true" aria-label="Contact Panel">
+    <div class="drawer-header">
+      <span class="drawer-tag">// CONNECTION CONSOLE</span>
+      <button type="button" class="drawer-close" id="drawer-close" aria-label="Close drawer">×</button>
+    </div>
+
+    <div class="drawer-body">
+      <h3 class="drawer-title" data-i18n="drawer.title">Hablemos directamente</h3>
+      <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
+
+      <form class="drawer-form" id="drawer-contact-form">
+        <div class="form-group">
+          <div class="subject-chips drawer-chips">
+            <button type="button" class="subject-chip active" data-subject="Oportunidad laboral"
+              data-i18n="drawer.sub_job">Oportunidad laboral</button>
+            <button type="button" class="subject-chip" data-subject="Colaboración técnica"
+              data-i18n="drawer.sub_collab">Colaboración técnica</button>
+            <button type="button" class="subject-chip" data-subject="Hacer networking" data-i18n="drawer.sub_net">Hacer
+              networking</button>
+            <button type="button" class="subject-chip" data-subject="custom"
+              data-i18n="drawer.sub_other">Otro...</button>
+          </div>
+          <div class="hidden-custom-subject drawer-custom-wrap">
+            <input type="text" class="form-input drawer-custom-input" placeholder="Escribe el motivo..."
+              data-i18n-placeholder="drawer.placeholder_subject">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="drawer-msg" data-i18n="drawer.msg_label">Mensaje</label>
+          <textarea class="form-textarea drawer-textarea" id="drawer-msg" required
+            placeholder="Escribe tu mensaje aquí..." data-i18n-placeholder="drawer.placeholder_msg"></textarea>
+        </div>
+
+        <button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Enviar mensaje</button>
+      </form>
+    </div>
+  </aside>
 
   <script>
     const translations = {
@@ -1053,6 +1389,7 @@
         "nav.about": "Sobre mí",
         "nav.experience": "Experiencia",
         "home.hero_cta_cv": "CV",
+        "nav.contact": "Contáctame",
         "home.hero_specialty": "Gameplay & Network Systems Engineer",
         "stack.tag": "// STACK TÉCNICO PRINCIPAL",
         "stack.col1_title": "Core & Gráficos",
@@ -1073,17 +1410,34 @@
         "home.exp_lede": "Experiencia profesional en la industria del videojuego y desarrollo de proyectos propios en motores como Unreal Engine y Unity.",
         "home.sub_exp_prof": "Experiencia Profesional",
         "home.sub_exp_pers": "Proyectos Personales",
+        "home.tbs_tag": "// THE BREACH STUDIOS",
         "home.tbs_title": "The Breach Studios",
-        "home.tbs_role": "Software Engineer (Remoto)",
-        "home.tbs_summary": "Colaboración en remoto desarrollando sistemas de juego y herramientas modulares para un prototipo comercial bajo NDA, utilizando flujos Agile (Jira), Fibery y Gitea.",
+        "home.tbs_role": "Junior Game Programmer • Part-time (Remote) • Jul 2025 - Jun 2026",
+        "home.tbs_summary": "Contributed to gameplay programming tasks for an unannounced commercial title, working remotely as part of a distributed team and collaborating using Agile workflows (Jira) and version control (Gitea) in a professional studio environment.",
+        "home.tbs_nda_title": "PROYECTO BAJO NDA",
+        "home.tbs_nda_desc": "Por motivos de confidencialidad comercial, no es posible mostrar material visual ni código fuente del título en desarrollo.",
+        "home.tbs_task1": "<strong>Custom Map Generation & Serialization Tool:</strong> Engineered an internal system in Unity/C# combining procedural asset spawning with manual placement rules, serializing layout data into custom ScriptableObjects to ensure reproducible maps and support prototype replayability.",
+        "home.tbs_task2": "<strong>Dynamic Multi-Camera Architecture:</strong> Implemented a robust camera management system supporting smooth runtime blending, transitions, and contextual zoom logic to meet precise gameplay framing requirements.",
+        "home.tbs_task3": "<strong>Production & Workflow Independence:</strong> Collaborated directly with the Technical Lead to translate mechanics design into standalone implementations, tracking iterations in Fibery and managing version control through a self-hosted Gitea environment.",
+        "home.tbs_task4": "<strong>Core USP Validation:</strong> Delivered the foundational map and asset management architecture required to validate one of the prototype's primary selling points for stakeholders.",
         "home.nm_tag": "// XARXA APLICADA EN C++20",
         "home.nm_meta": "Solo Developer • C++20, Azure, TDD • Feb 2026 - Presente",
         "home.nm_summary": "Capa de red multijugador server-authoritative independiente del motor para arquitecturas MOBA a 100 Hz, construida con serialización binaria a medida, compresión delta, POSIX sendmmsg y CI/CD automatizado en Azure.",
         "home.lyra_tag": "// UNREAL ENGINE 5 • MILLOR TFG",
         "home.lyra_role": "Software Engineer & Producer",
-        "home.lyra_summary": "Proyecto de fin de grado desarrollado durante un año en Unreal Engine por un equipo de 7 personas. Galardonado con el premio al Mejor TFG en el DemoDay 2026 de ENTI.",
+        "home.lyra_summary": "Proyecto de fin de grado desarrollado durante un año en Unreal Engine por un equipo de 7 personas. Galardonado con el premio al Mejor TFG en el DemoDay 2026 d'ENTI.",
         "common.btn_details": "Ver detalles del proyecto ➔",
-        "home.footer_cta_title": "¿Quieres contactar?"
+        "home.footer_cta_title": "¿Quieres contactar?",
+        "drawer.title": "Hablemos directamente",
+        "drawer.lede": "Elige el motivo:",
+        "drawer.sub_job": "Oportunidad laboral",
+        "drawer.sub_collab": "Colaboración técnica",
+        "drawer.sub_net": "Hacer networking",
+        "drawer.sub_other": "Otro...",
+        "drawer.placeholder_subject": "Escribe el motivo...",
+        "drawer.msg_label": "Mensaje",
+        "drawer.placeholder_msg": "Escribe tu mensaje aquí...",
+        "drawer.send_btn": "Enviar mensaje"
       },
       en: {
         "home.page_title": "Alejandro Rubio Plana - Software & Systems Engineer",
@@ -1091,6 +1445,7 @@
         "nav.about": "About me",
         "nav.experience": "Experience",
         "home.hero_cta_cv": "CV",
+        "nav.contact": "Contact me",
         "home.hero_specialty": "Gameplay & Network Systems Engineer",
         "stack.tag": "// CORE TECHNICAL STACK",
         "stack.col1_title": "Core & Graphics",
@@ -1111,9 +1466,16 @@
         "home.exp_lede": "Professional experience in the video game industry and development of own projects in engines such as Unreal Engine and Unity.",
         "home.sub_exp_prof": "Professional Experience",
         "home.sub_exp_pers": "Personal Projects",
+        "home.tbs_tag": "// THE BREACH STUDIOS",
         "home.tbs_title": "The Breach Studios",
-        "home.tbs_role": "Software Engineer (Remote)",
-        "home.tbs_summary": "Remote collaboration developing gameplay systems and modular tools for an unannounced commercial prototype under NDA, using Agile workflows (Jira), Fibery, and Gitea.",
+        "home.tbs_role": "Junior Game Programmer • Part-time (Remote) • Jul 2025 - Jun 2026",
+        "home.tbs_summary": "Contributed to gameplay programming tasks for an unannounced commercial title, working remotely as part of a distributed team and collaborating using Agile workflows (Jira) and version control (Gitea) in a professional studio environment.",
+        "home.tbs_nda_title": "PROJECT UNDER NDA",
+        "home.tbs_nda_desc": "Due to commercial confidentiality, visual assets and source code of the title in development cannot be displayed.",
+        "home.tbs_task1": "<strong>Custom Map Generation & Serialization Tool:</strong> Engineered an internal system in Unity/C# combining procedural asset spawning with manual placement rules, serializing layout data into custom ScriptableObjects to ensure reproducible maps and support prototype replayability.",
+        "home.tbs_task2": "<strong>Dynamic Multi-Camera Architecture:</strong> Implemented a robust camera management system supporting smooth runtime blending, transitions, and contextual zoom logic to meet precise gameplay framing requirements.",
+        "home.tbs_task3": "<strong>Production & Workflow Independence:</strong> Collaborated directly with the Technical Lead to translate mechanics design into standalone implementations, tracking iterations in Fibery and managing version control through a self-hosted Gitea environment.",
+        "home.tbs_task4": "<strong>Core USP Validation:</strong> Delivered the foundational map and asset management architecture required to validate one of the prototype's primary selling points for stakeholders.",
         "home.nm_tag": "// C++20 APPLIED NETWORKING",
         "home.nm_meta": "Solo Developer • C++20, Azure, TDD • Feb 2026 - Present",
         "home.nm_summary": "Engine-agnostic, server-authoritative multiplayer netcode layer for 100 Hz MOBA architectures, built with custom binary serialization, delta compression, POSIX sendmmsg, and automated Azure CI/CD.",
@@ -1121,7 +1483,17 @@
         "home.lyra_role": "Software Engineer & Producer",
         "home.lyra_summary": "Full-year capstone project developed in Unreal Engine by a 7-person team, winning the Best TFG award at ENTI's 2026 DemoDay.",
         "common.btn_details": "View project details ➔",
-        "home.footer_cta_title": "Want to get in touch?"
+        "home.footer_cta_title": "Want to get in touch?",
+        "drawer.title": "Let's connect directly",
+        "drawer.lede": "Choose the reason:",
+        "drawer.sub_job": "Job Opportunity",
+        "drawer.sub_collab": "Technical Collab",
+        "drawer.sub_net": "Networking & Connect",
+        "drawer.sub_other": "Other...",
+        "drawer.placeholder_subject": "Type the reason...",
+        "drawer.msg_label": "Message",
+        "drawer.placeholder_msg": "Type your message here...",
+        "drawer.send_btn": "Send message"
       },
       ca: {
         "home.page_title": "Alejandro Rubio Plana - Software & Systems Engineer",
@@ -1129,6 +1501,7 @@
         "nav.about": "Sobre mi",
         "nav.experience": "Experiència",
         "home.hero_cta_cv": "CV",
+        "nav.contact": "Contacta'm",
         "home.hero_specialty": "Gameplay & Network Systems Engineer",
         "stack.tag": "// STACK TÈCNIC PRINCIPAL",
         "stack.col1_title": "Core & Gràfics",
@@ -1143,23 +1516,40 @@
         "home.about_section_label": "// ABOUT ME",
         "home.about_greeting": "Hola! Soc l'Alex!",
         "home.about_p1": "Soc un enginyer de programari centrat en el networking i en els sistemes que fan funcionar els jocs multijugador. M'agrada entendre com funcionen les coses per dins, especialment quan el problema és complex. C++, networking de baix nivell, disseny de sistemes i optimització són les àrees que més gaudeixo, i m'encanta aquella sensació d'aconseguir que un sistema difícil acabi encaixant a la perfecció. Soc una persona naturalment curiosa, així que si em trobo amb alguna cosa que no entenc, probablement acabaré investigant-la simplement perquè vull saber com funciona.",
-        "home.about_p2": "He desenvolupat aquesta manera de treballar a través de projectes personals i de la meva experiència professional en estudis com The Breach Studios. El meu projecte de final de grau, Lyra, va ser un projecte d'un año en què vaig treballar com a Software Engineer dins d'un equip de 7 persones, i que va rebre el premi al Millor TFG al DemoDay 2026 d'ENTI. Més endavant vaig construir NetworkMiddleware des de zero per continuar aprofundint en el networking amb C++. Soc ambiciós pel que fa a on vull portar la meva carrera. Vull treballar en sistemes exigents, continuar aprenent de les persones que m'envolten i, amb el temps, crear tecnologia de networking i multijugador de la qual em pugui sentir realment orgullós.",
+        "home.about_p2": "He desenvolupat aquesta manera de treballar a través de projectes personals i de la meva experiència professional en estudis com The Breach Studios. El meu projecte de final de grau, Lyra, va ser un projecte d'un year en què vaig treballar com a Software Engineer dins d'un equip de 7 persones, i que va rebre el premi al Millor TFG al DemoDay 2026 d'ENTI. Més endavant vaig construir NetworkMiddleware des de zero per continuar aprofundint en el networking amb C++. Soc ambiciós pel que fa a on vull portar la meva carrera. Vull treballar en sistemes exigents, continuar aprenent de les persones que m'envolten i, amb el temps, crear tecnologia de networking i multijugador de la qual em pugui sentir realment orgullós.",
         "home.exp_label": "// PRODUCCIÓ & TRAYECTORIA",
         "home.exp_title": "La meva experiència",
         "home.exp_lede": "Experiència professional en la indústria del videojoc i desenvolupament de projectes propis en motors com Unreal Engine i Unity.",
         "home.sub_exp_prof": "Experiència Profesional",
         "home.sub_exp_pers": "Proyectos Personales",
+        "home.tbs_tag": "// THE BREACH STUDIOS",
         "home.tbs_title": "The Breach Studios",
-        "home.tbs_role": "Software Engineer (Remot)",
+        "home.tbs_role": "Junior Game Programmer • Part-time (Remote) • Jul 2025 - Jun 2026",
         "home.tbs_summary": "Col·laboració en remot desenvolupant sistemes de joc i eines modulars per a un prototip comercial sota NDA, utilitzant fluxos Agile (Jira), Fibery i Gitea.",
+        "home.tbs_nda_title": "PROJECTE SOTA NDA",
+        "home.tbs_nda_desc": "Per motius de confidencialitat comercial, no és possible mostrar material visual ni codi font del títol en desenvolupament.",
+        "home.tbs_task1": "<strong>Custom Map Generation & Serialization Tool:</strong> Vaig dissenyar un sistema intern a Unity/C# que combina la generació procedural d'assets amb regles de col·locació manual, serialitzant les dades de disseny en ScriptableObjects personalitzats per garantir mapes reproduïbles i donar suport a la rejugabilitat del prototip.",
+        "home.tbs_task2": "<strong>Arquitectura multicàmera dinàmica:</strong> Vaig implementar un sistema de gestió de càmeres robust que suporta transicions i mescles fluides en temps real, a més de lògica de zoom contextual per complir amb els requisits precisos d'enquadrament.",
+        "home.tbs_task3": "<strong>Producció i independència de flux de treball:</strong> Vaig col·laborar directament amb el Tech Lead per traduir el disseny de mecàniques en implementacions independents, realitzant un seguiment de les iteracions a Fibery i gestionant el control de versions a través d'un entorn Gitea allotjat pròpiament.",
+        "home.tbs_task4": "<strong>Validació de USP principal:</strong> Vaig entregar l'arquitectura fonamental de gestió d'assets requerida per validar un dels principals punts de venda del prototip.",
         "home.nm_tag": "// XARXA APLICADA EN C++20",
         "home.nm_meta": "Solo Developer • C++20, Azure, TDD • Feb 2026 - Present",
-        "home.nm_summary": "Capa de xarxa multijugador server-authoritative independent del motor per a arquitectures MOBA a 100 Hz, construïda amb serialització binària a mida, compressió delta, POSIX sendmmsg i CI/CD automatitzat a Azure.",
+        "home.nm_summary": "Capa de xarxa multijugador server-authoritative independent del motor per a arquitectures MOBA a 100 Hz, construïda amb serialització binaria a mida, compressió delta, POSIX sendmmsg i CI/CD automatitzat a Azure.",
         "home.lyra_tag": "// UNREAL ENGINE 5 • MILLOR TFG",
         "home.lyra_role": "Software Engineer & Producer",
-        "home.lyra_summary": "Projecte de final de grau desenvolupat durant un año a Unreal Engine per un equip de 7 persones. Guardonat amb el premi al Millor TFG al DemoDay 2026 d'ENTI.",
+        "home.lyra_summary": "Projecte de final de grau desenvolupat durant un year a Unreal Engine per un equip de 7 persones. Guardonat amb el premi al Mejor TFG al DemoDay 2026 d'ENTI.",
         "common.btn_details": "Veure detalls del projecte ➔",
-        "home.footer_cta_title": "Vols contactar?"
+        "home.footer_cta_title": "Vols contactar?",
+        "drawer.title": "Parlem directament",
+        "drawer.lede": "Tria el motiu:",
+        "drawer.sub_job": "Oportunitat laboral",
+        "drawer.sub_collab": "Col·laboració tècnica",
+        "drawer.sub_net": "Fer networking",
+        "drawer.sub_other": "Un altre...",
+        "drawer.placeholder_subject": "Escriu el motiu...",
+        "drawer.msg_label": "Missatge",
+        "drawer.placeholder_msg": "Escriu el teu missatge aquí...",
+        "drawer.send_btn": "Enviar missatge"
       }
     };
 
@@ -1173,6 +1563,13 @@
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
           el.innerHTML = translations[lang][key];
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) {
+          el.setAttribute('placeholder', translations[lang][key]);
         }
       });
 
@@ -1202,14 +1599,9 @@
         });
       });
 
-      // Control dinámico perfeccionado para detectar el inicio y las demás secciones
+      // Control de sección activa en la barra superior
       const navLinks = document.querySelectorAll('.nav-link');
-
-      const observerOptions = {
-        root: null,
-        rootMargin: '-10% 0px -60% 0px',
-        threshold: 0
-      };
+      const observerOptions = { root: null, rootMargin: '-10% 0px -60% 0px', threshold: 0 };
 
       const observerCallback = (entries) => {
         entries.forEach(entry => {
@@ -1228,8 +1620,6 @@
       };
 
       const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-      // Observamos el bloque de inicio por su ID específico y el resto de secciones
       document.querySelectorAll('#home-hero, #about, #experience').forEach(sec => observer.observe(sec));
 
       // Ocultar social dock al llegar al footer
@@ -1251,6 +1641,82 @@
 
         dockObserver.observe(contactFooter);
       }
+
+      // Control de apertura y cierre del Action Drawer lateral de contacto
+      const drawer = document.getElementById('contact-drawer');
+      const overlay = document.getElementById('contact-drawer-overlay');
+      const closeBtn = document.getElementById('drawer-close');
+      const contactTriggers = document.querySelectorAll('.nav-cta');
+
+      function openDrawer(e) {
+        e.preventDefault();
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      contactTriggers.forEach(trigger => {
+        trigger.addEventListener('click', openDrawer);
+      });
+
+      closeBtn.addEventListener('click', closeDrawer);
+      overlay.addEventListener('click', closeDrawer);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeDrawer();
+      });
+
+      // Lógica interactiva aislada y robusta para los formularios (Drawer y Footer)
+      function setupForm(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return;
+
+        const chips = form.querySelectorAll('.subject-chip');
+        const customWrap = form.querySelector('.hidden-custom-subject');
+        const customInput = form.querySelector('.form-input');
+        let selectedSubject = "Oportunidad laboral";
+
+        chips.forEach(chip => {
+          chip.addEventListener('click', (e) => {
+            e.preventDefault();
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            const val = chip.getAttribute('data-subject');
+            if (val === 'custom') {
+              customWrap.classList.add('show');
+              customInput.focus();
+              selectedSubject = customInput.value || '';
+              customInput.oninput = (ev) => { selectedSubject = ev.target.value; };
+            } else {
+              customWrap.classList.remove('show');
+              selectedSubject = val;
+            }
+          });
+        });
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const msgText = form.querySelector('.form-textarea').value;
+          const activeChip = form.querySelector('.subject-chip.active');
+          const finalSubject = (activeChip && activeChip.getAttribute('data-subject') === 'custom')
+            ? (customInput.value || 'Contacto Portfolio')
+            : selectedSubject;
+
+          const mailtoLink = `mailto:alexrubioplana14@gmail.com?subject=${encodeURIComponent(finalSubject)}&body=${encodeURIComponent(msgText)}`;
+          window.location.href = mailtoLink;
+          if (formId === 'drawer-contact-form') closeDrawer();
+        });
+      }
+
+      setupForm('drawer-contact-form');
+      setupForm('footer-contact-form');
     });
   </script>
 </body>
