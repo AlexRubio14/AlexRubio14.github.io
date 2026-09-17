@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n-title="nm.page_title">NetworkMiddleware - Caso de estudio | Alejandro Rubio Plana</title>
+    <meta name="description"
+        content="Engine-agnostic, server-authoritative multiplayer netcode layer in modern C++20 for 100 Hz MOBA architectures.">
+    <meta name="theme-color" content="#07090D">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="NetworkMiddleware - Case Study | Alejandro Rubio Plana">
+    <meta property="og:description"
+        content="C++20 server-authoritative multiplayer netcode layer with custom binary serialization, delta compression, and Azure CI/CD.">
+    <meta property="og:image" content="../assets/img/network-key.jpg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="canonical" href="project-network-middleware.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <script>
+        (function () {
+            try {
+                var l = localStorage.getItem('portfolio_lang');
+                if (l === 'es' || l === 'en' || l === 'ca') document.documentElement.setAttribute('lang', l);
+            } catch (e) { }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-main: #07090D;
+            --bg-surface: #0E131A;
+            --bg-card: #121922;
+            --border-subtle: rgba(56, 189, 248, 0.12);
+            --border-hover: rgba(56, 189, 248, 0.45);
+            --text-main: #EDF2F7;
+            --text-muted: #8292A2;
+            --accent: #38BDF8;
+            --accent-dim: rgba(56, 189, 248, 0.12);
+            --accent-glow: rgba(56, 189, 248, 0.22);
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 1.75rem;
+        }
+
+        /* Nav flotante unificada */
+        .site-nav {
+            position: fixed;
+            top: 1.25rem;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .site-nav .wrap {
+            background: rgba(14, 19, 26, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .nav-center-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .back-link {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* Selector de Idioma Compartido */
+        .nav-toggles {
+            position: relative;
+        }
+
+        .nav-lang-btn {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+            padding: 0.3rem 0.65rem;
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-lang-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 0.35rem 0;
+            list-style: none;
+            display: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            min-width: 110px;
+            z-index: 110;
+        }
+
+        .lang-menu.show {
+            display: block;
+        }
+
+        .lang-menu button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.45rem 1rem;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            cursor: pointer;
+        }
+
+        .lang-menu button:hover,
+        .lang-menu button.active {
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .nav-buttons-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-cv-btn {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 0.38rem 0.85rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-cv-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: #07090D;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.38rem 0.95rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: #7DD3FC;
+            box-shadow: 0 0 14px var(--accent-glow);
+        }
+
+        /* Hero del Proyecto a Ancho Completo */
+        .project-hero {
+            padding: 9rem 0 3rem;
+            border-bottom: 1px solid var(--border-subtle);
+            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.05) 0%, transparent 70%);
+        }
+
+        .project-hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .project-tag {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .project-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .project-meta {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-lede {
+            color: #CAD2D9;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* TICKER AUTOMÁTICO DE MÉTRICAS */
+        .metrics-ticker-section {
+            border-bottom: 1px solid var(--border-subtle);
+            background: var(--bg-surface);
+            overflow: hidden;
+            padding: 0.9rem 0;
+            position: relative;
+            pointer-events: none;
+        }
+
+        .metrics-ticker-track {
+            display: flex;
+            gap: 3.5rem;
+            width: max-content;
+            animation: tickerScroll 55s linear infinite;
+        }
+
+        .metrics-ticker-section:hover .metrics-ticker-track {
+            animation-play-state: paused;
+        }
+
+        .metric-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+
+        .metric-title {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .metric-separator {
+            color: rgba(56, 189, 248, 0.3);
+            font-size: 0.8rem;
+        }
+
+        @keyframes tickerScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Cuerpo del caso de estudio */
+        .project-content-wrap {
+            padding: 5rem 0;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3.5rem;
+        }
+
+        .case-block {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .case-block h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .case-block h2::before {
+            content: "";
+            width: 4px;
+            height: 1.4rem;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .case-block p,
+        .case-block li {
+            color: #CAD2D9;
+            font-size: 1rem;
+            line-height: 1.85;
+        }
+
+        .case-block ul {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .case-block strong {
+            color: var(--text-main);
+        }
+
+        .metric-highlight {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            margin: 1.25rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: var(--text-main);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #040608;
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 900px) {
+            .case-block {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV COMPARTIDA -->
+    <header class="site-nav">
+        <div class="wrap">
+            <a href="index.html" class="brand">Alejandro Rubio <span>Portfolio</span></a>
+
+            <div class="nav-center-wrap">
+                <a href="index.html#experience" class="back-link" data-i18n="nm.back_btn">← Volver a atrás</a>
+
+                <!-- Selector de Idioma Persistente -->
+                <div class="nav-toggles">
+                    <button type="button" class="nav-lang-btn" id="lang-toggle" aria-label="Language selector">
+                        <span id="lang-label">ES</span> ▾
+                    </button>
+                    <ul class="lang-menu" id="lang-menu">
+                        <li><button type="button" data-lang="es">Español</button></li>
+                        <li><button type="button" data-lang="en">English</button></li>
+                        <li><button type="button" data-lang="ca">Català</button></li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons-group">
+                    <a class="nav-cv-btn" href="cv.pdf" target="_blank" data-i18n="home.hero_cta_cv">CV</a>
+                    <a class="nav-cta" href="index.html#contact" data-i18n="nav.contact">Contáctame</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO PRINCIPAL AMPLIADO -->
+        <section class="project-hero">
+            <div class="wrap">
+                <div class="project-hero-inner">
+                    <span class="project-tag" data-i18n="nm.tag">// RED APLICADA EN C++20</span>
+                    <h1 class="project-title">NetworkMiddleware</h1>
+                    <p class="project-meta" data-i18n="nm.meta">Solo Developer • C++20, Azure, TDD (GoogleTest) • Feb
+                        2026 - Presente</p>
+                    <p class="project-lede" data-i18n="nm.lede">
+                        Capa de red multijugador <em>server-authoritative</em> independiente del motor en moderno C++20,
+                        diseñada específicamente para arquitecturas MOBA a 100 Hz (presupuesto estricto de tick de 10
+                        ms). Construida con serialización binaria personalizada a nivel de bit, fiabilidad UDP
+                        selectiva, Fog of War espacial y CI/CD automatizado hacia Microsoft Azure.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TICKER AUTOMÁTICO DE MÉTRICAS -->
+        <section class="metrics-ticker-section">
+            <div class="metrics-ticker-track" id="ticker-track">
+                <!-- Grupo 1 -->
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m1_title">Tick Rate del Servidor:</span>
+                    <span class="metric-value">100 Hz</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m2_title">Bandwidth por Cliente:</span>
+                    <span class="metric-value">~19.7 kbps</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m3_title">Tests Automatizados:</span>
+                    <span class="metric-value">254 Tests (100%)</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m4_title">Errores CRC & Retransmisiones:</span>
+                    <span class="metric-value">0 Errores</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m5_title">Reducción de Estado (Delta):</span>
+                    <span class="metric-value">-74% Bits</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m6_title">Validación WAN Real:</span>
+                    <span class="metric-value">49 Clientes (Azure)</span>
+                </div>
+                <span class="metric-separator">//</span>
+
+                <!-- Grupo 2 (Duplicado para bucle continuo infinito perfecto) -->
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m1_title">Tick Rate del Servidor:</span>
+                    <span class="metric-value">100 Hz</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m2_title">Bandwidth por Cliente:</span>
+                    <span class="metric-value">~19.7 kbps</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m3_title">Tests Automatizados:</span>
+                    <span class="metric-value">254 Tests (100%)</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m4_title">Errores CRC & Retransmisiones:</span>
+                    <span class="metric-value">0 Errores</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m5_title">Reducción de Estado (Delta):</span>
+                    <span class="metric-value">-74% Bits</span>
+                </div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item">
+                    <span class="metric-title" data-i18n="nm.m6_title">Validación WAN Real:</span>
+                    <span class="metric-value">49 Clientes (Azure)</span>
+                </div>
+                <span class="metric-separator">//</span>
+            </div>
+        </section>
+
+        <!-- CUERPO DEL CASO DE ESTUDIO -->
+        <div class="wrap project-content-wrap">
+
+            <div class="case-block">
+                <h2 data-i18n="nm.arch_heading">Arquitectura y Principios de Diseño</h2>
+                <p data-i18n="nm.arch_desc">
+                    El sistema se ha regido por un desacoplamiento total y la absoluta ausencia de <em>singletons</em>
+                    para garantizar que sea completamente <em>engine-agnostic</em>.
+                </p>
+                <ul>
+                    <li>
+                        <strong data-i18n="nm.arch_l1_title">Pipeline Autoritative:</strong>
+                        <span data-i18n="nm.arch_l1_text">Ingeniería del flujo completo desde sockets UDP en crudo hasta
+                            un bucle autoritativo respaldado por módulos de CMake estrictamente desacoplados.</span>
+                    </li>
+                    <li>
+                        <strong data-i18n="nm.arch_l2_title">Wire Format Personalizado (104 bits):</strong>
+                        <span data-i18n="nm.arch_l2_text">Diseño de una cabecera fija optimizada que integra ventanas
+                            deslizantes de secuencias y <em>ACK piggybacking</em>, eliminando por completo los paquetes
+                            de confirmación dedicados.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="nm.tech_heading">Logros Técnicos y Optimización</h2>
+                <p data-i18n="nm.tech_desc">
+                    Para superar las limitaciones de middlewares comerciales y cajas negras, se implementaron soluciones
+                    punteras de bajo nivel:
+                </p>
+                <ul>
+                    <li>
+                        <strong data-i18n="nm.tech_l1_title">Serialización y Compresión Delta:</strong>
+                        <span data-i18n="nm.tech_l1_text">Implementación de un <code>BitWriter / BitReader</code> de
+                            bloques de 32 bits con codificación ZigZag y baselines circulares, reduciendo el estado de
+                            entidad de 45 B a 149 bits (-59%), y hasta 38 bits (-74%) en ticks sin cambios.</span>
+                    </li>
+                    <li>
+                        <strong data-i18n="nm.tech_l2_title">Benchmarks WAN en Producción (Azure):</strong>
+                        <span data-i18n="nm.tech_l2_text">Validado con éxito a través de 49 clientes simultáneos (desde
+                            Azure Switzerland hasta España) a 100 Hz, logrando ~19.7 kbps/cliente con 0 errores CRC y 0
+                            retransmisiones.</span>
+                    </li>
+                    <li>
+                        <strong data-i18n="nm.tech_l3_title">I/O en Linux y Concurrencia:</strong>
+                        <span data-i18n="nm.tech_l3_text">Migración de llamadas POSIX <code>send()</code> tradicionales
+                            a <code>sendmmsg()</code> por lotes, controladas mediante un despachador asíncrono basado en
+                            búferes de intercambio con <code>std::jthread</code>, reduciendo la ejecución del tick de
+                            10.97 ms a ~3.77 ms.</span>
+                    </li>
+                    <li>
+                        <strong data-i18n="nm.tech_l4_title">Filtro de Kalman y Lag Compensation:</strong>
+                        <span data-i18n="nm.tech_l4_text">Predicción de velocidad constante frente a pérdida de paquetes
+                            (+28% de ganancia en convergencia de tick) combinada con un rewind buffer circular de 320 ms
+                            para validación precisa de impactos.</span>
+                    </li>
+                    <li>
+                        <strong data-i18n="nm.tech_l5_title">Spatial Hashing Fog of War:</strong>
+                        <span data-i18n="nm.tech_l5_text">Desarrollo de una cuadrícula espacial uniforme 20x20 O(1)
+                            utilizando <code>std::bitset&lt;400&gt;</code> que cabe exactamente en una sola línea de
+                            caché por equipo, uniendo reglas de visibilidad y gestión de interés de ancho de
+                            banda.</span>
+                    </li>
+                </ul>
+                <div class="metric-highlight">
+                    <span data-i18n="nm.metric_note">→ Tasa de éxito del 100% en 254 pruebas unitarias y de integración
+                        (GoogleTest, MockTransport) automatizadas en GitHub Actions con despliegue Docker en
+                        Azure.</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            Copyright © 2026 Alejandro Rubio Plana • NetworkMiddleware Case Study
+        </div>
+    </footer>
+
+    <script>
+        // Objeto de traducciones compartido y persistente
+        const translations = {
+            es: {
+                "nm.page_title": "NetworkMiddleware - Caso de estudio | Alejandro Rubio Plana",
+                "nm.back_btn": "← Volver a atrás",
+                "home.hero_cta_cv": "CV",
+                "nav.contact": "Contáctame",
+                "nm.tag": "// RED APLICADA EN C++20",
+                "nm.meta": "Solo Developer • C++20, Azure, TDD (GoogleTest) • Feb 2026 - Presente",
+                "nm.lede": "Capa de red multijugador server-authoritative independiente del motor en moderno C++20, diseñada específicamente para arquitecturas MOBA a 100 Hz (presupuesto estricto de tick de 10 ms). Construida con serialización binaria personalizada a nivel de bit, fiabilidad UDP selectiva, Fog of War espacial y CI/CD automatizado hacia Microsoft Azure.",
+                "nm.m1_title": "Tick Rate del Servidor:",
+                "nm.m2_title": "Bandwidth por Cliente:",
+                "nm.m3_title": "Tests Automatizados:",
+                "nm.m4_title": "Errores CRC & Retransmisiones:",
+                "nm.m5_title": "Reducción de Estado (Delta):",
+                "nm.m6_title": "Validación WAN Real:",
+                "nm.arch_heading": "Arquitectura y Principios de Diseño",
+                "nm.arch_desc": "El sistema se ha regido por un desacoplamiento total y la absoluta ausencia de singletons para garantizar que sea completamente engine-agnostic.",
+                "nm.arch_l1_title": "Pipeline Autoritative:",
+                "nm.arch_l1_text": "Ingeniería del flujo completo desde sockets UDP en crudo hasta un bucle autoritativo respaldado por módulos de CMake estrictamente desacoplados.",
+                "nm.arch_l2_title": "Wire Format Personalizado (104 bits):",
+                "nm.arch_l2_text": "Diseño de una cabecera fija optimizada que integra ventanas deslizantes de secuencias y ACK piggybacking, eliminando por completo los paquetes de confirmación dedicados.",
+                "nm.tech_heading": "Logros Técnicos y Optimización",
+                "nm.tech_desc": "Para superar las limitaciones de middlewares comerciales y cajas negras, se implementaron soluciones punteras de bajo nivel:",
+                "nm.tech_l1_title": "Serialización y Compresión Delta:",
+                "nm.tech_l1_text": "Implementación de un BitWriter / BitReader de bloques de 32 bits con codificación ZigZag y baselines circulares, reduciendo el estado de entidad de 45 B a 149 bits (-59%), y hasta 38 bits (-74%) en ticks sin cambios.",
+                "nm.tech_l2_title": "Benchmarks WAN en Producción (Azure):",
+                "nm.tech_l2_text": "Validado con éxito a través de 49 clientes simultáneos (desde Azure Switzerland hasta España) a 100 Hz, logrando ~19.7 kbps/cliente con 0 errores CRC y 0 retransmisiones.",
+                "nm.tech_l3_title": "I/O en Linux y Concurrencia:",
+                "nm.tech_l3_text": "Migración de llamadas POSIX send() tradicionales a sendmmsg() por lotes, controladas mediante un despachador asíncrono basado en búferes de intercambio con std::jthread, reduciendo la ejecución del tick de 10.97 ms al voltant de ~3.77 ms.",
+                "nm.tech_l4_title": "Filtro de Kalman y Lag Compensation:",
+                "nm.tech_l4_text": "Predicción de velocidad constante frente a pérdida de paquetes (+28% de ganancia en convergencia de tick) combinada con un rewind buffer circular de 320 ms para validación precisa de impactos.",
+                "nm.tech_l5_title": "Spatial Hashing Fog of War:",
+                "nm.tech_l5_text": "Desarrollo de una cuadrícula espacial uniforme 20x20 O(1) utilizando std::bitset<400> que cabe exactamente en una sola línea de caché por equipo, uniendo reglas de visibilidad y gestión de interés de ancho de banda.",
+                "nm.metric_note": "→ Tasa de éxito del 100% en 254 pruebas unitarias y de integración (GoogleTest, MockTransport) automatizadas en GitHub Actions con despliegue Docker en Azure."
+            },
+            en: {
+                "nm.page_title": "NetworkMiddleware - Case Study | Alejandro Rubio Plana",
+                "nm.back_btn": "← Back to home",
+                "home.hero_cta_cv": "CV",
+                "nav.contact": "Contact me",
+                "nm.tag": "// C++20 APPLIED NETWORKING",
+                "nm.meta": "Solo Developer • C++20, Azure, TDD (GoogleTest) • Feb 2026 - Present",
+                "nm.lede": "Engine-agnostic, server-authoritative multiplayer netcode layer in modern C++20 for 100 Hz MOBA architectures (10 ms tick budget). Built with custom binary serialization, an explicit UDP reliability layer, spatial Fog of War, and zero-touch CI/CD to Microsoft Azure.",
+                "nm.m1_title": "Server Tick Rate:",
+                "nm.m2_title": "Bandwidth per Client:",
+                "nm.m3_title": "Automated Tests:",
+                "nm.m4_title": "CRC Errors & Retransmissions:",
+                "nm.m5_title": "State Reduction (Delta):",
+                "nm.m6_title": "Real WAN Validation:",
+                "nm.arch_heading": "Architecture & Design Principles",
+                "nm.arch_desc": "The system was built following strict decoupling and the absolute absence of singletons to remain fully engine-agnostic.",
+                "nm.arch_l1_title": "Authoritative Pipeline:",
+                "nm.arch_l1_text": "Engineered the pipeline from raw UDP sockets to an authoritative loop with decoupled CMake modules and zero singletons.",
+                "nm.arch_l2_title": "Custom Wire Format (104 bits):",
+                "nm.arch_l2_text": "Designed a custom wire format featuring sequence sliding windows and ACK piggybacking to eliminate dedicated acknowledgment packets.",
+                "nm.tech_heading": "Technical Achievements & Optimization",
+                "nm.tech_desc": "To overcome the limitations of black-box commercial middleware, cutting-edge low-level solutions were implemented:",
+                "nm.tech_l1_title": "Bit Serialization & Delta Compression:",
+                "nm.tech_l1_text": "Built a custom 32-bit block BitWriter/Reader with ZigZag encoding and circular baselines, reducing entity state from 45 B to 149 bits (-59%), and down to 38 bits (-74%) on unchanged ticks.",
+                "nm.tech_l2_title": "Production WAN Benchmarks (Azure):",
+                "nm.tech_l2_text": "Validated across 49 clients (Azure Switzerland to Spain) at 100 Hz, achieving ~19.7 kbps/client with 0 CRC errors and 0 retransmissions.",
+                "nm.tech_l3_title": "Linux I/O & Concurrency:",
+                "nm.tech_l3_text": "Migrated from POSIX send() to batched sendmmsg() with an async swap-buffer std::jthread dispatcher, cutting tick execution from 10.97 ms to ~3.77 ms.",
+                "nm.tech_l4_title": "Kalman Filter & Lag Compensation:",
+                "nm.tech_l4_text": "Constant-velocity prediction for packet loss (+28% tick convergence gain) paired with a 320 ms circular rewind buffer for hit validation.",
+                "nm.tech_l5_title": "Spatial Hashing Fog of War:",
+                "nm.tech_l5_text": "Developed an O(1) uniform 20x20 spatial grid utilizing std::bitset<400> that fits within a single cache line per team, combining gameplay visibility rules with bandwidth interest management.",
+                "nm.metric_note": "→ Maintained 100% test pass rate across 254 unit and integration tests (GoogleTest, MockTransport) automated via GitHub Actions with multi-arch Docker deployment to Azure."
+            },
+            ca: {
+                "nm.page_title": "NetworkMiddleware - Cas d'estudi | Alejandro Rubio Plana",
+                "nm.back_btn": "← Tornar cap enrere",
+                "home.hero_cta_cv": "CV",
+                "nav.contact": "Contacta'm",
+                "nm.tag": "// XARXA APLICADA EN C++20",
+                "nm.meta": "Solo Developer • C++20, Azure, TDD (GoogleTest) • Feb 2026 - Present",
+                "nm.lede": "Capa de xarxa multijugador server-authoritative independent del motor en modern C++20 per a arquitectures MOBA a 100 Hz (pressupost de tick de 10 ms). Construïda amb serialització binària personalitzada a nivell de bit, fiabilitat UDP selectiva, Fog of War espacial i CI/CD automatitzat cap a Microsoft Azure.",
+                "nm.m1_title": "Tick Rate del Servidor:",
+                "nm.m2_title": "Bandwidth per Client:",
+                "nm.m3_title": "Proves Automatitzades:",
+                "nm.m4_title": "Errors CRC & Retransmissions:",
+                "nm.m5_title": "Reducció d'Estat (Delta):",
+                "nm.m6_title": "Validació WAN Real:",
+                "nm.arch_heading": "Arquitectura i Principis de Disseny",
+                "nm.arch_desc": "El sistema s'ha rigut per un desacoblament total i l'absència absoluta de singletons per garantir que sigui completament engine-agnostic.",
+                "nm.arch_l1_title": "Pipeline Autoritative:",
+                "nm.arch_l1_text": "Enginyeria del flux complet des de sòkets UDP en cru fins a un bucle autoritatiu amb mòduls de CMake estrictament desacoplats.",
+                "nm.arch_l2_title": "Wire Format Personalitzat (104 bits):",
+                "nm.arch_l2_text": "Disseny d'una capçalera fixa optimitzada amb finestres lliscants de seqüències i piggybacking d'ACK per eliminar paquets de confirmació dedicats.",
+                "nm.tech_heading": "Fites Tècniques i Optimització",
+                "nm.tech_desc": "Per superar les limitacions dels middlewares comercials i caixes negres, es van implementar solucions punteres de baix nivell:",
+                "nm.tech_l1_title": "Serialització i Compressió Delta:",
+                "nm.tech_l1_text": "Construcció d'un BitWriter / BitReader de blocs de 32 bits amb codificació ZigZag i baselines circulars, reduint l'estat d'entitat de 45 B a 149 bits (-59%), i fins a 38 bits (-74%) en ticks sense canvis.",
+                "nm.tech_l2_title": "Benchmarks WAN en Producció (Azure):",
+                "nm.tech_l2_text": "Validat amb èxit a través de 49 clients simultanis (des d'Azure Switzerland fins a Espanya) a 100 Hz, aconseguint ~19.7 kbps/client amb 0 errors CRC i 0 retransmissions.",
+                "nm.tech_l3_title": "I/O a Linux i Concurrència:",
+                "nm.tech_l3_text": "Migració de crides POSIX send() tradicionals a sendmmsg() per lots mitjançant un despatxador asíncron basat en buffers d'intercanvi amb std::jthread, reduint l'execució del tick de 10.97 ms al voltant de ~3.77 ms.",
+                "nm.tech_l4_title": "Filtre de Kalman i Compensació de Lag:",
+                "nm.tech_l4_text": "Predicció de velocitat constant per mitigar pèrdua de paquets (+28% de guany en convergència de tick) combinada amb un rewind buffer circular de 320 ms per a validació d'impactes.",
+                "nm.tech_l5_title": "Spatial Hashing Fog of War:",
+                "nm.tech_l5_text": "Desenvolupament d'una quadrícula espacial uniforme 20x20 O(1) utilitzant std::bitset<400> que cap exactament en una sola línia de memòria cau per equip, unint regles de visibilitat i gestió d'interès d'ample de banda.",
+                "nm.metric_note": "→ Taxa d'èxit del 100% en 254 proves unitàries i d'integració (GoogleTest, MockTransport) automatitzades a GitHub Actions amb desplegament Docker a Azure."
+            }
+        };
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            localStorage.setItem('portfolio_lang', lang);
+            document.documentElement.lang = lang;
+            document.getElementById('lang-label').textContent = lang.toUpperCase();
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('#lang-menu button').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('portfolio_lang') || 'es';
+            setLanguage(savedLang);
+
+            const langBtn = document.getElementById('lang-toggle');
+            const langMenu = document.getElementById('lang-menu');
+
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langMenu.classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => langMenu.classList.remove('show'));
+
+            langMenu.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setLanguage(btn.getAttribute('data-lang'));
+                    langMenu.classList.remove('show');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
