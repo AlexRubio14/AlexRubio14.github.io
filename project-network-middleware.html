@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n-title="nm.page_title">NetworkMiddleware - Caso de estudio | Alejandro Rubio Plana</title>
+    <title data-i18n="nm.page_title">NetworkMiddleware - Caso de estudio | Alejandro Rubio Plana</title>
     <meta name="description"
         content="Engine-agnostic, server-authoritative multiplayer netcode layer in modern C++20 for 100 Hz MOBA architectures.">
     <meta name="theme-color" content="#07090D">
@@ -220,6 +220,8 @@
             border-radius: 999px;
             text-decoration: none;
             transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
         }
 
         .nav-cta:hover {
@@ -227,7 +229,47 @@
             box-shadow: 0 0 14px var(--accent-glow);
         }
 
-        /* Hero del Proyecto a Ancho Completo */
+        /* Social Dock Lateral */
+        .social-dock {
+            position: fixed;
+            left: 1.5rem;
+            bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            z-index: 90;
+            transition: opacity 0.3s ease;
+        }
+
+        .dock-btn {
+            width: 50px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(14, 19, 26, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .dock-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .dock-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--accent);
+        }
+
+        /* Hero del Proyecto */
         .project-hero {
             padding: 9rem 0 3rem;
             border-bottom: 1px solid var(--border-subtle);
@@ -271,7 +313,7 @@
             line-height: 1.8;
         }
 
-        /* TICKER AUTOMÁTICO DE MÉTRICAS */
+        /* Ticker de Métricas */
         .metrics-ticker-section {
             border-bottom: 1px solid var(--border-subtle);
             background: var(--bg-surface);
@@ -286,10 +328,6 @@
             gap: 3.5rem;
             width: max-content;
             animation: tickerScroll 55s linear infinite;
-        }
-
-        .metrics-ticker-section:hover .metrics-ticker-track {
-            animation-play-state: paused;
         }
 
         .metric-item {
@@ -398,15 +436,281 @@
             border-radius: 0 8px 8px 0;
         }
 
-        /* Footer */
-        .site-footer {
-            background: #040608;
-            padding: 4rem 0;
-            border-top: 1px solid var(--border-subtle);
-            text-align: center;
+        /* Formularios y Drawer de Contacto */
+        .contact-drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 6, 8, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .contact-drawer-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .contact-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-surface);
+            border-left: 1px solid var(--border-subtle);
+            z-index: 999;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+        }
+
+        .contact-drawer.open {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .drawer-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .drawer-close {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .drawer-close:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .drawer-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .drawer-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .drawer-lede {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .drawer-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--text-muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .subject-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .subject-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .subject-chip:hover,
+        .subject-chip.active {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .form-input,
+        .form-textarea {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-dim);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .hidden-custom-subject {
+            display: none;
+            margin-top: 0.5rem;
+        }
+
+        .hidden-custom-subject.show {
+            display: block;
+        }
+
+        .drawer-submit-btn {
+            background: var(--accent);
+            color: #07090D;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.85rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .drawer-submit-btn:hover {
+            background: #7DD3FC;
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        /* FOOTER IDENTICO AL INDEX */
+        .site-footer {
+            background: #040608;
+            padding: 6rem 0 4rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-contact-wrap {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .footer-contact-wrap h3 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .footer-socials-centered {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-social-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .footer-social-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .footer-social-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent);
+        }
+
+        .footer-heading-direct {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .footer-contact-wrap .drawer-lede {
+            text-align: center;
+            margin-top: -1rem;
+        }
+
+        .footer-copyright {
+            margin-top: 4rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
         }
 
         @media (max-width: 900px) {
@@ -419,13 +723,12 @@
 
 <body>
 
-    <!-- NAV COMPARTIDA EN LAS SUBPÁGINAS -->
+    <!-- NAV COMPARTIDA CON ENLACE DE RETORNO PRECISO -->
     <header class="site-nav">
         <div class="wrap">
             <a href="index.html" class="brand">Alejandro Rubio <span>Portfolio</span></a>
 
             <div class="nav-center-wrap">
-                <!-- Añadimos el ancla exacta #experience para que vuelva directamente a la sección de proyectos/experiencia -->
                 <a href="index.html#network-middleware" class="back-link" data-i18n="nm.back_btn">← Volver a atrás</a>
 
                 <!-- Selector de Idioma Persistente -->
@@ -442,11 +745,35 @@
 
                 <div class="nav-buttons-group">
                     <a class="nav-cv-btn" href="cv.pdf" target="_blank" data-i18n="home.hero_cta_cv">CV</a>
-                    <a class="nav-cta" href="index.html#contact" data-i18n="nav.contact">Contáctame</a>
+                    <button type="button" class="nav-cta" data-i18n="nav.contact">Contáctame</button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- SOCIAL DOCK LATERAL CON ICONOS VECTORIALES -->
+    <aside class="social-dock" id="social-dock">
+        <a class="dock-btn" href="https://github.com/AlexRubio14" target="_blank" rel="noopener" title="GitHub">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+                <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+        </a>
+        <a class="dock-btn" href="https://www.linkedin.com/in/alejandro-rubio-plana/" target="_blank" rel="noopener"
+            title="LinkedIn">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+                <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+            </svg>
+        </a>
+        <a class="dock-btn" href="#contact" title="Email"
+            style="background:rgba(14, 19, 26, 0.9); border:1px solid var(--border-subtle);">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path
+                    d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.24-8 4.76-8-4.76V6l8 4.76L20 6Z" />
+            </svg>
+        </a>
+    </aside>
 
     <main>
         <!-- HERO PRINCIPAL AMPLIADO -->
@@ -470,7 +797,6 @@
         <!-- TICKER AUTOMÁTICO DE MÉTRICAS -->
         <section class="metrics-ticker-section">
             <div class="metrics-ticker-track" id="ticker-track">
-                <!-- Grupo 1 -->
                 <div class="metric-item">
                     <span class="metric-title" data-i18n="nm.m1_title">Tick Rate del Servidor:</span>
                     <span class="metric-value">100 Hz</span>
@@ -502,7 +828,7 @@
                 </div>
                 <span class="metric-separator">//</span>
 
-                <!-- Grupo 2 (Duplicado para bucle continuo infinito perfecto) -->
+                <!-- Duplicado para bucle continuo -->
                 <div class="metric-item">
                     <span class="metric-title" data-i18n="nm.m1_title">Tick Rate del Servidor:</span>
                     <span class="metric-value">100 Hz</span>
@@ -538,7 +864,6 @@
 
         <!-- CUERPO DEL CASO DE ESTUDIO -->
         <div class="wrap project-content-wrap">
-
             <div class="case-block">
                 <h2 data-i18n="nm.arch_heading">Arquitectura y Principios de Diseño</h2>
                 <p data-i18n="nm.arch_desc">
@@ -606,18 +931,107 @@
                         Azure.</span>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="wrap">
-            Copyright © 2026 Alejandro Rubio Plana • NetworkMiddleware Case Study
+    <!-- FOOTER CON LOS ENLACES REALES E ICONOS VECTORIALES -->
+    <footer class="site-footer" id="contact">
+        <div class="wrap footer-contact-wrap">
+            <h3 data-i18n="home.footer_cta_title">¿Quieres contactar?</h3>
+            <div class="footer-socials-centered">
+                <a class="footer-social-btn" href="https://github.com/AlexRubio14" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg> GitHub
+                </a>
+                <a class="footer-social-btn" href="https://www.linkedin.com/in/alejandro-rubio-plana/" target="_blank"
+                    rel="noopener">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg> LinkedIn
+                </a>
+            </div>
+            <h4 class="footer-heading-direct" data-i18n="drawer.title">Hablemos directamente</h4>
+            <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
+
+            <form class="drawer-form" id="footer-contact-form">
+                <div class="form-group">
+                    <div class="subject-chips footer-chips">
+                        <button type="button" class="subject-chip active" data-subject="Oportunidad laboral"
+                            data-i18n="drawer.sub_job">Oportunidad laboral</button>
+                        <button type="button" class="subject-chip" data-subject="Colaboración técnica"
+                            data-i18n="drawer.sub_collab">Colaboración técnica</button>
+                        <button type="button" class="subject-chip" data-subject="Hacer networking"
+                            data-i18n="drawer.sub_net">Hacer networking</button>
+                        <button type="button" class="subject-chip" data-subject="custom"
+                            data-i18n="drawer.sub_other">Otro...</button>
+                    </div>
+                    <div class="hidden-custom-subject footer-custom-wrap">
+                        <input type="text" class="form-input footer-custom-input" placeholder="Escribe el motivo..."
+                            data-i18n-placeholder="drawer.placeholder_subject">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="footer-msg" data-i18n="drawer.msg_label">Mensaje</label>
+                    <textarea class="form-textarea footer-textarea" id="footer-msg" required
+                        placeholder="Escribe tu mensaje aquí..."
+                        data-i18n-placeholder="drawer.placeholder_msg"></textarea>
+                </div>
+
+                <button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Enviar mensaje</button>
+            </form>
+
+            <div class="footer-copyright" data-i18n="common.footer_copyright">Copyright © 2026 Alejandro Rubio Plana
+            </div>
         </div>
     </footer>
 
+    <!-- ACTION DRAWER LATERAL DE CONTACTO -->
+    <div class="contact-drawer-overlay" id="contact-drawer-overlay"></div>
+    <aside class="contact-drawer" id="contact-drawer" role="dialog" aria-modal="true" aria-label="Contact Panel">
+        <div class="drawer-header">
+            <span class="drawer-tag">// CONNECTION CONSOLE</span>
+            <button type="button" class="drawer-close" id="drawer-close" aria-label="Close drawer">×</button>
+        </div>
+
+        <div class="drawer-body">
+            <h3 class="drawer-title" data-i18n="drawer.title">Hablemos directamente</h3>
+            <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
+
+            <form class="drawer-form" id="drawer-contact-form">
+                <div class="form-group">
+                    <div class="subject-chips drawer-chips">
+                        <button type="button" class="subject-chip active" data-subject="Oportunidad laboral"
+                            data-i18n="drawer.sub_job">Oportunidad laboral</button>
+                        <button type="button" class="subject-chip" data-subject="Colaboración técnica"
+                            data-i18n="drawer.sub_collab">Colaboración técnica</button>
+                        <button type="button" class="subject-chip" data-subject="Hacer networking"
+                            data-i18n="drawer.sub_net">Hacer networking</button>
+                        <button type="button" class="subject-chip" data-subject="custom"
+                            data-i18n="drawer.sub_other">Otro...</button>
+                    </div>
+                    <div class="hidden-custom-subject drawer-custom-wrap">
+                        <input type="text" class="form-input drawer-custom-input" placeholder="Escribe el motivo..."
+                            data-i18n-placeholder="drawer.placeholder_subject">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="drawer-msg" data-i18n="drawer.msg_label">Mensaje</label>
+                    <textarea class="form-textarea drawer-textarea" id="drawer-msg" required
+                        placeholder="Escribe tu mensaje aquí..."
+                        data-i18n-placeholder="drawer.placeholder_msg"></textarea>
+                </div>
+
+                <button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Enviar mensaje</button>
+            </form>
+        </div>
+    </aside>
+
     <script>
-        // Objeto de traducciones compartido y persistente
         const translations = {
             es: {
                 "nm.page_title": "NetworkMiddleware - Caso de estudio | Alejandro Rubio Plana",
@@ -626,7 +1040,7 @@
                 "nav.contact": "Contáctame",
                 "nm.tag": "// RED APLICADA EN C++20",
                 "nm.meta": "Solo Developer • C++20, Azure, TDD (GoogleTest) • Feb 2026 - Presente",
-                "nm.lede": "Capa de red multijugador server-authoritative independiente del motor en moderno C++20, diseñada específicamente para arquitecturas MOBA a 100 Hz (presupuesto estricto de tick de 10 ms). Construida con serialización binaria personalizada a nivel de bit, fiabilidad UDP selectiva, Fog of War espacial y CI/CD automatizado hacia Microsoft Azure.",
+                "nm.lede": "Capa de red multijugador <em>server-authoritative</em> independiente del motor en moderno C++20, diseñada específicamente para arquitecturas MOBA a 100 Hz (presupuesto estricto de tick de 10 ms). Construida con serialización binaria personalizada a nivel de bit, fiabilidad UDP selectiva, Fog of War espacial y CI/CD automatizado hacia Microsoft Azure.",
                 "nm.m1_title": "Tick Rate del Servidor:",
                 "nm.m2_title": "Bandwidth por Cliente:",
                 "nm.m3_title": "Tests Automatizados:",
@@ -634,24 +1048,35 @@
                 "nm.m5_title": "Reducción de Estado (Delta):",
                 "nm.m6_title": "Validación WAN Real:",
                 "nm.arch_heading": "Arquitectura y Principios de Diseño",
-                "nm.arch_desc": "El sistema se ha regido por un desacoplamiento total y la absoluta ausencia de singletons para garantizar que sea completamente engine-agnostic.",
+                "nm.arch_desc": "El sistema se ha regido por un desacoplamiento total y la absoluta ausencia de <em>singletons</em> para garantizar que sea completamente <em>engine-agnostic</em>.",
                 "nm.arch_l1_title": "Pipeline Autoritative:",
                 "nm.arch_l1_text": "Ingeniería del flujo completo desde sockets UDP en crudo hasta un bucle autoritativo respaldado por módulos de CMake estrictamente desacoplados.",
                 "nm.arch_l2_title": "Wire Format Personalizado (104 bits):",
-                "nm.arch_l2_text": "Diseño de una cabecera fija optimizada que integra ventanas deslizantes de secuencias y ACK piggybacking, eliminando por completo los paquetes de confirmación dedicados.",
+                "nm.arch_l2_text": "Diseño de una cabecera fija optimizada que integra ventanas deslizantes de secuencias y <em>ACK piggybacking</em>, eliminando por completo los paquetes de confirmación dedicados.",
                 "nm.tech_heading": "Logros Técnicos y Optimización",
                 "nm.tech_desc": "Para superar las limitaciones de middlewares comerciales y cajas negras, se implementaron soluciones punteras de bajo nivel:",
                 "nm.tech_l1_title": "Serialización y Compresión Delta:",
-                "nm.tech_l1_text": "Implementación de un BitWriter / BitReader de bloques de 32 bits con codificación ZigZag y baselines circulares, reduciendo el estado de entidad de 45 B a 149 bits (-59%), y hasta 38 bits (-74%) en ticks sin cambios.",
+                "nm.tech_l1_text": "Implementación de un <code>BitWriter / BitReader</code> de bloques de 32 bits con codificación ZigZag y baselines circulares, reduciendo el estado de entidad de 45 B a 149 bits (-59%), y hasta 38 bits (-74%) en ticks sin cambios.",
                 "nm.tech_l2_title": "Benchmarks WAN en Producción (Azure):",
                 "nm.tech_l2_text": "Validado con éxito a través de 49 clientes simultáneos (desde Azure Switzerland hasta España) a 100 Hz, logrando ~19.7 kbps/cliente con 0 errores CRC y 0 retransmisiones.",
                 "nm.tech_l3_title": "I/O en Linux y Concurrencia:",
-                "nm.tech_l3_text": "Migración de llamadas POSIX send() tradicionales a sendmmsg() por lotes, controladas mediante un despachador asíncrono basado en búferes de intercambio con std::jthread, reduciendo la ejecución del tick de 10.97 ms al voltant de ~3.77 ms.",
+                "nm.tech_l3_text": "Migración de llamadas POSIX <code>send()</code> tradicionales a <code>sendmmsg()</code> por lotes, controladas mediante un despachador asíncrono basado en búferes de intercambio con <code>std::jthread</code>, reduciendo la ejecución del tick de 10.97 ms a ~3.77 ms.",
                 "nm.tech_l4_title": "Filtro de Kalman y Lag Compensation:",
                 "nm.tech_l4_text": "Predicción de velocidad constante frente a pérdida de paquetes (+28% de ganancia en convergencia de tick) combinada con un rewind buffer circular de 320 ms para validación precisa de impactos.",
                 "nm.tech_l5_title": "Spatial Hashing Fog of War:",
-                "nm.tech_l5_text": "Desarrollo de una cuadrícula espacial uniforme 20x20 O(1) utilizando std::bitset<400> que cabe exactamente en una sola línea de caché por equipo, uniendo reglas de visibilidad y gestión de interés de ancho de banda.",
-                "nm.metric_note": "→ Tasa de éxito del 100% en 254 pruebas unitarias y de integración (GoogleTest, MockTransport) automatizadas en GitHub Actions con despliegue Docker en Azure."
+                "nm.tech_l5_text": "Desarrollo de una cuadrícula espacial uniforme 20x20 O(1) utilizando <code>std::bitset&lt;400&gt;</code> que cabe exactamente en una sola línea de caché por equipo, uniendo reglas de visibilidad y gestión de interés de ancho de banda.",
+                "nm.metric_note": "→ Tasa de éxito del 100% en 254 pruebas unitarias y de integración (GoogleTest, MockTransport) automatizadas en GitHub Actions con despliegue Docker en Azure.",
+                "home.footer_cta_title": "¿Quieres contactar?",
+                "drawer.title": "Hablemos directamente",
+                "drawer.lede": "Elige el motivo:",
+                "drawer.sub_job": "Oportunidad laboral",
+                "drawer.sub_collab": "Colaboración técnica",
+                "drawer.sub_net": "Hacer networking",
+                "drawer.sub_other": "Otro...",
+                "drawer.placeholder_subject": "Escribe el motivo...",
+                "drawer.msg_label": "Mensaje",
+                "drawer.placeholder_msg": "Escribe tu mensaje aquí...",
+                "drawer.send_btn": "Enviar mensaje"
             },
             en: {
                 "nm.page_title": "NetworkMiddleware - Case Study | Alejandro Rubio Plana",
@@ -685,7 +1110,18 @@
                 "nm.tech_l4_text": "Constant-velocity prediction for packet loss (+28% tick convergence gain) paired with a 320 ms circular rewind buffer for hit validation.",
                 "nm.tech_l5_title": "Spatial Hashing Fog of War:",
                 "nm.tech_l5_text": "Developed an O(1) uniform 20x20 spatial grid utilizing std::bitset<400> that fits within a single cache line per team, combining gameplay visibility rules with bandwidth interest management.",
-                "nm.metric_note": "→ Maintained 100% test pass rate across 254 unit and integration tests (GoogleTest, MockTransport) automated via GitHub Actions with multi-arch Docker deployment to Azure."
+                "nm.metric_note": "→ Maintained 100% test pass rate across 254 unit and integration tests (GoogleTest, MockTransport) automated via GitHub Actions with multi-arch Docker deployment to Azure.",
+                "home.footer_cta_title": "Want to get in touch?",
+                "drawer.title": "Let's connect directly",
+                "drawer.lede": "Choose the reason:",
+                "drawer.sub_job": "Job Opportunity",
+                "drawer.sub_collab": "Technical Collab",
+                "drawer.sub_net": "Networking & Connect",
+                "drawer.sub_other": "Other...",
+                "drawer.placeholder_subject": "Type the reason...",
+                "drawer.msg_label": "Message",
+                "drawer.placeholder_msg": "Type your message here...",
+                "drawer.send_btn": "Send message"
             },
             ca: {
                 "nm.page_title": "NetworkMiddleware - Cas d'estudi | Alejandro Rubio Plana",
@@ -719,7 +1155,18 @@
                 "nm.tech_l4_text": "Predicció de velocitat constant per mitigar pèrdua de paquets (+28% de guany en convergència de tick) combinada amb un rewind buffer circular de 320 ms per a validació d'impactes.",
                 "nm.tech_l5_title": "Spatial Hashing Fog of War:",
                 "nm.tech_l5_text": "Desenvolupament d'una quadrícula espacial uniforme 20x20 O(1) utilitzant std::bitset<400> que cap exactament en una sola línia de memòria cau per equip, unint regles de visibilitat i gestió d'interès d'ample de banda.",
-                "nm.metric_note": "→ Taxa d'èxit del 100% en 254 proves unitàries i d'integració (GoogleTest, MockTransport) automatitzades a GitHub Actions amb desplegament Docker a Azure."
+                "nm.metric_note": "→ Taxa d'èxit del 100% en 254 proves unitàries i d'integració (GoogleTest, MockTransport) automatitzades a GitHub Actions amb desplegament Docker a Azure.",
+                "home.footer_cta_title": "Vols contactar?",
+                "drawer.title": "Parlem directament",
+                "drawer.lede": "Tria el motiu:",
+                "drawer.sub_job": "Oportunitat laboral",
+                "drawer.sub_collab": "Col·laboració tècnica",
+                "drawer.sub_net": "Fer networking",
+                "drawer.sub_other": "Un altre...",
+                "drawer.placeholder_subject": "Escriu el motiu...",
+                "drawer.msg_label": "Missatge",
+                "drawer.placeholder_msg": "Escriu el teu missatge aquí...",
+                "drawer.send_btn": "Enviar missatge"
             }
         };
 
@@ -731,8 +1178,15 @@
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
+                if (translations[lang][key]) {
                     el.innerHTML = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    el.setAttribute('placeholder', translations[lang][key]);
                 }
             });
 
@@ -761,6 +1215,82 @@
                     langMenu.classList.remove('show');
                 });
             });
+
+            // Control de apertura y cierre del Action Drawer lateral de contacto
+            const drawer = document.getElementById('contact-drawer');
+            const overlay = document.getElementById('contact-drawer-overlay');
+            const closeBtn = document.getElementById('drawer-close');
+            const contactTriggers = document.querySelectorAll('.nav-cta');
+
+            function openDrawer(e) {
+                e.preventDefault();
+                drawer.classList.add('open');
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeDrawer() {
+                drawer.classList.remove('open');
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            contactTriggers.forEach(trigger => {
+                trigger.addEventListener('click', openDrawer);
+            });
+
+            closeBtn.addEventListener('click', closeDrawer);
+            overlay.addEventListener('click', closeDrawer);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeDrawer();
+            });
+
+            // Lógica interactiva aislada y robusta para los formularios (Drawer y Footer)
+            function setupForm(formId) {
+                const form = document.getElementById(formId);
+                if (!form) return;
+
+                const chips = form.querySelectorAll('.subject-chip');
+                const customWrap = form.querySelector('.hidden-custom-subject');
+                const customInput = form.querySelector('.form-input');
+                let selectedSubject = "Oportunidad laboral";
+
+                chips.forEach(chip => {
+                    chip.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        chips.forEach(c => c.classList.remove('active'));
+                        chip.classList.add('active');
+
+                        const val = chip.getAttribute('data-subject');
+                        if (val === 'custom') {
+                            customWrap.classList.add('show');
+                            customInput.focus();
+                            selectedSubject = customInput.value || '';
+                            customInput.oninput = (ev) => { selectedSubject = ev.target.value; };
+                        } else {
+                            customWrap.classList.remove('show');
+                            selectedSubject = val;
+                        }
+                    });
+                });
+
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const msgText = form.querySelector('.form-textarea').value;
+                    const activeChip = form.querySelector('.subject-chip.active');
+                    const finalSubject = (activeChip && activeChip.getAttribute('data-subject') === 'custom')
+                        ? (customInput.value || 'Contacto Portfolio')
+                        : selectedSubject;
+
+                    const mailtoLink = `mailto:alexrubioplana14@gmail.com?subject=${encodeURIComponent(finalSubject)}&body=${encodeURIComponent(msgText)}`;
+                    window.location.href = mailtoLink;
+                    if (formId === 'drawer-contact-form') closeDrawer();
+                });
+            }
+
+            setupForm('drawer-contact-form');
+            setupForm('footer-contact-form');
         });
     </script>
 </body>

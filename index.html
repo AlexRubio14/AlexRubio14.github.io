@@ -264,6 +264,7 @@
     .dock-btn img {
       width: 22px;
       height: 22px;
+      fill: var(--accent);
     }
 
     /* HERO PANTALLA COMPLETA */
@@ -918,10 +919,11 @@
       box-shadow: 0 0 16px var(--accent-glow);
     }
 
-    .footer-social-btn img,
-    .footer-social-btn svg {
+    .footer-social-btn svg,
+    .footer-social-btn img {
       width: 20px;
       height: 20px;
+      fill: var(--accent);
     }
 
     .footer-heading-direct {
@@ -1057,13 +1059,20 @@
     </div>
   </header>
 
-  <!-- SOCIAL DOCK LATERAL -->
+  <!-- SOCIAL DOCK LATERAL CON ENLACES REALES E ICONOS VECTORIALES -->
   <aside class="social-dock" id="social-dock">
-    <a class="dock-btn" href="https://github.com" target="_blank" rel="noopener" title="GitHub">
-      <img src="https://cdn.simpleicons.org/github/38BDF8" alt="GH">
+    <a class="dock-btn" href="https://github.com/AlexRubio14" target="_blank" rel="noopener" title="GitHub">
+      <svg viewBox="0 0 24 24" width="22" height="22">
+        <path
+          d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+      </svg>
     </a>
-    <a class="dock-btn" href="https://linkedin.com" target="_blank" rel="noopener" title="LinkedIn">
-      <img src="https://cdn.simpleicons.org/linkedin/38BDF8" alt="IN">
+    <a class="dock-btn" href="https://www.linkedin.com/in/alejandro-rubio-plana/" target="_blank" rel="noopener"
+      title="LinkedIn">
+      <svg viewBox="0 0 24 24" width="22" height="22">
+        <path
+          d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+      </svg>
     </a>
     <a class="dock-btn" href="#contact" title="Email"
       style="background:rgba(14, 19, 26, 0.9); border:1px solid var(--border-subtle);">
@@ -1294,16 +1303,23 @@
 
   </main>
 
-  <!-- FOOTER CON LOS BOTONES DE GITHUB/LINKEDIN Y EL FORMULARIO INTEGRADO -->
+  <!-- FOOTER CON LOS ENLACES REALES E ICONOS VECTORIALES -->
   <footer class="site-footer" id="contact">
     <div class="wrap footer-contact-wrap">
       <h3 data-i18n="home.footer_cta_title">¿Quieres contactar?</h3>
       <div class="footer-socials-centered">
-        <a class="footer-social-btn" href="https://github.com" target="_blank" rel="noopener">
-          <img src="https://cdn.simpleicons.org/github/38BDF8" alt="GitHub"> GitHub
+        <a class="footer-social-btn" href="https://github.com/AlexRubio14" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg> GitHub
         </a>
-        <a class="footer-social-btn" href="https://linkedin.com" target="_blank" rel="noopener">
-          <img src="https://cdn.simpleicons.org/linkedin/38BDF8" alt="LinkedIn"> LinkedIn
+        <a class="footer-social-btn" href="https://www.linkedin.com/in/alejandro-rubio-plana/" target="_blank"
+          rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path
+              d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg> LinkedIn
         </a>
       </div>
       <h4 class="footer-heading-direct" data-i18n="drawer.title">Hablemos directamente</h4>
@@ -1460,7 +1476,7 @@
         "home.about_section_label": "// ABOUT ME",
         "home.about_greeting": "Hi, I'm Alex!",
         "home.about_p1": "I'm a software engineer focused on networking and the systems behind multiplayer games. I enjoy understanding how things work under the hood, especially when the problem is complex. C++, low level networking, system design and optimization are the areas I enjoy most, and I love the feeling of making a difficult system finally click into place. I'm naturally curious, so if I come across something I don't understand, I'll probably end up researching it just because I want to know how it works.",
-        "home.about_p2": "I've developed this mindset through personal projects and professional studio experience at The Breach Studios. My final year project, Lyra, was a year long project where I worked as Gameplay Programmer & Producer in a team of 7 people, winning the Best TFG award at ENTI's 2026 DemoDay. I later built NetworkMiddleware from scratch to push myself further into C++ networking. I'm ambitious about where I want to take my career. I want to work on challenging systems, keep learning from the people around me, and eventually build networking and multiplayer technology that I'm genuinely proud of.",
+        "home.about_p2": "I've developed this mindset through personal projects and professional studio experience at The Breach Studios. My final year project, Lyra, was a year long project where I worked as Software Engineer in a team of 7 people, winning the Best TFG award at ENTI's 2026 DemoDay. I later built NetworkMiddleware from scratch to push myself further into C++ networking. I'm ambitious about where I want to take my career. I want to work on challenging systems, keep learning from the people around me, and eventually build networking and multiplayer technology that I'm genuinely proud of.",
         "home.exp_label": "// PRODUCTION & TRAJECTORY",
         "home.exp_title": "My experience",
         "home.exp_lede": "Professional experience in the video game industry and development of own projects in engines such as Unreal Engine and Unity.",
@@ -1537,8 +1553,8 @@
         "home.nm_summary": "Capa de xarxa multijugador server-authoritative independent del motor per a arquitectures MOBA a 100 Hz, construïda amb serialització binaria a mida, compressió delta, POSIX sendmmsg i CI/CD automatitzat a Azure.",
         "home.lyra_tag": "// UNREAL ENGINE 5 • MILLOR TFG",
         "home.lyra_role": "Software Engineer & Producer",
-        "home.lyra_summary": "Projecte de final de grau desenvolupat durant un year a Unreal Engine per un equip de 7 persones. Guardonat amb el premi al Mejor TFG al DemoDay 2026 d'ENTI.",
-        "common.btn_details": "Veure detalls del projecte ➔",
+        "home.lyra_summary": "Proyecto de fin de grado desarrollado durante un year en Unreal Engine por un equipo de 7 personas. Galardonado con el premio al Mejor TFG en el DemoDay 2026 d'ENTI.",
+        "common.btn_details": "Ver detalles del proyecto ➔",
         "home.footer_cta_title": "Vols contactar?",
         "drawer.title": "Parlem directament",
         "drawer.lede": "Tria el motiu:",
