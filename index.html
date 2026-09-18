@@ -190,23 +190,6 @@
       gap: 0.75rem;
     }
 
-    .nav-cv-btn {
-      background: transparent;
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      padding: 0.38rem 0.85rem;
-      border-radius: 999px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .nav-cv-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
     .nav-cta {
       background: var(--accent);
       color: #07090D;
@@ -629,18 +612,30 @@
       color: var(--text-main);
     }
 
+    /* CONTENEDOR VISUAL ADAPTADO Y UNIFORME */
     .featured-visual {
       position: relative;
       background: var(--bg-card);
       border-left: 1px solid var(--border-subtle);
       overflow: hidden;
-      min-height: 380px;
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
+    /* IMÁGENES ADAPTADAS AL ESPACIO DE LA CAJA */
     .featured-visual img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      /* Cambia a 'contain' si prefieres que se vea toda la imagen sin recortes */
+      object-position: center;
+      display: block;
+      position: absolute;
+      inset: 0;
       transition: transform 0.4s ease;
     }
 
@@ -1077,7 +1072,6 @@
         </div>
 
         <div class="nav-buttons-group">
-          <a class="nav-cv-btn" href="CV_Alex.pdf" target="_blank" data-i18n="home.hero_cta_cv">CV</a>
           <button type="button" class="nav-cta" data-i18n="nav.contact">Contacta'm</button>
         </div>
       </div>
@@ -1110,12 +1104,17 @@
 
   <main id="top">
 
-    <!-- INICIO PANTALLA COMPLETA -->
+    <!-- INICIO PANTALLA COMPLETA CON BOTÓN DE CV REUBICADO -->
     <section class="hero-block" id="home-hero">
       <div class="wrap hero-content">
         <h1 class="hero-headline">Alejandro Rubio Plana</h1>
         <h2 class="hero-subtitle">Game Software Engineer</h2>
         <p class="hero-specialty">C++ • Systems • Multiplayer Networking • Gameplay</p>
+
+        <div style="margin-top: 1.25rem;">
+          <a class="btn-project-details" href="CV_Alex.pdf" target="_blank" data-i18n="home.hero_cta_cv">Descargar CV
+            ➔</a>
+        </div>
       </div>
     </section>
 
@@ -1229,7 +1228,8 @@
           <div class="about-photo-sticky-wrapper">
             <div class="about-photo-card">
               <div class="about-avatar-large">
-                <img src="assets/about-photo.jpg" alt="Alejandro Rubio Plana"
+                <!-- FOTO DE PERFIL: FotoPerfil.png -->
+                <img src="FotoPerfil.png" alt="Alejandro Rubio Plana"
                   onerror="this.src='https://via.placeholder.com/410x410/0E131A/38BDF8?text=Alex+Rubio'">
               </div>
             </div>
@@ -1303,13 +1303,14 @@
               </div>
             </div>
             <div class="featured-visual">
-              <img src="assets/img/network-key.jpg" alt="Network Middleware Diagram"
+              <!-- NETWORK MIDDLEWARE: Usando LyraProfile.png (o cambia por la imagen de red que prefieras) -->
+              <img src="Neon Wallpaper.jfif" alt="Network Middleware Diagram"
                 onerror="this.src='https://via.placeholder.com/600x400/0E131A/38BDF8?text=Network+Middleware+C%2B%2B20'">
             </div>
           </article>
 
-          <!-- Lyra -->
-          <article class="featured-card">
+          <!-- Lyra con ID 'lyra' para anclaje de retorno -->
+          <article class="featured-card" id="lyra">
             <div class="featured-content">
               <div>
                 <div class="featured-tag" data-i18n="home.lyra_tag">// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION</div>
@@ -1326,7 +1327,8 @@
               </div>
             </div>
             <div class="featured-visual">
-              <img src="assets/img/lyra-key.jpg" alt="Lyra"
+              <!-- LYRA: LyraProfile.png -->
+              <img src="LyraProfile.png" alt="Lyra"
                 onerror="this.src='https://via.placeholder.com/600x400/0E131A/38BDF8?text=Lyra+Best+TFG'">
             </div>
           </article>
@@ -1360,7 +1362,6 @@
       <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
 
       <form class="drawer-form" id="footer-contact-form">
-        <!-- Tu Key de Web3Forms integrada -->
         <input type="hidden" name="access_key" value="b3fae88e-56f3-416e-85f9-63971996377a">
 
         <div class="form-group">
@@ -1413,7 +1414,6 @@
       <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
 
       <form class="drawer-form" id="drawer-contact-form">
-        <!-- Tu Key de Web3Forms integrada -->
         <input type="hidden" name="access_key" value="b3fae88e-56f3-416e-85f9-63971996377a">
 
         <div class="form-group">
@@ -1458,7 +1458,7 @@
         "nav.home": "Inicio",
         "nav.about": "Sobre mí",
         "nav.experience": "Experiencia",
-        "home.hero_cta_cv": "CV",
+        "home.hero_cta_cv": "Descargar CV ➔",
         "nav.contact": "Contáctame",
         "stack.tag": "// STACK TÉCNICO PRINCIPAL",
         "stack.col1_title": "C++ & Systems",
@@ -1523,7 +1523,7 @@
         "nav.home": "Home",
         "nav.about": "About me",
         "nav.experience": "Experience",
-        "home.hero_cta_cv": "CV",
+        "home.hero_cta_cv": "Download CV ➔",
         "nav.contact": "Contact me",
         "stack.tag": "// CORE TECHNICAL STACK",
         "stack.col1_title": "C++ & Systems",
@@ -1588,7 +1588,7 @@
         "nav.home": "Inici",
         "nav.about": "Sobre mi",
         "nav.experience": "Experiència",
-        "home.hero_cta_cv": "CV",
+        "home.hero_cta_cv": "Descarregar CV ➔",
         "nav.contact": "Contacta'm",
         "stack.tag": "// STACK TÈCNIC PRINCIPAL",
         "stack.col1_title": "C++ & Systems",
@@ -1711,7 +1711,6 @@
         });
       });
 
-      // Control de sección activa en la barra superior
       const navLinks = document.querySelectorAll('.nav-link');
       const observerOptions = { root: null, rootMargin: '-10% 0px -60% 0px', threshold: 0 };
 
@@ -1734,7 +1733,6 @@
       const observer = new IntersectionObserver(observerCallback, observerOptions);
       document.querySelectorAll('#home-hero, #about, #experience').forEach(sec => observer.observe(sec));
 
-      // Ocultar social dock al llegar al footer
       const socialDock = document.getElementById('social-dock');
       const contactFooter = document.getElementById('contact');
 
@@ -1754,7 +1752,6 @@
         dockObserver.observe(contactFooter);
       }
 
-      // Control de apertura y cierre del Action Drawer lateral de contacto
       const drawer = document.getElementById('contact-drawer');
       const overlay = document.getElementById('contact-drawer-overlay');
       const closeBtn = document.getElementById('drawer-close');
@@ -1784,7 +1781,6 @@
         if (e.key === 'Escape') closeDrawer();
       });
 
-      // Lógica interactiva aislada y robusta para los formularios (Drawer y Footer)
       function setupForm(formId) {
         const form = document.getElementById(formId);
         if (!form) return;

@@ -193,23 +193,6 @@
             gap: 0.75rem;
         }
 
-        .nav-cv-btn {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-subtle);
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            padding: 0.38rem 0.85rem;
-            border-radius: 999px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .nav-cv-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
         .nav-cta {
             background: var(--accent);
             color: #07090D;
@@ -327,12 +310,6 @@
             flex-wrap: wrap;
         }
 
-        .hero-cta-sub {
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
         .btn-action {
             font-family: var(--font-mono);
             font-size: 0.85rem;
@@ -407,7 +384,7 @@
             color: var(--accent);
         }
 
-        /* Ticker de Métricas */
+        /* Ticker de Métricas Continuo (Bucle -50%) */
         .metrics-ticker-section {
             border-bottom: 1px solid var(--border-subtle);
             background: var(--bg-surface);
@@ -422,7 +399,7 @@
             display: flex;
             gap: 3.5rem;
             width: max-content;
-            animation: tickerScroll 55s linear infinite;
+            animation: tickerScroll 45s linear infinite;
         }
 
         .metric-item {
@@ -544,7 +521,6 @@
             line-height: 1.5;
         }
 
-        /* CUSTOM COMPONENT STYLES (HTML/CSS Visual Diagrams) */
         .architecture-diagram {
             display: flex;
             flex-direction: column;
@@ -599,19 +575,6 @@
             font-size: 0.78rem;
             max-width: 110px;
             white-space: nowrap;
-        }
-
-        .packet-diagram {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin: 1.5rem 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            padding: 1.25rem 1rem;
-            border-radius: 8px;
-            width: 100%;
-            overflow-x: auto;
         }
 
         .replication-comparison {
@@ -1150,7 +1113,6 @@
                 </div>
 
                 <div class="nav-buttons-group">
-                    <a class="nav-cv-btn" href="CV_Alex.pdf" target="_blank" data-i18n="home.hero_cta_cv">CV</a>
                     <button type="button" class="nav-cta" data-i18n="nav.contact">Contacta'm</button>
                 </div>
             </div>
@@ -1206,8 +1168,7 @@
                                 </svg>
                                 GitHub Repository
                             </a>
-                            <a href="assets/docs/Memoria.pdf" target="_blank" rel="noopener"
-                                class="btn-action secondary">
+                            <a href="Memoria.pdf" target="_blank" rel="noopener" class="btn-action secondary">
                                 <svg viewBox="0 0 24 24">
                                     <path
                                         d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
@@ -1215,8 +1176,6 @@
                                 Technical Documentation
                             </a>
                         </div>
-                        <span class="hero-cta-sub" data-i18n="nm.hero_cta_sub">Código fuente y documentación técnica
-                            completa</span>
                     </div>
 
                     <div class="glance-grid">
@@ -1245,9 +1204,10 @@
             </div>
         </section>
 
-        <!-- TICKER DE MÉTRICAS -->
+        <!-- TICKER DE MÉTRICAS CONTINUO -->
         <section class="metrics-ticker-section">
             <div class="metrics-ticker-track" id="ticker-track">
+                <!-- Bloque 1 -->
                 <div class="metric-item">
                     <span class="metric-title" data-i18n="nm.m1_title">Authoritative Tick:</span>
                     <span class="metric-value">100 Hz</span>
@@ -1269,6 +1229,7 @@
                 </div>
                 <span class="metric-separator">//</span>
 
+                <!-- Bloque 2 (Duplicado idéntico para continuidad del bucle -50%) -->
                 <div class="metric-item">
                     <span class="metric-title" data-i18n="nm.m1_title">Authoritative Tick:</span>
                     <span class="metric-value">100 Hz</span>
@@ -1294,8 +1255,6 @@
 
         <!-- CUERPO DEL CASO DE ESTUDIO -->
         <div class="wrap project-content-wrap">
-
-            <!-- 01 THE PROBLEM -->
             <div class="case-block">
                 <h2 data-i18n="nm.p1_heading">01 | The Problem</h2>
                 <p data-i18n="nm.p1_desc">
@@ -1319,7 +1278,6 @@
                 </div>
             </div>
 
-            <!-- 02 ARCHITECTURE -->
             <div class="case-block">
                 <h2 data-i18n="nm.p2_heading">02 | Architecture & Design Decisions</h2>
                 <p data-i18n="nm.p2_desc">
@@ -1358,7 +1316,6 @@
                 </ul>
             </div>
 
-            <!-- 03 PROTOCOL DESIGN -->
             <div class="case-block">
                 <h2 data-i18n="nm.p3_heading">03 | Protocol Design & Reliability</h2>
                 <p data-i18n="nm.p3_desc">
@@ -1388,7 +1345,6 @@
                 </ul>
             </div>
 
-            <!-- 04 STATE REPLICATION -->
             <div class="case-block">
                 <h2 data-i18n="nm.p4_heading">04 | State Replication & Compression</h2>
                 <p data-i18n="nm.p4_desc">
@@ -1435,31 +1391,8 @@
                     compares its current state against that baseline and only sends the differences. For a tick where
                     nothing changes, the data drops to 38 bits.
                 </p>
-
-                <h3
-                    style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-top: 1.5rem; margin-bottom: 0.75rem;">
-                    Engineering Challenge — Baseline Isolation</h3>
-                <p>
-                    The initial implementation stored replication baselines using only the entity as the key:
-                </p>
-                <div class="code-box" style="margin-top: 0.5rem; margin-bottom: 0.75rem;">
-                    Entity → Baseline
-                </div>
-                <p>
-                    This caused cross-talk and data interference between clients. The problem was that a baseline is not
-                    just a property of an entity; it represents the specific reference point that a particular client is
-                    using. The data model was therefore refactored to:
-                </p>
-                <div class="code-box" style="margin-top: 0.5rem;">
-                    (Client, Entity) → Baseline
-                </div>
-                <p style="margin-top: 0.75rem;">
-                    Each client now maintains an independent replication baseline for the same entity, completely
-                    resolving cross-client interference.
-                </p>
             </div>
 
-            <!-- 05 PREDICTION & INTEREST MANAGEMENT -->
             <div class="case-block">
                 <h2 data-i18n="nm.p5_heading">05 | Interest Management & State Estimation</h2>
                 <p data-i18n="nm.p5_desc">
@@ -1476,12 +1409,10 @@
                         <div class="pred-flow-item">Kalman / Velocity Model</div>
                         <div style="text-align:center; color:var(--text-muted); font-size:0.7rem;">↓</div>
                         <div class="pred-flow-item">Smoothed Client Estimation</div>
-                        <div style="text-align:center; color:var(--text-muted); font-size:0.7rem;">(Full
-                            CSP/Reconciliation as Future Work)</div>
                     </div>
                     <div class="pred-box">
                         <span style="color:var(--accent); font-weight:700; margin-bottom:0.25rem;">FOG OF WAR (SPATIAL
-                            HASHING)</span>
+                            HASH)</span>
                         <div style="color:var(--text-muted); font-size:0.75rem; margin-bottom:0.3rem;">Uniform Grid ➔
                             Visibility Lookup</div>
                         <div class="grid-fow">
@@ -1503,40 +1434,11 @@
                             <div class="fow-cell">0</div>
                         </div>
                         <div style="text-align:center; font-size:0.7rem; color:var(--accent); margin-top:auto;">O(1)
-                            Grid Visibility & Network LOD</div>
+                            Grid Visibility & LOD</div>
                     </div>
                 </div>
-
-                <h3
-                    style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-top: 1.5rem; margin-bottom: 0.75rem;">
-                    Spatial Hashing and Fog of War</h3>
-                <p>
-                    The world is divided into a uniform spatial grid. Instead of treating every player and entity
-                    globally, the system groups them by their physical location.
-                </p>
-                <p style="margin-top: 0.75rem;">
-                    This creates a direct connection between gameplay visibility and network traffic. If an enemy is
-                    hidden by the 'Fog of War' and is not relevant to a specific client, that entity can be excluded
-                    from its replicated state. This reduces unnecessary network traffic and limits the amount of world
-                    state each client needs to process.
-                </p>
-
-                <h3
-                    style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-top: 1.5rem; margin-bottom: 0.75rem;">
-                    Client State Estimation</h3>
-                <p>
-                    Network latency and packet loss can cause visual stutters or delays in movement. To make movement
-                    appear smoother between received updates, the project evaluated state estimation using a 'Kalman
-                    filter' and constant-velocity models.
-                </p>
-                <p style="margin-top: 0.75rem;">
-                    These techniques estimate the expected movement of an entity between network updates. The final
-                    integration of client-side prediction and server reconciliation for Unreal Engine remained outside
-                    the implemented scope of this version and was instead explored as part of the architectural design.
-                </p>
             </div>
 
-            <!-- 06 PERFORMANCE ENGINEERING -->
             <div class="case-block">
                 <h2 data-i18n="nm.p6_heading">06 | Performance Engineering & The I/O Journey</h2>
                 <p data-i18n="nm.p6_desc">
@@ -1564,14 +1466,10 @@
                             <div class="perf-bar-visual">
                                 <div class="perf-seg logic" title="Game Logic: 3.77 ms">3.77 ms</div>
                                 <div class="perf-seg io-before" title="Network I/O syscalls: 7.20 ms">Network I/O: 7.20
-                                    ms (Individual send())</div>
+                                    ms</div>
                             </div>
                         </div>
-                        <div style="text-align:center; font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);"
-                            data-i18n="nm.perf_cause">
-                            ↓ Optimization: Batched syscalls via Linux sendmmsg() + Async Dispatcher ('std::jthread')
-                        </div>
-                        <div class="perf-bar-group">
+                        <div class="perf-bar-group" style="margin-top: 0.5rem;">
                             <div class="perf-bar-label">
                                 <span data-i18n="nm.perf_io_after">NETWORK I/O (After sendmmsg)</span>
                                 <span style="color:#10B981; font-weight:700;">0.17 ms (-97.6%)</span>
@@ -1592,7 +1490,6 @@
                 </p>
             </div>
 
-            <!-- 07 TESTING & VALIDATION -->
             <div class="case-block">
                 <h2 data-i18n="nm.p7_heading">07 | Testing & Validation Architecture</h2>
                 <p data-i18n="nm.p7_desc">
@@ -1608,7 +1505,6 @@
                 </div>
             </div>
 
-            <!-- 08 RESULTS & SCALABILITY LIMIT -->
             <div class="case-block">
                 <h2 data-i18n="nm.p8_heading">08 | Results, CI/CD & Scalability Limit</h2>
                 <p data-i18n="nm.p8_desc">
@@ -1622,20 +1518,79 @@
                             with 49 concurrent WAN clients with zero CRC errors observed during recorded tests.</span>
                     </li>
                     <li><strong data-i18n="nm.p8_scale">Scalability Benchmark (99 clients):</strong> <span
-                            data-i18n="nm.p8_scale_text">Stress testing reached 99 clients at 14.24 ms loop time.
-                            Because each client receives state for all entities, replication scales at $O(n^2)$,
-                            highlighting the need for dynamic relevancy sets in larger sessions beyond 5v5 MOBA
-                            scopes.</span></li>
+                            data-i18n="nm.p8_scale_text">Stress testing reached 99 clients at 14.24 ms loop time,
+                            highlighting the need for dynamic relevancy sets in sessions beyond 5v5 MOBA scopes.</span>
+                    </li>
                 </ul>
-                <div class="metric-highlight" style="margin-top: 1.5rem;" data-i18n="nm.p8_takeaways">
-                    <strong>Engineering Takeaways:</strong><br>
-                    • Profile before optimizing: bottlenecks reside in system call overhead rather than simulation
-                    logic.<br>
-                    • Model state around ownership: scope replication baselines to client/entity relationships.<br>
-                    • Abstract transport ('ITransport') to enable robust 'MockTransport' unit testing.
-                </div>
             </div>
 
+            <!-- 09 | ENGINEERING TAKEAWAYS (Sin guiones largos) -->
+            <div class="case-block">
+                <h2 data-i18n="nm.p9_heading">09 | Engineering Takeaways</h2>
+                <p data-i18n="nm.p9_desc1">
+                    Building NetworkMiddleware from scratch changed the way I approach systems engineering. The project
+                    taught me that designing a networking system is not only about making packets travel between
+                    machines. The harder part is defining clear ownership, understanding how state flows through the
+                    system and making decisions that remain maintainable as complexity increases.
+                </p>
+
+                <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-top: 1.5rem; margin-bottom: 0.75rem;"
+                    data-i18n="nm.p9_sub1">
+                    Design Before Optimization
+                </h3>
+                <p data-i18n="nm.p9_desc2">
+                    One of the most important lessons was learning to separate assumptions from measured problems. The
+                    performance work initially looked like a problem with the simulation loop, but profiling showed that
+                    the main bottleneck was network I/O syscall overhead. That led to a targeted optimization using
+                    batched Linux <code>sendmmsg()</code> calls instead of optimizing code that was not actually
+                    limiting performance.
+                </p>
+
+                <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-top: 1.5rem; margin-bottom: 0.75rem;"
+                    data-i18n="nm.p9_sub2">
+                    State Ownership Matters
+                </h3>
+                <p data-i18n="nm.p9_desc3">
+                    The baseline issue showed how important ownership is when designing replicated state. An entity does
+                    not have a single universal replication state. Each client can have a different reference point for
+                    that entity. Modeling the baseline around the <code>(Client, Entity)</code> relationship made this
+                    ownership explicit and eliminated cross-client interference.
+                </p>
+
+                <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-top: 1.5rem; margin-bottom: 0.75rem;"
+                    data-i18n="nm.p9_sub3">
+                    Testability Is an Architectural Property
+                </h3>
+                <p data-i18n="nm.p9_desc4">
+                    Using <code>ITransport</code> and <code>MockTransport</code> made testing part of the architecture
+                    rather than something added afterwards. Being able to reproduce packet loss, delays and protocol
+                    behaviour without relying on real sockets made it possible to validate the networking layer in
+                    isolation.
+                </p>
+
+                <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-top: 1.5rem; margin-bottom: 0.75rem;"
+                    data-i18n="nm.p9_sub4">
+                    Measure the Limits
+                </h3>
+                <p data-i18n="nm.p9_desc5">
+                    The scalability benchmark was also an important part of the project. Reaching 99 clients exposed the
+                    O(n²) cost of the current replication model. Instead of treating the benchmark only as a performance
+                    result, it provided a concrete direction for future work: improving relevancy and avoiding
+                    unnecessary state replication.
+                </p>
+
+                <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-top: 1.5rem; margin-bottom: 0.75rem;"
+                    data-i18n="nm.p9_sub5">
+                    What I Would Explore Next
+                </h3>
+                <p data-i18n="nm.p9_desc6">
+                    The next step would be to evolve the replication and relevancy systems further, particularly through
+                    dynamic relevancy sets, and complete the client-side prediction and server reconciliation
+                    integration for Unreal Engine. The project gave me a much deeper understanding of multiplayer
+                    networking, but more importantly, it taught me how to investigate complex systems, identify their
+                    real constraints and make engineering decisions based on evidence rather than assumptions.
+                </p>
+            </div>
         </div>
     </main>
 
@@ -1662,9 +1617,7 @@
             <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
 
             <form class="drawer-form" id="footer-contact-form">
-                <!-- Tu Key de Web3Forms integrada -->
                 <input type="hidden" name="access_key" value="b3fae88e-56f3-416e-85f9-63971996377a">
-
                 <div class="form-group">
                     <div class="subject-chips footer-chips">
                         <button type="button" class="subject-chip active" data-subject="Oportunidad laboral"
@@ -1681,25 +1634,21 @@
                             placeholder="Escribe el motivo..." data-i18n-placeholder="drawer.placeholder_subject">
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label" for="footer-email" data-i18n="drawer.email_label">Tu Email de
                         contacto</label>
                     <input type="email" name="name_or_email" class="form-input" id="footer-email" required
                         placeholder="ejemplo@email.com" data-i18n-placeholder="drawer.placeholder_email">
                 </div>
-
                 <div class="form-group">
                     <label class="form-label" for="footer-msg" data-i18n="drawer.msg_label">Mensaje</label>
                     <textarea name="message" class="form-textarea footer-textarea" id="footer-msg" required
                         placeholder="Escribe tu mensaje aquí..."
                         data-i18n-placeholder="drawer.placeholder_msg"></textarea>
                 </div>
-
                 <button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Enviar mensaje</button>
                 <div class="form-feedback footer-feedback"></div>
             </form>
-
             <div class="footer-copyright" data-i18n="common.footer_copyright">Copyright © 2026 Alejandro Rubio Plana
             </div>
         </div>
@@ -1712,15 +1661,11 @@
             <span class="drawer-tag">// CONNECTION CONSOLE</span>
             <button type="button" class="drawer-close" id="drawer-close" aria-label="Close drawer">×</button>
         </div>
-
         <div class="drawer-body">
             <h3 class="drawer-title" data-i18n="drawer.title">Hablemos directamente</h3>
             <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
-
             <form class="drawer-form" id="drawer-contact-form">
-                <!-- Tu Key de Web3Forms integrada -->
                 <input type="hidden" name="access_key" value="b3fae88e-56f3-416e-85f9-63971996377a">
-
                 <div class="form-group">
                     <div class="subject-chips drawer-chips">
                         <button type="button" class="subject-chip active" data-subject="Oportunidad laboral"
@@ -1737,21 +1682,18 @@
                             placeholder="Escribe el motivo..." data-i18n-placeholder="drawer.placeholder_subject">
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label" for="drawer-email" data-i18n="drawer.email_label">Tu Email de
                         contacto</label>
                     <input type="email" name="name_or_email" class="form-input" id="drawer-email" required
                         placeholder="ejemplo@email.com" data-i18n-placeholder="drawer.placeholder_email">
                 </div>
-
                 <div class="form-group">
                     <label class="form-label" for="drawer-msg" data-i18n="drawer.msg_label">Mensaje</label>
                     <textarea name="message" class="form-textarea drawer-textarea" id="drawer-msg" required
                         placeholder="Escribe tu mensaje aquí..."
                         data-i18n-placeholder="drawer.placeholder_msg"></textarea>
                 </div>
-
                 <button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Enviar mensaje</button>
                 <div class="form-feedback drawer-feedback"></div>
             </form>
@@ -1763,12 +1705,10 @@
             es: {
                 "nm.page_title": "NetworkMiddleware - Caso de estudio | Alejandro Rubio Plana",
                 "nm.back_btn": "← Volver a atrás",
-                "home.hero_cta_cv": "CV",
                 "nav.contact": "Contáctame",
                 "nm.tag": "// C++20 | MULTIPLAYER NETWORKING | SYSTEMS",
                 "nm.meta": "Solo Developer | C++20 | Multiplayer Networking | Systems",
                 "nm.lede": "Middleware de red autoritativo independiente de motor para juegos multijugador estilo MOBA, construido en C++20 sobre un protocolo UDP personalizado, replicación por snapshots y simulación a 100 Hz.",
-                "nm.hero_cta_sub": "Código fuente y documentación técnica completa",
                 "nm.m1_title": "Tick Autoritativo:",
                 "nm.m2_title": "Tests Automatizados:",
                 "nm.m3_title": "Compresión Delta:",
@@ -1778,15 +1718,15 @@
                 "nm.p1_goals": "<strong>Objetivos de NetworkMiddleware:</strong><br>• Autoridad del Servidor a 100 Hz de tick.<br>• Red UDP robusta con fiabilidad selectiva.<br>• Replicación eficiente mediante serialización bit a bit y delta compression.<br>• Diseño agnóstico del motor vía 'ITransport'.<br>• Testabilidad total con 'MockTransport'.",
                 "nm.p2_heading": "02 | Architecture & Design Decisions",
                 "nm.p2_desc": "La arquitectura desacopla la simulación, la red, el protocolo y el transporte. El core depende de la interfaz 'ITransport' sin acoplarse a sockets concretos, empleando inyección de dependencias sin singletons.",
-                "nm.arch_sim": "JUEGO / SIMULACIÓN",
+                "nm.arch_sim": "JUEGO / SIMULACIÓ",
                 "nm.arch_mgr": "NETWORK MANAGER",
-                "nm.arch_mgr_sub": "Orquestación Servidor / Cliente",
+                "nm.arch_mgr_sub": "Orquestación Servidor / Client",
                 "nm.arch_proto": "PROTOCOLO / REPLICACIÓ",
                 "nm.arch_proto_sub": "Snapshots • ACKs • Delta",
                 "nm.p2_l1": "Inversión de Dependencias:",
                 "nm.p2_l1_text": "El núcleo de red depende de 'ITransport' en lugar de una implementación concreta.",
                 "nm.p2_l2": "Sin Singletons:",
-                "nm.p2_l2_text": "Inyección explícita mediante constructores para garantizar testabilidad.",
+                "nm.p2_l2_text": "Injección explícita mediante constructores para garantizar testabilidad.",
                 "nm.p3_heading": "03 | Protocol Design & Reliability",
                 "nm.p3_desc": "UDP aporta bajo coste pero sin garantías. NetworkMiddleware implementa fiabilidad a nivel de protocolo mediante números de secuencia, máscara ACK de 32 bits y canales con/sin fiabilidad.",
                 "nm.p3_l1": "ACK Piggybacking:",
@@ -1797,30 +1737,39 @@
                 "nm.p4_desc": "Reducción progresiva del tamaño de red mediante serialización bit a bit y compresión delta contra baselines.",
                 "nm.rep_full": "ESTADO COMPLETO",
                 "nm.rep_arrow1": "↓ Serialización bit a bit",
-                "nm.rep_comp": "ESTADO COMPRIMIDO",
+                "nm.rep_comp": "ESTAT COMPRIMIT",
                 "nm.rep_arrow2": "↓ Delta contra baseline",
-                "nm.rep_unch": "TICK SIN CAMBIOS",
-                "nm.p4_desc2": "<strong>Desafío de Ingeniería — Aislamiento de Baselines:</strong> El modelo inicial almacenaba baselines por entidad ('Entity → Baseline'), provocando interferencias. Se rediseñó a '(Client, Entity) → Baseline' para aislar el estado por cliente.",
+                "nm.rep_unch": "TICK SENSE CANVIS",
                 "nm.p5_heading": "05 | Interest Management & State Estimation",
                 "nm.p5_desc": "Gestión de interés espacial y estimación de estado.",
                 "nm.p6_heading": "06 | Performance Engineering & The I/O Journey",
                 "nm.p6_desc": "El profiling demostró que el cuello de botella residía en las llamadas al sistema (syscalls) del envío de red.",
-                "nm.perf_logic_label": "GAME LOGIC (Tick Autoritativo)",
-                "nm.perf_io_before": "NETWORK I/O (Antes de sendmmsg)",
-                "nm.perf_cause": "↓ Optimización: Syscalls por lotes vía Linux sendmmsg() + Async Dispatcher ('std::jthread')",
-                "nm.perf_io_after": "NETWORK I/O (Después de sendmmsg)",
+                "nm.perf_logic_label": "GAME LOGIC (Tick Autoritatiu)",
+                "nm.perf_io_before": "NETWORK I/O (Abans de sendmmsg)",
+                "nm.perf_io_after": "NETWORK I/O (Després de sendmmsg)",
                 "nm.p6_desc2": "<strong>Solución:</strong> Migración de llamadas individuales a Linux <code>sendmmsg()</code> por lotes, reduciendo el Network I/O de 7.20 ms a 0.17 ms (-97.6%) manteniendo la lógica de juego a 3.77 ms.",
                 "nm.p7_heading": "07 | Testing & Validation Architecture",
                 "nm.p7_desc": "Desarrollo guiado por pruebas (TDD) respaldado por <strong>254 tests automatizados</strong> con Google Test y 'MockTransport' para simular red sin sockets reales.",
                 "nm.p8_heading": "08 | Results, CI/CD & Scalability Limit",
                 "nm.p8_desc": "Automatización con GitHub Actions, Docker y Azure, junto con validación WAN y de escalabilidad.",
                 "nm.p8_ci": "CI/CD & Despliegue:",
-                "nm.p8_ci_text": "Pipelines automatizados con GitHub Actions, contenidors Docker i GHCR desplegats a Azure.",
+                "nm.p8_ci_text": "Pipelines automatizados con GitHub Actions, contenedores Docker y GHCR desplegados en Azure.",
                 "nm.p8_wan": "Validación WAN:",
                 "nm.p8_wan_text": "Pruebas con 49 clientes WAN concurrentes sin errores CRC registrados.",
-                "nm.p8_scale": "Límit d'Escalabilitat (99 clients):",
-                "nm.p8_scale_text": "El benchmark alcanzó 99 clientes a 14.24 ms. El modelo escala en O(n²), evidenciando la necesidad futura de dynamic relevancy sets para sesiones masivas.",
-                "nm.p8_takeaways": "<strong>Engineering Takeaways:</strong><br>• Perfila abans d'optimitzar: el coll d'ampolla estava en les syscalls.<br>• Modela l'estat al voltant de la propietat (baselines por cliente/entidad).<br>• Abstrau el transport ('ITransport') per habilitar testing robust amb 'MockTransport'.",
+                "nm.p8_scale": "Límite de Escalabilidad (99 clientes):",
+                "nm.p8_scale_text": "El benchmark alcanzó 99 clientes a 14.24 ms. El modelo escala en O(n²), evidenciando la necesidad futura de dynamic relevancy sets.",
+                "nm.p9_heading": "09 | Conclusiones de Ingeniería",
+                "nm.p9_desc1": "Construir NetworkMiddleware desde cero transformó mi enfoque hacia la ingeniería de sistemas. El proyecto me enseñó que diseñar un sistema de red no consiste únicamente en hacer que los paquetes viajen entre máquinas; lo más complejo es definir una propiedad clara de los datos, comprender cómo fluye el estado y tomar decisiones mantenibles a medida que crece la complejidad.",
+                "nm.p9_sub1": "Diseñar antes de optimizar",
+                "nm.p9_desc2": "Una de las lecciones más importantes fue aprender a separar las suposiciones de los problemas medidos. Al principio, el trabajo de rendimiento parecía apuntar al bucle de simulación, pero el perfilado demostró que el verdadero cuello de botella era el coste de las llamadas al sistema (syscalls) de I/O de red. Esto permitió aplicar una optimización precisa usando llamadas por lotes en Linux con <code>sendmmsg()</code> en lugar de optimizar código que no limitaba el rendimiento real.",
+                "nm.p9_sub2": "La propiedad del estado es crucial",
+                "nm.p9_desc3": "El problema de las baselines evidenció la importancia de la propiedad al diseñar estados replicados. Una entidad no posee un estado de replicación universal único; cada cliente puede manejar un punto de referencia distinto para ella. Modelar la baseline en torno a la relación <code>(Cliente, Entidad)</code> hizo esta propiedad explícita y eliminó interferencias cruzadas.",
+                "nm.p9_sub3": "La testabilidad es una propiedad arquitectónica",
+                "nm.p9_desc4": "El uso de <code>ITransport</code> y <code>MockTransport</code> convirtió el testing en una parte nativa de la arquitectura y no en un añadido posterior. Poder reproducir pérdida de paquetes, retardos y comportamientos de protocolo sin depender de sockets reales facilitó aislar y validar la capa de red.",
+                "nm.p9_sub4": "Medir los límites del sistema",
+                "nm.p9_desc5": "El benchmark de escalabilidad fue fundamental. Alcanzar 99 clientes expuso el coste O(n²) del modelo de replicación actual. Más allá de verlo solo como un resultado de rendimiento, marcó una dirección clara para el futuro: mejorar la relevancia (relevancy) y evitar la replicación innecesaria de estados.",
+                "nm.p9_sub5": "Próximos pasos a explorar",
+                "nm.p9_desc6": "El siguiente paso consistiría en evolucionar los sistemas de replicación y relevancia, especialmente mediante conjuntos de relevancia dinámica, y completar la integración de predicción del lado del cliente y reconciliación del servidor para Unreal Engine. El proyecto me otorgó una comprensión profunda del networking multijugador y, sobre todo, me enseñó a investigar sistemas complejos, identificar restricciones reales y tomar decisiones técnicas basadas en evidencias.",
                 "home.footer_cta_title": "¿Quieres contactar?",
                 "drawer.title": "Hablemos directamente",
                 "drawer.lede": "Elige el motivo:",
@@ -1841,12 +1790,10 @@
             en: {
                 "nm.page_title": "NetworkMiddleware - Case Study | Alejandro Rubio Plana",
                 "nm.back_btn": "← Back to home",
-                "home.hero_cta_cv": "CV",
                 "nav.contact": "Contact me",
                 "nm.tag": "// C++20 | MULTIPLAYER NETWORKING | SYSTEMS",
                 "nm.meta": "Solo Developer | C++20 | Multiplayer Networking | Systems",
                 "nm.lede": "An engine-agnostic, server-authoritative networking middleware for MOBA-style multiplayer games, built in C++20 around a custom UDP protocol, snapshot replication and a 100 Hz authoritative simulation.",
-                "nm.hero_cta_sub": "Source code and full technical documentation",
                 "nm.m1_title": "Authoritative Tick:",
                 "nm.m2_title": "Automated Tests:",
                 "nm.m3_title": "Delta Compression:",
@@ -1878,14 +1825,12 @@
                 "nm.rep_comp": "COMPRESSED STATE",
                 "nm.rep_arrow2": "↓ Delta against baseline",
                 "nm.rep_unch": "UNCHANGED TICK",
-                "nm.p4_desc2": "<strong>Engineering Challenge — Baseline Isolation:</strong> The initial model stored baselines per entity ('Entity → Baseline'), causing cross-talk. Refactored to '(Client, Entity) → Baseline' for isolated per-client state.",
                 "nm.p5_heading": "05 | Interest Management & State Estimation",
                 "nm.p5_desc": "Spatial interest management and client state estimation.",
                 "nm.p6_heading": "06 | Performance Engineering & The I/O Journey",
                 "nm.p6_desc": "Profiling proved that simulation logic was stable, whereas network I/O system call overhead was the primary bottleneck.",
                 "nm.perf_logic_label": "GAME LOGIC (Authoritative Tick)",
                 "nm.perf_io_before": "NETWORK I/O (Before sendmmsg)",
-                "nm.perf_cause": "↓ Optimization: Batched syscalls via Linux sendmmsg() + Async Dispatcher ('std::jthread')",
                 "nm.perf_io_after": "NETWORK I/O (After sendmmsg)",
                 "nm.p6_desc2": "<strong>Solution:</strong> Migration to batched Linux <code>sendmmsg()</code> calls, reducing network I/O from 7.20 ms to 0.17 ms (-97.6%) while game logic remained at 3.77 ms.",
                 "nm.p7_heading": "07 | Testing & Validation Architecture",
@@ -1898,7 +1843,18 @@
                 "nm.p8_wan_text": "Tested with 49 concurrent WAN clients with zero CRC errors observed during recorded tests.",
                 "nm.p8_scale": "Scalability Limit (99 clients):",
                 "nm.p8_scale_text": "Benchmark reached 99 clients at 14.24 ms. Replication scales at O(n²), highlighting the need for dynamic relevancy sets.",
-                "nm.p8_takeaways": "<strong>Engineering Takeaways:</strong><br>• Profile before optimizing: bottlenecks lie in syscall overhead.<br>• Model state around ownership (client/entity baselines).<br>• Abstract transport ('ITransport') to enable robust 'MockTransport' testing.",
+                "nm.p9_heading": "09 | Engineering Takeaways",
+                "nm.p9_desc1": "Building NetworkMiddleware from scratch changed the way I approach systems engineering. The project taught me that designing a networking system is not only about making packets travel between machines. The harder part is defining clear ownership, understanding how state flows through the system and making decisions that remain maintainable as complexity increases.",
+                "nm.p9_sub1": "Design Before Optimization",
+                "nm.p9_desc2": "One of the most important lessons was learning to separate assumptions from measured problems. The performance work initially looked like a problem with the simulation loop, but profiling showed that the main bottleneck was network I/O syscall overhead. That led to a targeted optimization using batched Linux <code>sendmmsg()</code> calls instead of optimizing code that was not actually limiting performance.",
+                "nm.p9_sub2": "State Ownership Matters",
+                "nm.p9_desc3": "The baseline issue showed how important ownership is when designing replicated state. An entity does not have a single universal replication state. Each client can have a different reference point for that entity. Modeling the baseline around the <code>(Client, Entity)</code> relationship made this ownership explicit and eliminated cross-client interference.",
+                "nm.p9_sub3": "Testability Is an Architectural Property",
+                "nm.p9_desc4": "Using <code>ITransport</code> and <code>MockTransport</code> made testing part of the architecture rather than something added afterwards. Being able to reproduce packet loss, delays and protocol behaviour without relying on real sockets made it possible to validate the networking layer in isolation.",
+                "nm.p9_sub4": "Measure the Limits",
+                "nm.p9_desc5": "The scalability benchmark was also an important part of the project. Reaching 99 clients exposed the O(n²) cost of the current replication model. Instead of treating the benchmark only as a performance result, it provided a concrete direction for future work: improving relevancy and avoiding unnecessary state replication.",
+                "nm.p9_sub5": "What I Would Explore Next",
+                "nm.p9_desc6": "The next step would be to evolve the replication and relevancy systems further, particularly through dynamic relevancy sets, and complete the client-side prediction and server reconciliation integration for Unreal Engine. The project gave me a much deeper understanding of multiplayer networking, but more importantly, it taught me how to investigate complex systems, identify their real constraints and make engineering decisions based on evidence rather than assumptions.",
                 "home.footer_cta_title": "Want to get in touch?",
                 "drawer.title": "Let's connect directly",
                 "drawer.lede": "Choose the reason:",
@@ -1919,12 +1875,10 @@
             ca: {
                 "nm.page_title": "NetworkMiddleware - Cas d'estudi | Alejandro Rubio Plana",
                 "nm.back_btn": "← Tornar cap enrere",
-                "home.hero_cta_cv": "CV",
                 "nav.contact": "Contacta'm",
                 "nm.tag": "// C++20 | MULTIPLAYER NETWORKING | SYSTEMS",
                 "nm.meta": "Solo Developer | C++20 | Multiplayer Networking | Systems",
                 "nm.lede": "Middleware de xarxa autoritatiu independent de motor per a jocs multijugador estil MOBA, construït en C++20 sobre un protocol UDP personalitzat, replicació per snapshots i simulació a 100 Hz.",
-                "nm.hero_cta_sub": "Codi font i documentació tècnica completa",
                 "nm.m1_title": "Tick Autoritatiu:",
                 "nm.m2_title": "Proves Automatitzades:",
                 "nm.m3_title": "Compressió Delta:",
@@ -1956,27 +1910,36 @@
                 "nm.rep_comp": "ESTAT COMPRIMIT",
                 "nm.rep_arrow2": "↓ Delta contra baseline",
                 "nm.rep_unch": "TICK SENSE CANVIS",
-                "nm.p4_desc2": "<strong>Desafiament d'Enginyeria — Aïllament de Baselines:</strong> La implementació inicial emmagatzematva baselines únicament per entitat ('Entity → Baseline'), la qual cosa era insuficient un cop l'estat de la mateixa entitat es replicava a múltiples clients. Un baseline pertany a una relació de replicació específica, no simplement a l'entitat. El model de dades es va modificar a:",
                 "nm.p5_heading": "05 | Prediction & Interest Management",
-                "nm.p5_desc": "Mecanismes avançats de gestió espacial i optimització:",
+                "nm.p5_desc": "Mecanismes avançats de gestió espacial i optimització.",
                 "nm.p6_heading": "06 | Performance Engineering & The I/O Journey",
                 "nm.p6_desc": "El descobriment del coll d'ampolla real sota benchmarks a Azure WAN:",
                 "nm.perf_logic_label": "GAME LOGIC (Tick Autoritatiu)",
                 "nm.perf_io_before": "NETWORK I/O (Abans de sendmmsg)",
-                "nm.perf_cause": "↓ Optimització: Crides per lots via Linux sendmmsg() + Despatxador Asíncron ('std::jthread')",
                 "nm.perf_io_after": "NETWORK I/O (Després de sendmmsg)",
-                "nm.p6_desc2": "<strong>Solució:</strong> Migració de crides individuals `send()` a Linux <code>sendmmsg()</code> per lots, controlades mitjançant un despatxador asíncron amb `std::jthread`. Això va desacoblar el rendiment de la lògica de joc i va reduir dràsticament el cost de les transicions al kernel en el flux de xarxa.",
+                "nm.p6_desc2": "<strong>Solució:</strong> Migració de crides individuals `send()` a Linux <code>sendmmsg()</code> per lots, controlades mitjançant un despatxador asíncron amb `std::jthread`.",
                 "nm.p7_heading": "07 | Testing & Validation Architecture",
                 "nm.p7_desc": "Desenvolupament guiat per proves (TDD) amb 254 tests automatitzats emprant Google Test i un 'MockTransport' que simula xarxa bidireccional sense sòkets reals.",
                 "nm.p8_heading": "08 | Results, CI/CD & Scalability Limit",
-                "nm.p8_desc": "Validació contínua amb GitHub Actions, contenidors Docker i desplegament automàtic a Azure:",
+                "nm.p8_desc": "Validació contínua amb GitHub Actions, contenidors Docker i desplegament automàtic a Azure.",
                 "nm.p8_ci": "CI/CD & Desplegament:",
                 "nm.p8_ci_text": "Pipelines automatitzats amb GitHub Actions, contenidors Docker i GHCR desplegats a Azure.",
                 "nm.p8_wan": "Validació WAN:",
                 "nm.p8_wan_text": "49 clients concurrents provats sense errors CRC.",
                 "nm.p8_scale": "Límit d'Escalabilitat (99 clients):",
-                "nm.p8_scale_text": "El benchmark d'estrès va exposar que el model de replicació actual escala en O(n^2) (cada client rep l'estat de totes les entitats). Tot i que l'abast del projecte estava enfocat a sessions 5v5 MOBA, aquest límit marca la necessitat futura d'implementar dynamic relevancy sets.",
-                "nm.p8_takeaways": "<strong>Conclusions d'Enginyeria:</strong><br>• Perfila sempre abans d'optimitzar: el coll d'ampolla final no estava en la simulació, sinó en les crides al sistema (syscalls).<br>• Les interfícies ('ITransport') permeten aïllar el core i testejat amb 'MockTransport' sense fricció.<br>• Mesurar els límits d'escalabilitat aporta maduresa tècnica real al disseny de sistemes.",
+                "nm.p8_scale_text": "El benchmark va assolir 99 clients a 14.24 ms, evidenciant la necessitat futura de dynamic relevancy sets.",
+                "nm.p9_heading": "09 | Conclusions d'Enginyeria",
+                "nm.p9_desc1": "Construir NetworkMiddleware des de zero va transformar el meu enfocament cap a l'enginyeria de sistemes. El projecte em va ensenyar que dissenyar un sistema de xarxa no consisteix només a fer que els paquets viatgin entre màquines; el més complex és definir una propietat clara de les dades, comprendre com flueix l'estat i prendre decisions mantenibles a mesura que creix la complexitat.",
+                "nm.p9_sub1": "Dissenyar abans d'optimitzar",
+                "nm.p9_desc2": "Una de les lliçons més importants va ser aprendre a separar les suposicions dels problemes mesurats. Al principi, el treball de rendiment semblava apuntar al bucle de simulació, però el perfilat va demostrar que el coll d'ampolla real era el cost de les crides al sistema (syscalls) d'I/O de xarxa. Això va permetre aplicar una optimització precisa usant crides per lots a Linux amb <code>sendmmsg()</code> en lloc d'optimitzar codi que no limitava el rendiment real.",
+                "nm.p9_sub2": "La propietat de l'estat és crucial",
+                "nm.p9_desc3": "El problema de las baselines va evidenciar la importància de la propietat en dissenyar estats replicats. Una entitat no té un estat de replicació universal únic; cada client pot gestionar un punt de referència diferent per a ella. Modelar la baseline al voltant de la relació <code>(Client, Entitat)</code> va fer aquesta propietat explícita i va eliminar interferències creuades.",
+                "nm.p9_sub3": "La testabilitat és una propietat arquitectònica",
+                "nm.p9_desc4": "L'ús d'<code>ITransport</code> i <code>MockTransport</code> va convertir el testing en una part nativa de l'arquitectura i no pas en un afegit posterior. Poder reproduir pèrdua de paquets, retards i comportaments de protocol sense dependre de sòkets reals va facilitar aïllar i validar la capa de xarxa.",
+                "nm.p9_sub4": "Mesurar els límits del sistema",
+                "nm.p9_desc5": "El benchmark d'escalabilitat va ser fonamental. Arribar a 99 clients va exposar el cost O(n²) del model de replicació actual. Més enllà de veure'l només com un resultat de rendimiento, va marcar una direcció clara per al futur: millorar la rellevància (relevancy) i evitar la replicació innecessària d'estats.",
+                "nm.p9_sub5": "Pròxims passos a explorar",
+                "nm.p9_desc6": "El pas següent consistiria a evolucionar els sistemes de replicació i rellevància, especialment mitjançant conjunts de rellevància dinàmica, i completar la integració de predicció del costat del client i reconciliació del servidor per a Unreal Engine. El projecte em va otorgar una comprensió profunda del networking multijugador i, sobretot, em va ensenyar a investigar sistemes complexos, identificar restriccions reals i prendre decisions tècniques basades en evidències.",
                 "home.footer_cta_title": "Vols contactar?",
                 "drawer.title": "Parlem directament",
                 "drawer.lede": "Tria el motiu:",

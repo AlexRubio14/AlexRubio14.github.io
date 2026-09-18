@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="lyra.page_title">Lyra - Case Study | Alejandro Rubio Plana</title>
+    <meta name="description"
+        content="Character programming & production for Lyra, an award-winning Unreal Engine 5 puzzle adventure game (Best TFG ENTI DemoDay 2026).">
+    <meta name="theme-color" content="#07090D">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Lyra - Case Study | Alejandro Rubio Plana">
+    <meta property="og:description"
+        content="Unreal Engine 5 gameplay systems, modular Finite State Machine, and Perforce/Jenkins production pipeline. Best TFG ENTI DemoDay 2026.">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="canonical" href="project-lyra.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <script>
+        (function () {
+            try {
+                var l = localStorage.getItem('portfolio_lang');
+                if (l === 'es' || l === 'en' || l === 'ca') document.documentElement.setAttribute('lang', l);
+            } catch (e) { }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-main: #07090D;
+            --bg-surface: #0E131A;
+            --bg-card: #121922;
+            --border-subtle: rgba(56, 189, 248, 0.12);
+            --border-hover: rgba(56, 189, 248, 0.45);
+            --text-main: #EDF2F7;
+            --text-muted: #8292A2;
+            --accent: #38BDF8;
+            --accent-dim: rgba(56, 189, 248, 0.12);
+            --accent-glow: rgba(56, 189, 248, 0.22);
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 1.75rem;
+        }
+
+        /* Nav flotante unificada */
+        .site-nav {
+            position: fixed;
+            top: 1.25rem;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .site-nav .wrap {
+            background: rgba(14, 19, 26, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .nav-center-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .back-link {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-toggles {
+            position: relative;
+        }
+
+        .nav-lang-btn {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+            padding: 0.3rem 0.65rem;
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-lang-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 0.35rem 0;
+            list-style: none;
+            display: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            min-width: 110px;
+            z-index: 110;
+        }
+
+        .lang-menu.show {
+            display: block;
+        }
+
+        .lang-menu button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.45rem 1rem;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            cursor: pointer;
+        }
+
+        .lang-menu button:hover,
+        .lang-menu button.active {
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .nav-buttons-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: #07090D;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.38rem 0.95rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .nav-cta:hover {
+            background: #7DD3FC;
+            box-shadow: 0 0 14px var(--accent-glow);
+        }
+
+        /* Social Dock Lateral */
+        .social-dock {
+            position: fixed;
+            left: 1.5rem;
+            bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            z-index: 90;
+            transition: opacity 0.3s ease;
+        }
+
+        .dock-btn {
+            width: 50px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(14, 19, 26, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .dock-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .dock-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--accent);
+        }
+
+        /* Hero del Proyecto */
+        .project-hero {
+            padding: 9rem 0 3rem;
+            border-bottom: 1px solid var(--border-subtle);
+            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.05) 0%, transparent 70%);
+        }
+
+        .project-hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .project-tag {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .project-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .project-meta {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-lede {
+            color: #CAD2D9;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .hero-cta-wrapper {
+            margin-top: 1.75rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.65rem 1.35rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action.primary {
+            background: var(--accent);
+            color: #07090D;
+            border: none;
+        }
+
+        .btn-action.primary:hover {
+            background: #7DD3FC;
+            box-shadow: 0 0 14px var(--accent-glow);
+        }
+
+        .btn-action.secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-action.secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .btn-action svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .glance-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .glance-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .glance-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .glance-val {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Hero Media / Video Placeholder */
+        .hero-media-container {
+            margin-top: 3rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-media-container video,
+        .hero-media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Ticker de Métricas Continuo */
+        .metrics-ticker-section {
+            border-bottom: 1px solid var(--border-subtle);
+            background: var(--bg-surface);
+            overflow: hidden;
+            padding: 0.9rem 0;
+            position: relative;
+            pointer-events: none;
+            margin-top: 3rem;
+        }
+
+        .metrics-ticker-track {
+            display: flex;
+            gap: 3.5rem;
+            width: max-content;
+            animation: tickerScroll 40s linear infinite;
+        }
+
+        .metric-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+
+        .metric-title {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .metric-separator {
+            color: rgba(56, 189, 248, 0.3);
+            font-size: 0.8rem;
+        }
+
+        @keyframes tickerScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Cuerpo del caso de estudio */
+        .project-content-wrap {
+            padding: 5rem 0;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3.5rem;
+        }
+
+        .case-block {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .case-block h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .case-block h2::before {
+            content: "";
+            width: 4px;
+            height: 1.4rem;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .case-block p,
+        .case-block li {
+            color: #CAD2D9;
+            font-size: 1rem;
+            line-height: 1.85;
+        }
+
+        .case-block ul {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .case-block strong {
+            color: var(--text-main);
+        }
+
+        .metric-highlight {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            margin: 1.25rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: var(--text-main);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .architecture-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 2rem 0;
+            padding: 1.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .arch-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-hover);
+            border-radius: 6px;
+            padding: 0.85rem 1rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-main);
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .arch-box.sub {
+            border-color: var(--border-subtle);
+            color: var(--accent);
+        }
+
+        .arch-arrow {
+            color: var(--accent);
+            font-size: 1rem;
+            font-family: var(--font-mono);
+            line-height: 1;
+        }
+
+        .cards-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .card-item-visual {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        /* Formularios y Drawer de Contacto */
+        .contact-drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 6, 8, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .contact-drawer-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .contact-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-surface);
+            border-left: 1px solid var(--border-subtle);
+            z-index: 999;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+        }
+
+        .contact-drawer.open {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .drawer-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .drawer-close {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .drawer-close:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .drawer-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .drawer-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .drawer-lede {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .drawer-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .subject-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .subject-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .subject-chip:hover,
+        .subject-chip.active {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .form-input,
+        .form-textarea {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-dim);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .hidden-custom-subject {
+            display: none;
+            margin-top: 0.5rem;
+        }
+
+        .hidden-custom-subject.show {
+            display: block;
+        }
+
+        .drawer-submit-btn {
+            background: var(--accent);
+            color: #07090D;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.85rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .drawer-submit-btn:hover {
+            background: #7DD3FC;
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .form-feedback {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .form-feedback.success {
+            color: #10B981;
+            display: block;
+        }
+
+        .form-feedback.error {
+            color: #EF4444;
+            display: block;
+        }
+
+        .form-feedback.fade-out {
+            opacity: 0;
+        }
+
+        /* FOOTER */
+        .site-footer {
+            background: #040608;
+            padding: 6rem 0 4rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-contact-wrap {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .footer-contact-wrap h3 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .footer-socials-centered {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-social-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .footer-social-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .footer-social-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent);
+        }
+
+        .footer-heading-direct {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .footer-contact-wrap .drawer-lede {
+            text-align: center;
+            margin-top: -1rem;
+        }
+
+        .footer-copyright {
+            margin-top: 4rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .case-block {
+                padding: 2rem 1.5rem;
+            }
+
+            .glance-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cards-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-nav">
+        <div class="wrap">
+            <a href="index.html" class="brand">Alejandro Rubio <span>Portfolio</span></a>
+
+            <div class="nav-center-wrap">
+                <a href="index.html#lyra" class="back-link" data-i18n="lyra.back_btn">← Volver a atrás</a>
+
+                <div class="nav-toggles">
+                    <button type="button" class="nav-lang-btn" id="lang-toggle" aria-label="Language selector">
+                        <span id="lang-label">ES</span> ▾
+                    </button>
+                    <ul class="lang-menu" id="lang-menu">
+                        <li><button type="button" data-lang="es">Español</button></li>
+                        <li><button type="button" data-lang="en">English</button></li>
+                        <li><button type="button" data-lang="ca">Català</button></li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons-group">
+                    <button type="button" class="nav-cta" data-i18n="nav.contact">Contacta'm</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <aside class="social-dock" id="social-dock">
+        <a class="dock-btn" href="https://github.com/AlexRubio14" target="_blank" rel="noopener" title="GitHub">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+                <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+        </a>
+        <a class="dock-btn" href="https://www.linkedin.com/in/alejandro-rubio-plana/" target="_blank" rel="noopener"
+            title="LinkedIn">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+                <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+            </svg>
+        </a>
+        <a class="dock-btn" href="#contact" title="Email"
+            style="background:rgba(14, 19, 26, 0.9); border:1px solid var(--border-subtle);">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path
+                    d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.24-8 4.76-8-4.76V6l8 4.76L20 6Z" />
+            </svg>
+        </a>
+    </aside>
+
+    <main>
+        <section class="project-hero">
+            <div class="wrap">
+                <div class="project-hero-inner">
+                    <span class="project-tag" data-i18n="lyra.tag">// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION</span>
+                    <h1 class="project-title">Lyra</h1>
+                    <p class="project-meta" data-i18n="lyra.meta">Character Programmer & Producer • Team of 7 • Best TFG
+                        - ENTI DemoDay 2026</p>
+                    <p class="project-lede" data-i18n="lyra.lede">
+                        A third-person soft-fantasy adventure developed in Unreal Engine 5. As Character Programmer &
+                        Producer, I designed the character architecture, companion interactions and gameplay systems
+                        while coordinating the production pipeline of a seven-person multidisciplinary team.
+                    </p>
+
+                    <div class="hero-cta-wrapper">
+                        <a href="https://la-mapachanda-studio.itch.io/lyra" target="_blank" rel="noopener"
+                            class="btn-action primary" data-i18n="lyra.cta_itch">
+                            Itch.io Page
+                        </a>
+                        <a href="TFG_Alejandro_Rubio.pdf" target="_blank" rel="noopener" class="btn-action secondary"
+                            data-i18n="lyra.cta_tfg">
+                            Technical TFG Memory
+                        </a>
+                    </div>
+
+                    <div class="glance-grid">
+                        <div class="glance-item">
+                            <span class="glance-label">Role</span>
+                            <span class="glance-val">Character Programmer & Producer</span>
+                        </div>
+                        <div class="glance-item">
+                            <span class="glance-label">Engine</span>
+                            <span class="glance-val">Unreal Engine 5</span>
+                        </div>
+                        <div class="glance-item">
+                            <span class="glance-label">Team Size</span>
+                            <span class="glance-val">7 Members</span>
+                        </div>
+                        <div class="glance-item">
+                            <span class="glance-label">Duration</span>
+                            <span class="glance-val">Nov 2025 – Jul 2026</span>
+                        </div>
+                        <div class="glance-item">
+                            <span class="glance-label">Award</span>
+                            <span class="glance-val">Best TFG (ENTI 2026)</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-media-container">
+                        <video autoplay muted loop playsinline poster="assets/img/lyra-key.jpg">
+                            <source src="assets/video/lyra-gameplay-hero.mp4" type="video/mp4">
+                            Tu navegador no soporta video HTML5.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="metrics-ticker-section">
+            <div class="metrics-ticker-track" id="ticker-track">
+                <div class="metric-item"><span class="metric-title" data-i18n="lyra.m1_title">Finite State
+                        Machine:</span><span class="metric-value">Modular FSM (SOLID)</span></div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item"><span class="metric-title" data-i18n="lyra.m2_title">Award:</span><span
+                        class="metric-value">Best TFG DemoDay 2026</span></div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item"><span class="metric-title" data-i18n="lyra.m3_title">Version
+                        Control:</span><span class="metric-value">Perforce Helix Core</span></div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item"><span class="metric-title" data-i18n="lyra.m4_title">CI/CD
+                        Pipeline:</span><span class="metric-value">Jenkins Nightly Builds</span></div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item"><span class="metric-title" data-i18n="lyra.m1_title">Finite State
+                        Machine:</span><span class="metric-value">Modular FSM (SOLID)</span></div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item"><span class="metric-title" data-i18n="lyra.m2_title">Award:</span><span
+                        class="metric-value">Best TFG DemoDay 2026</span></div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item"><span class="metric-title" data-i18n="lyra.m3_title">Version
+                        Control:</span><span class="metric-value">Perforce Helix Core</span></div>
+                <span class="metric-separator">//</span>
+                <div class="metric-item"><span class="metric-title" data-i18n="lyra.m4_title">CI/CD
+                        Pipeline:</span><span class="metric-value">Jenkins Nightly Builds</span></div>
+                <span class="metric-separator">//</span>
+            </div>
+        </section>
+
+        <div class="wrap project-content-wrap">
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p1_heading">01 | My Role</h2>
+                <p data-i18n="lyra.p1_desc">Lyra was developed by La Mapachanda, a seven-person multidisciplinary team.
+                    My role combined two areas that had to work closely together: Character Programming and Production.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                    <div
+                        style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                        <strong style="color: var(--accent); display: block; margin-bottom: 0.75rem;">Character
+                            Programming</strong>
+                        <ul style="padding-left: 1.2rem; font-size: 0.9rem;">
+                            <li>Character controller and movement systems</li>
+                            <li>Camera-relative locomotion</li>
+                            <li>Character state architecture</li>
+                            <li>Enhanced Input integration</li>
+                            <li>Companion interaction systems</li>
+                            <li>Animation and gameplay integration</li>
+                        </ul>
+                    </div>
+                    <div
+                        style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                        <strong
+                            style="color: var(--accent); display: block; margin-bottom: 0.75rem;">Production</strong>
+                        <ul style="padding-left: 1.2rem; font-size: 0.9rem;">
+                            <li>Scrumban planning and sprint coordination</li>
+                            <li>Milestone and roadmap tracking</li>
+                            <li>Cross-discipline communication</li>
+                            <li>Perforce workflow</li>
+                            <li>Jenkins CI/CD pipeline</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="metric-highlight" style="margin-top: 1.5rem;" data-i18n="lyra.p1_takeaway">
+                    I wasn't only implementing gameplay — I was also responsible for keeping the team moving towards the
+                    final build.
+                </div>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p2_heading">02 | Character Architecture</h2>
+                <p data-i18n="lyra.p2_problem"><strong>The Problem:</strong> As character interactions grew, movement,
+                    companion actions and gameplay states could easily become coupled through boolean flags and
+                    conditional logic. I wanted each character state to own its behaviour instead of having the
+                    character controller decide what should happen through a growing set of conditions.</p>
+                <p data-i18n="lyra.p2_solution" style="margin-top: 1rem;"><strong>The Solution:</strong> I designed a
+                    modular Finite State Machine where each state follows a common interface and explicitly controls its
+                    own lifecycle.</p>
+
+                <div class="architecture-diagram">
+                    <div class="arch-box" data-i18n="lyra.arch_root">CHARACTER SYSTEM</div>
+                    <div class="arch-arrow">▼</div>
+                    <div class="arch-box sub" data-i18n="lyra.arch_mgr">FSM Manager</div>
+                    <div class="arch-arrow">▼</div>
+                    <div style="display: flex; gap: 1rem; width: 100%; justify-content: center;">
+                        <div class="arch-box sub" style="font-size: 0.75rem;">State A</div>
+                        <div class="arch-box sub" style="font-size: 0.75rem;">State B</div>
+                        <div class="arch-box sub" style="font-size: 0.75rem;">State C</div>
+                    </div>
+                </div>
+
+                <div class="metric-highlight" data-i18n="lyra.p2_decisions">
+                    <strong>Engineering Decisions:</strong><br>
+                    • <strong>State Encapsulation:</strong> Each state owns the behaviour associated with its lifecycle
+                    (OnEnter, OnUpdate, OnExit).<br>
+                    • <strong>Interfaces:</strong> States communicate through defined contracts rather than depending
+                    directly on concrete implementations.<br>
+                    • <strong>Design Patterns:</strong> State • Strategy • Observer • Mediator.
+                </div>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p3_heading">03 | From State to Gameplay</h2>
+                <p data-i18n="lyra.p3_desc">The FSM was not designed as an isolated programming exercise. Its purpose
+                    was to coordinate the different systems involved in the player's moment-to-moment interactions.</p>
+
+                <div class="architecture-diagram" style="max-width: 400px; margin: 1.5rem auto;">
+                    <div class="arch-box sub" style="max-width: 100%;">INPUT (Enhanced Input)</div>
+                    <div class="arch-arrow">↓</div>
+                    <div class="arch-box sub" style="max-width: 100%;">Character State (FSM)</div>
+                    <div class="arch-arrow">↓</div>
+                    <div class="arch-box sub" style="max-width: 100%;">Gameplay Action (Companion / Movement)</div>
+                    <div class="arch-arrow">↓</div>
+                    <div class="arch-box sub" style="max-width: 100%;">Animation Notify & Event</div>
+                </div>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p4_heading">04 | Companion System</h2>
+                <p data-i18n="lyra.p4_desc">The companion system is one of Lyra's core gameplay mechanics. The player
+                    can invoke, pick up, aim and throw dragons to interact with the environment and solve environmental
+                    puzzles.</p>
+
+                <div class="cards-grid-4">
+                    <div class="card-item-visual">INVOKE</div>
+                    <div class="card-item-visual">PICK UP</div>
+                    <div class="card-item-visual">AIM</div>
+                    <div class="card-item-visual">THROW</div>
+                </div>
+
+                <p style="margin-top: 1.5rem;" data-i18n="lyra.p4_input"><strong>Input Architecture:</strong> Different
+                    character states require different available inputs. Instead of keeping every action permanently
+                    active, Lyra dynamically switches Input Mapping Contexts (IMC) depending on the current character
+                    state.</p>
+                <p style="margin-top: 1rem;" data-i18n="lyra.p4_attach"><strong>Attachment & Animation:</strong> When a
+                    dragon is picked up, its attachment to the character's skeletal mesh is synchronized with animation
+                    events. Sockets provide the attachment point, while animation notifies coordinate the moment when
+                    the gameplay state changes.</p>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p5_heading">05 | Camera-Relative Locomotion</h2>
+                <p data-i18n="lyra.p5_desc">Lyra uses fixed cameras placed along rails, with smooth transitions between
+                    viewpoints. During a camera transition, world-space movement can make the player's controls feel
+                    inconsistent with what the player sees.</p>
+                <div class="metric-highlight" data-i18n="lyra.p5_solution">
+                    <strong>Solution:</strong> Movement input is calculated relative to the active camera (Camera
+                    Forward) instead of directly using absolute world-space directions, ensuring input direction remains
+                    intuitive while the camera changes.
+                </div>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p6_heading">06 | Production Pipeline</h2>
+                <p data-i18n="lyra.p6_desc">Working within a real production meant adopting industry-standard version
+                    control and tracking pipelines tailored for Unreal Engine projects.</p>
+                <ul>
+                    <li><strong data-i18n="lyra.p6_scrumban">Scrumban:</strong> Organized using weekly sprints,
+                        milestone tracking and cross-discipline coordination via Jira and Confluence across programming,
+                        design, art and animation.</li>
+                    <li><strong data-i18n="lyra.p6_perforce">Perforce Helix Core:</strong> Configured with exclusive
+                        checkout policies for <code>.uasset</code> files to reduce conflicting binary edits and make
+                        asset ownership explicit.</li>
+                </ul>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p7_heading">07 | CI/CD & Nightly Builds</h2>
+                <p data-i18n="lyra.p7_desc">To keep the team working against a reproducible build, I configured a
+                    Jenkins CI pipeline for automated nightly builds, ensuring synchronization, compilation, cooking and
+                    packaging run reliably.</p>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p8_heading">08 | From Prototype to Final Build</h2>
+                <p data-i18n="lyra.p8_desc">Lyra evolved from an early gameplay prototype into a polished vertical slice
+                    combining character systems, companion interactions, environmental puzzles and a final art pass.</p>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p9_heading">09 | Final Vertical Slice</h2>
+                <p data-i18n="lyra.p9_desc">Exploration • Character Movement • Dragon Companions • Environmental Puzzles
+                    • Camera Transitions</p>
+            </div>
+
+            <div class="case-block" style="text-align: center;">
+                <h2 style="justify-content: center;" data-i18n="lyra.p10_heading">10 | Awards & Academic Recognition
+                </h2>
+                <p style="font-family: var(--font-display); font-size: 1.5rem; color: var(--accent); font-weight: 700; margin-top: 1rem;"
+                    data-i18n="lyra.p10_award">
+                    🏆 BEST TFG — ENTI DEMODAY 2026
+                </p>
+                <p style="margin-top: 0.75rem;" data-i18n="lyra.p10_desc">Lyra received the Best Final Degree Project
+                    award at ENTI DemoDay 2026.</p>
+            </div>
+
+            <div class="case-block">
+                <h2 data-i18n="lyra.p11_heading">11 | Engineering Takeaways</h2>
+                <p data-i18n="lyra.p11_desc">Designing the FSM taught me to think about gameplay systems in terms of
+                    ownership and responsibilities. Working as Producer alongside programming changed the way I approach
+                    technical decisions, ensuring systems are maintainable not only for the programmer, but for
+                    designers, artists and other teammates.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer" id="contact">
+        <div class="wrap footer-contact-wrap">
+            <h3 data-i18n="home.footer_cta_title">¿Quieres contactar?</h3>
+            <div class="footer-socials-centered">
+                <a class="footer-social-btn" href="https://github.com/AlexRubio14" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg> GitHub
+                </a>
+                <a class="footer-social-btn" href="https://www.linkedin.com/in/alejandro-rubio-plana/" target="_blank"
+                    rel="noopener">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg> LinkedIn
+                </a>
+            </div>
+            <h4 class="footer-heading-direct" data-i18n="drawer.title">Hablemos directamente</h4>
+            <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
+
+            <form class="drawer-form" id="footer-contact-form">
+                <input type="hidden" name="access_key" value="b3fae88e-56f3-416e-85f9-63971996377a">
+                <div class="form-group">
+                    <div class="subject-chips footer-chips">
+                        <button type="button" class="subject-chip active" data-subject="Oportunidad laboral"
+                            data-i18n="drawer.sub_job">Oportunidad laboral</button>
+                        <button type="button" class="subject-chip" data-subject="Colaboración técnica"
+                            data-i18n="drawer.sub_collab">Colaboración técnica</button>
+                        <button type="button" class="subject-chip" data-subject="Hacer networking"
+                            data-i18n="drawer.sub_net">Hacer networking</button>
+                        <button type="button" class="subject-chip" data-subject="custom"
+                            data-i18n="drawer.sub_other">Otro...</button>
+                    </div>
+                    <div class="hidden-custom-subject footer-custom-wrap">
+                        <input type="text" name="custom_subject" class="form-input footer-custom-input"
+                            placeholder="Escribe el motivo..." data-i18n-placeholder="drawer.placeholder_subject">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="footer-email" data-i18n="drawer.email_label">Tu Email de
+                        contacto</label>
+                    <input type="email" name="name_or_email" class="form-input" id="footer-email" required
+                        placeholder="ejemplo@email.com" data-i18n-placeholder="drawer.placeholder_email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="footer-msg" data-i18n="drawer.msg_label">Mensaje</label>
+                    <textarea name="message" class="form-textarea footer-textarea" id="footer-msg" required
+                        placeholder="Escribe tu mensaje aquí..."
+                        data-i18n-placeholder="drawer.placeholder_msg"></textarea>
+                </div>
+                <button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Enviar mensaje</button>
+                <div class="form-feedback footer-feedback"></div>
+            </form>
+            <div class="footer-copyright" data-i18n="common.footer_copyright">Copyright © 2026 Alejandro Rubio Plana
+            </div>
+        </div>
+    </footer>
+
+    <div class="contact-drawer-overlay" id="contact-drawer-overlay"></div>
+    <aside class="contact-drawer" id="contact-drawer" role="dialog" aria-modal="true" aria-label="Contact Panel">
+        <div class="drawer-header">
+            <span class="drawer-tag">// CONNECTION CONSOLE</span>
+            <button type="button" class="drawer-close" id="drawer-close" aria-label="Close drawer">×</button>
+        </div>
+        <div class="drawer-body">
+            <h3 class="drawer-title" data-i18n="drawer.title">Hablemos directamente</h3>
+            <p class="drawer-lede" data-i18n="drawer.lede">Elige el motivo:</p>
+            <form class="drawer-form" id="drawer-contact-form">
+                <input type="hidden" name="access_key" value="b3fae88e-56f3-416e-85f9-63971996377a">
+                <div class="form-group">
+                    <div class="subject-chips drawer-chips">
+                        <button type="button" class="subject-chip active" data-subject="Oportunidad laboral"
+                            data-i18n="drawer.sub_job">Oportunidad laboral</button>
+                        <button type="button" class="subject-chip" data-subject="Colaboración técnica"
+                            data-i18n="drawer.sub_collab">Colaboración técnica</button>
+                        <button type="button" class="subject-chip" data-subject="Hacer networking"
+                            data-i18n="drawer.sub_net">Hacer networking</button>
+                        <button type="button" class="subject-chip" data-subject="custom"
+                            data-i18n="drawer.sub_other">Otro...</button>
+                    </div>
+                    <div class="hidden-custom-subject drawer-custom-wrap">
+                        <input type="text" name="custom_subject" class="form-input drawer-custom-input"
+                            placeholder="Escribe el motivo..." data-i18n-placeholder="drawer.placeholder_subject">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="drawer-email" data-i18n="drawer.email_label">Tu Email de
+                        contacto</label>
+                    <input type="email" name="name_or_email" class="form-input" id="drawer-email" required
+                        placeholder="ejemplo@email.com" data-i18n-placeholder="drawer.placeholder_email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="drawer-msg" data-i18n="drawer.msg_label">Mensaje</label>
+                    <textarea name="message" class="form-textarea drawer-textarea" id="drawer-msg" required
+                        placeholder="Escribe tu mensaje aquí..."
+                        data-i18n-placeholder="drawer.placeholder_msg"></textarea>
+                </div>
+                <button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Enviar mensaje</button>
+                <div class="form-feedback drawer-feedback"></div>
+            </form>
+        </div>
+    </aside>
+
+    <script>
+        const translations = {
+            es: {
+                "lyra.page_title": "Lyra - Case Study | Alejandro Rubio Plana",
+                "lyra.back_btn": "← Volver a atrás",
+                "nav.contact": "Contáctame",
+                "lyra.tag": "// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION",
+                "lyra.meta": "Character Programmer & Producer • Team of 7 • Best TFG - ENTI DemoDay 2026",
+                "lyra.lede": "Aventura de fantasía suave en tercera persona desarrollada en Unreal Engine 5. Como Character Programmer & Producer, diseñé la arquitectura de personajes, las interacciones con el compañero y los sistemas de juego, coordinando la producción de un equipo multidisciplinar de 7 personas.",
+                "lyra.cta_itch": "Itch.io Page",
+                "lyra.cta_tfg": "Technical TFG Memory",
+                "lyra.m1_title": "Máquina de Estados:",
+                "lyra.m2_title": "Galardón:",
+                "lyra.m3_title": "Control de Versiones:",
+                "lyra.m4_title": "Pipeline CI/CD:",
+                "lyra.p1_heading": "01 | My Role",
+                "lyra.p1_desc": "Lyra fue desarrollada por La Mapachanda, un equipo multidisciplinar de 7 personas. Mi rol combinó dos áreas que trabajaron estrechamente: Character Programming y Production.",
+                "lyra.p1_takeaway": "No me limité a implementar gameplay; también fui responsable de mantener al equipo enfocado hacia la entrega de la build final.",
+                "lyra.p2_heading": "02 | Character Architecture",
+                "lyra.p2_problem": "<strong>El Problema:</strong> A medida que crecían las interacciones, el movimiento, las acciones de los compañeros y los estados de juego corrían el riesgo de acoplarse mediante flags booleanos y lógica condicional. Quería que cada estado de personaje gestionara su propio comportamiento en lugar de depender de condiciones en el character controller.",
+                "lyra.p2_solution": "<strong>La Solución:</strong> Diseñé una Finite State Machine modular donde cada estado comparte una interfaz común y controla explícitamente su propio ciclo de vida.",
+                "lyra.arch_root": "CHARACTER SYSTEM",
+                "lyra.arch_mgr": "FSM Manager",
+                "lyra.p2_decisions": "<strong>Decisiones de Ingeniería:</strong><br>• <strong>Encapsulamiento:</strong> Cada estado gestiona el comportamiento de su ciclo de vida (OnEnter, OnUpdate, OnExit).<br>• <strong>Interfaces:</strong> Comunicación mediante contratos definidos.<br>• <strong>Patrones de Diseño:</strong> State • Strategy • Observer • Mediator.",
+                "lyra.p3_heading": "03 | From State to Gameplay",
+                "lyra.p3_desc": "La FSM no se diseñó como un ejercicio aislado, sino para coordinar los distintos sistemas involucrados en las interacciones del jugador momento a momento.",
+                "lyra.p4_heading": "04 | Companion System",
+                "lyra.p4_desc": "El sistema de acompañantes es una de las mecánicas centrales de Lyra. El jugador puede invocar, recoger, apuntar y lanzar dragones para interactuar con el entorno y resolver puzles ambientales.",
+                "lyra.p4_input": "<strong>Arquitectura de Input:</strong> Distintos estados de personaje requieren inputs disponibles diferentes. En lugar de mantener todas las acciones activas permanentemente, Lyra cambia dinámicamente los Input Mapping Contexts (IMC) según el estado actual.",
+                "lyra.p4_attach": "<strong>Anclaje y Animación:</strong> Al recoger un dragón, su conexión con la malla esquelética del personaje se sincroniza con eventos de animación mediante Sockets y Animation Notifies.",
+                "lyra.p5_heading": "05 | Camera-Relative Locomotion",
+                "lyra.p5_desc": "Lyra utiliza cámaras fijas en raíl con transiciones suaves. Durante un cambio de cámara, el movimiento en coordenadas de mundo absoluto puede hacer que los controles resulten poco intuitivos.",
+                "lyra.p5_solution": "<strong>Solución:</strong> El input de movimiento se calcula de forma relativa a la cámara activa (Camera Forward) en lugar de direcciones absolutas, manteniendo la continuidad intuitiva de los controles.",
+                "lyra.p6_heading": "06 | Production Pipeline",
+                "lyra.p6_desc": "Trabajar en una producción real requirió adoptar estándares de control de versiones y seguimiento adaptados a Unreal Engine.",
+                "lyra.p6_scrumban": "<strong>Scrumban:</strong> Organizado mediante sprints semanales, seguimiento de milestones y coordinación interdisciplinar con Jira y Confluence.",
+                "lyra.p6_perforce": "<strong>Perforce Helix Core:</strong> Configurado con directrices de exclusive checkout para ficheros <code>.uasset</code>, reduciendo conflictos en binarios.",
+                "lyra.p7_heading": "07 | CI/CD & Nightly Builds",
+                "lyra.p7_desc": "Para mantener al equipo sincronizado con una build reproducible, configuré un pipeline de Jenkins CI automatizando sincronización, compilación, cooking y empaquetado.",
+                "lyra.p8_heading": "08 | From Prototype to Final Build",
+                "lyra.p8_desc": "Lyra evolucionó desde un prototipo temprano hasta un vertical slice pulido combinando sistemas de personaje, puzles y pase de arte final.",
+                "lyra.p9_heading": "09 | Final Vertical Slice",
+                "lyra.p9_desc": "Exploración • Movimiento de Personaje • Compañeros Dragón • Puzles Ambientales • Transiciones de Cámara",
+                "lyra.p10_heading": "10 | Awards & Academic Recognition",
+                "lyra.p10_award": "🏆 MEJOR TFG — ENTI DEMODAY 2026",
+                "lyra.p10_desc": "Lyra recibió el premio al Mejor Trabajo de Fin de Grado en ENTI DemoDay 2026.",
+                "lyra.p11_heading": "11 | Engineering Takeaways",
+                "lyra.p11_desc": "Diseñar la FSM me enseñó a pensar en los sistemas de juego en términos de propiedad y responsabilidades. Trabajar como Producer me permitió asegurar que las decisiones técnicas fueran mantenibles no solo para programación, sino para diseño, arte y el resto del equipo.",
+                "home.footer_cta_title": "¿Quieres contactar?",
+                "drawer.title": "Hablemos directamente",
+                "drawer.lede": "Elige el motivo:",
+                "drawer.sub_job": "Oportunidad laboral",
+                "drawer.sub_collab": "Colaboración técnica",
+                "drawer.sub_net": "Hacer networking",
+                "drawer.sub_other": "Otro...",
+                "drawer.placeholder_subject": "Escribe el motivo...",
+                "drawer.email_label": "Tu Email de contacto",
+                "drawer.placeholder_email": "ejemplo@email.com",
+                "drawer.msg_label": "Mensaje",
+                "drawer.placeholder_msg": "Escribe tu mensaje aquí...",
+                "drawer.send_btn": "Enviar mensaje",
+                "msg.required": "Por favor, introduce una dirección de correo electrónico válida.",
+                "msg.success": "¡Mensaje enviado con éxito! Te responderé pronto.",
+                "msg.error": "Hubo un error al enviar el mensaje. Inténtalo de nuevo."
+            },
+            en: {
+                "lyra.page_title": "Lyra - Case Study | Alejandro Rubio Plana",
+                "lyra.back_btn": "← Back to home",
+                "nav.contact": "Contact me",
+                "lyra.tag": "// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION",
+                "lyra.meta": "Character Programmer & Producer • Team of 7 • Best TFG - ENTI DemoDay 2026",
+                "lyra.lede": "A third-person soft-fantasy adventure developed in Unreal Engine 5. As Character Programmer & Producer, I designed the character architecture, companion interactions and gameplay systems while coordinating the production pipeline of a seven-person multidisciplinary team.",
+                "lyra.cta_itch": "Itch.io Page",
+                "lyra.cta_tfg": "Technical TFG Memory",
+                "lyra.m1_title": "Finite State Machine:",
+                "lyra.m2_title": "Award Recognition:",
+                "lyra.m3_title": "Version Control:",
+                "lyra.m4_title": "CI/CD Pipeline:",
+                "lyra.p1_heading": "01 | My Role",
+                "lyra.p1_desc": "Lyra was developed by La Mapachanda, a seven-person multidisciplinary team. My role combined two areas that had to work closely together: Character Programming and Production.",
+                "lyra.p1_takeaway": "I wasn't only implementing gameplay — I was also responsible for keeping the team moving towards the final build.",
+                "lyra.p2_heading": "02 | Character Architecture",
+                "lyra.p2_problem": "<strong>The Problem:</strong> As character interactions grew, movement, companion actions and gameplay states could easily become coupled through boolean flags and conditional logic. I wanted each character state to own its behaviour instead of having the character controller decide what should happen through a growing set of conditions.",
+                "lyra.p2_solution": "<strong>The Solution:</strong> I designed a modular Finite State Machine where each state follows a common interface and explicitly controls its own lifecycle.",
+                "lyra.arch_root": "CHARACTER SYSTEM",
+                "lyra.arch_mgr": "FSM Manager",
+                "lyra.p2_decisions": "<strong>Engineering Decisions:</strong><br>• <strong>State Encapsulation:</strong> Each state owns the behaviour associated with its lifecycle (OnEnter, OnUpdate, OnExit).<br>• <strong>Interfaces:</strong> States communicate through defined contracts rather than depending directly on concrete implementations.<br>• <strong>Design Patterns:</strong> State • Strategy • Observer • Mediator.",
+                "lyra.p3_heading": "03 | From State to Gameplay",
+                "lyra.p3_desc": "The FSM was not designed as an isolated programming exercise. Its purpose was to coordinate the different systems involved in the player's moment-to-moment interactions.",
+                "lyra.p4_heading": "04 | Companion System",
+                "lyra.p4_desc": "The companion system is one of Lyra's core gameplay mechanics. The player can invoke, pick up, aim and throw dragons to interact with the environment and solve environmental puzzles.",
+                "lyra.p4_input": "<strong>Input Architecture:</strong> Different character states require different available inputs. Instead of keeping every action permanently active, Lyra dynamically switches Input Mapping Contexts (IMC) depending on the current character state.",
+                "lyra.p4_attach": "<strong>Attachment & Animation:</strong> When a dragon is picked up, its attachment to the character's skeletal mesh is synchronized with animation events via Sockets and Animation Notifies.",
+                "lyra.p5_heading": "05 | Camera-Relative Locomotion",
+                "lyra.p5_desc": "Lyra uses fixed cameras placed along rails, with smooth transitions between viewpoints. During a camera transition, world-space movement can make the player's controls feel inconsistent with what the player sees.",
+                "lyra.p5_solution": "<strong>Solution:</strong> Movement input is calculated relative to the active camera instead of directly using absolute world-space directions.",
+                "lyra.p6_heading": "06 | Production Pipeline",
+                "lyra.p6_desc": "Working within a real production meant adopting industry-standard version control and tracking pipelines tailored for Unreal Engine projects.",
+                "lyra.p6_scrumban": "<strong>Scrumban:</strong> Organized using weekly sprints, milestone tracking and cross-discipline coordination via Jira and Confluence.",
+                "lyra.p6_perforce": "<strong>Perforce Helix Core:</strong> Configured with exclusive checkout policies for <code>.uasset</code> files to reduce conflicting binary edits.",
+                "lyra.p7_heading": "07 | CI/CD & Nightly Builds",
+                "lyra.p7_desc": "To keep the team working against a reproducible build, I configured a Jenkins CI pipeline for automated nightly builds.",
+                "lyra.p8_heading": "08 | From Prototype to Final Build",
+                "lyra.p8_desc": "Lyra evolved from an early gameplay prototype into a polished vertical slice combining character systems, companion interactions, and environmental puzzles.",
+                "lyra.p9_heading": "09 | Final Vertical Slice",
+                "lyra.p9_desc": "Exploration • Character Movement • Dragon Companions • Environmental Puzzles • Camera Transitions",
+                "lyra.p10_heading": "10 | Awards & Academic Recognition",
+                "lyra.p10_award": "🏆 BEST TFG — ENTI DEMODAY 2026",
+                "lyra.p10_desc": "Lyra received the Best Final Degree Project award at ENTI DemoDay 2026.",
+                "lyra.p11_heading": "11 | Engineering Takeaways",
+                "lyra.p11_desc": "Designing the FSM taught me to think about gameplay systems in terms of ownership and responsibilities. Working as Producer alongside programming ensured systems are maintainable not only for the programmer, but for designers, artists and teammates.",
+                "home.footer_cta_title": "Want to get in touch?",
+                "drawer.title": "Let's connect directly",
+                "drawer.lede": "Choose the reason:",
+                "drawer.sub_job": "Job Opportunity",
+                "drawer.sub_collab": "Technical Collab",
+                "drawer.sub_net": "Networking & Connect",
+                "drawer.sub_other": "Other...",
+                "drawer.placeholder_subject": "Type the reason...",
+                "drawer.email_label": "Your Contact Email",
+                "drawer.placeholder_email": "example@email.com",
+                "drawer.msg_label": "Message",
+                "drawer.placeholder_msg": "Type your message here...",
+                "drawer.send_btn": "Send message",
+                "msg.required": "Please enter a valid email address.",
+                "msg.success": "Message sent successfully! I will get back to you soon.",
+                "msg.error": "There was an error sending your message. Please try again."
+            },
+            ca: {
+                "lyra.page_title": "Lyra - Cas d'estudi | Alejandro Rubio Plana",
+                "lyra.back_btn": "← Tornar cap enrere",
+                "nav.contact": "Contacta'm",
+                "lyra.tag": "// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION",
+                "lyra.meta": "Character Programmer & Producer • Equip de 7 • Millor TFG - ENTI DemoDay 2026",
+                "lyra.lede": "Aventura de fantasia suau en tercera persona desenvolupada a Unreal Engine 5. Com a Character Programmer & Producer, vaig dissenyar l'arquitectura de personatges, les interaccions amb el company i els sistemes de joc, coordinant la producció d'un equip multidisciplinari de 7 persones.",
+                "lyra.cta_itch": "Itch.io Page",
+                "lyra.cta_tfg": "Technical TFG Memory",
+                "lyra.m1_title": "Màquina d'Estats:",
+                "lyra.m2_title": "Reconeixement:",
+                "lyra.m3_title": "Control de Versions:",
+                "lyra.m4_title": "Pipeline CI/CD:",
+                "lyra.p1_heading": "01 | My Role",
+                "lyra.p1_desc": "Lyra va ser desenvolupada per La Mapachanda, un equip multidisciplinari de 7 persones. El meu rol va combinar dues àrees que van treballar estretament: Character Programming i Production.",
+                "lyra.p1_takeaway": "No em vaig limitar a implementar gameplay; també vaig ser responsable de mantenir l'equip enfocat cap a l'entrega de la build final.",
+                "lyra.p2_heading": "02 | Character Architecture",
+                "lyra.p2_problem": "<strong>El Problema:</strong> A mesura que creixien les interaccions, el moviment, les accions dels companys i els estats de joc podien acoplar-se mitjançant flags booleans i lògica condicional. Volia que cada estat de personatge gestionés el seu propi comportament en lloc de dependre de condicions al character controller.",
+                "lyra.p2_solution": "<strong>La Solució:</strong> Vaig dissenyar una Finite State Machine modular on cada estat comparteix una interfície comuna i controla explícitament el seu propi cicle de vida.",
+                "lyra.arch_root": "CHARACTER SYSTEM",
+                "lyra.arch_mgr": "FSM Manager",
+                "lyra.p2_decisions": "<strong>Decisions d'Enginyeria:</strong><br>• <strong>Encapsulament:</strong> Cada estat gestiona el comportament del seu cicle de vida (OnEnter, OnUpdate, OnExit).<br>• <strong>Interfícies:</strong> Comunicació mitjançant contractes definits.<br>• <strong>Patrons de Disseny:</strong> State • Strategy • Observer • Mediator.",
+                "lyra.p3_heading": "03 | From State to Gameplay",
+                "lyra.p3_desc": "La FSM no es va dissenyar com un exercici aïllat, sinó per coordinar els diferents sistemes involucrats en les interaccions del jugador moment a moment.",
+                "lyra.p4_heading": "04 | Companion System",
+                "lyra.p4_desc": "El sistema d'acompanyants és una de les mecàniques centrals de Lyra. El jugador pot invocar, recollir, apuntar i llançar dracs per interactuar amb l'entorn i resoldre puzles ambientals.",
+                "lyra.p4_input": "<strong>Arquitectura d'Input:</strong> Diferents estats de personatge requereixen inputs disponibles diferents. En lloc de mantenir totes les accions actives permanentment, Lyra canvia dinàmicament els Input Mapping Contexts (IMC) segons l'estat actual.",
+                "lyra.p4_attach": "<strong>Anclatge i Animació:</strong> En recollir un drac, la seva connexió amb la malla esquelètica del personatge es sincronitza amb esdeveniments d'animació mitjançant Sockets i Animation Notifies.",
+                "lyra.p5_heading": "05 | Camera-Relative Locomotion",
+                "lyra.p5_desc": "Lyra utilitza càmeres fixes en raïl amb transicions suaus. Durant un canvi de càmera, el moviment en coordenades de món absolut pot fer que els controls resultin poc intuïtius.",
+                "lyra.p5_solution": "<strong>Solució:</strong> L'input de moviment es calcula de manera relativa a la càmera activa (Camera Forward) en lloc de direccions absolutes, mantenint la continuïtat intuïtiva dels controls.",
+                "lyra.p6_heading": "06 | Production Pipeline",
+                "lyra.p6_desc": "Treballar en una producció real va requerir adoptar estàndards de control de versions i seguiment adaptats a Unreal Engine.",
+                "lyra.p6_scrumban": "<strong>Scrumban:</strong> Organitzat mitjançant sprints setmanals, seguiment de fites i coordinació interdisciplinar amb Jira i Confluence.",
+                "lyra.p6_perforce": "<strong>Perforce Helix Core:</strong> Configurat amb directrius d'exclusive checkout per a fitxers <code>.uasset</code>, reduint conflictes en binaris.",
+                "lyra.p7_heading": "07 | CI/CD & Nightly Builds",
+                "lyra.p7_desc": "Per mantenir l'equip sincronitzat amb una build reproduïble, vaig configurar un pipeline de Jenkins CI automatitzant sincronització, compilació, cooking i empaquetatge.",
+                "lyra.p8_heading": "08 | From Prototype to Final Build",
+                "lyra.p8_desc": "Lyra va evolucionar des d'un prototip primerenc fins a un vertical slice polit combinant sistemes de personatge, puzles i pas d'art final.",
+                "lyra.p9_heading": "09 | Final Vertical Slice",
+                "lyra.p9_desc": "Exploració • Moviment de Personatge • Companys Drac • Puzles Ambientals • Transicions de Càmera",
+                "lyra.p10_heading": "10 | Awards & Academic Recognition",
+                "lyra.p10_award": "🏆 MILLOR TFG — ENTI DEMODAY 2026",
+                "lyra.p10_desc": "Lyra va rebre el premi al Millor Treball de Final de Grau a ENTI DemoDay 2026.",
+                "lyra.p11_heading": "11 | Engineering Takeaways",
+                "lyra.p11_desc": "Dissenyar la FSM em va ensenyar a pensar en els sistemes de joc en termes de propietat i responsabilitats. Treballar com a Producer em va permetre assegurar que les decisions tècniques fossin mantenibles no només per a programació, sinó per a disseny, art i la resta de l'equip.",
+                "home.footer_cta_title": "Vols contactar?",
+                "drawer.title": "Parlem directament",
+                "drawer.lede": "Tria el motiu:",
+                "drawer.sub_job": "Oportunitat laboral",
+                "drawer.sub_collab": "Col·laboració tècnica",
+                "drawer.sub_net": "Fer networking",
+                "drawer.sub_other": "Un altre...",
+                "drawer.placeholder_subject": "Escriu el motiu...",
+                "drawer.email_label": "El teu Correu de Contacte",
+                "drawer.placeholder_email": "exemple@email.com",
+                "drawer.msg_label": "Missatge",
+                "drawer.placeholder_msg": "Escriu el teu missatge aquí...",
+                "drawer.send_btn": "Enviar missatge",
+                "msg.required": "Si us plau, introdueix una adreça de correu electrònic vàlida.",
+                "msg.success": "Missatge enviat amb èxit! Et respondré aviat.",
+                "msg.error": "S'ha produït un error al enviar el msg. Torna-ho a provar."
+            }
+        };
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            localStorage.setItem('portfolio_lang', lang);
+            document.documentElement.lang = lang;
+            document.getElementById('lang-label').textContent = lang.toUpperCase();
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    el.setAttribute('placeholder', translations[lang][key]);
+                }
+            });
+
+            document.querySelectorAll('input[type="email"]').forEach(el => {
+                el.setCustomValidity('');
+            });
+
+            document.querySelectorAll('#lang-menu button').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('portfolio_lang') || 'es';
+            setLanguage(savedLang);
+
+            const langBtn = document.getElementById('lang-toggle');
+            const langMenu = document.getElementById('lang-menu');
+
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langMenu.classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => langMenu.classList.remove('show'));
+
+            langMenu.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setLanguage(btn.getAttribute('data-lang'));
+                    langMenu.classList.remove('show');
+                });
+            });
+
+            const emailInputs = document.querySelectorAll('input[type="email"]');
+            emailInputs.forEach(input => {
+                input.addEventListener('invalid', (e) => {
+                    const lang = localStorage.getItem('portfolio_lang') || 'es';
+                    e.target.setCustomValidity(translations[lang]["msg.required"] || "Por favor, introduce un correo válido.");
+                });
+                input.addEventListener('input', (e) => {
+                    e.target.setCustomValidity('');
+                });
+            });
+
+            const drawer = document.getElementById('contact-drawer');
+            const overlay = document.getElementById('contact-drawer-overlay');
+            const closeBtn = document.getElementById('drawer-close');
+            const contactTriggers = document.querySelectorAll('.nav-cta');
+
+            function openDrawer(e) {
+                e.preventDefault();
+                drawer.classList.add('open');
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeDrawer() {
+                drawer.classList.remove('open');
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            contactTriggers.forEach(trigger => {
+                trigger.addEventListener('click', openDrawer);
+            });
+
+            closeBtn.addEventListener('click', closeDrawer);
+            overlay.addEventListener('click', closeDrawer);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeDrawer();
+            });
+
+            function setupForm(formId) {
+                const form = document.getElementById(formId);
+                if (!form) return;
+
+                const chips = form.querySelectorAll('.subject-chip');
+                const customWrap = form.querySelector('.hidden-custom-subject');
+                const customInput = form.querySelector('.form-input[name="custom_subject"]');
+                const feedbackDiv = form.querySelector('.form-feedback');
+                let selectedSubject = "Oportunidad laboral";
+
+                chips.forEach(chip => {
+                    chip.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        chips.forEach(c => c.classList.remove('active'));
+                        chip.classList.add('active');
+
+                        const val = chip.getAttribute('data-subject');
+                        if (val === 'custom') {
+                            customWrap.classList.add('show');
+                            if (customInput) customInput.focus();
+                            selectedSubject = customInput ? customInput.value : '';
+                            if (customInput) {
+                                customInput.oninput = (ev) => { selectedSubject = ev.target.value; };
+                            }
+                        } else {
+                            customWrap.classList.remove('show');
+                            selectedSubject = val;
+                        }
+                    });
+                });
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    feedbackDiv.className = "form-feedback";
+                    feedbackDiv.textContent = "";
+
+                    const activeChip = form.querySelector('.subject-chip.active');
+                    const isCustom = activeChip && activeChip.getAttribute('data-subject') === 'custom';
+                    const finalSubject = isCustom && customInput ? (customInput.value || 'Contacto Portfolio') : selectedSubject;
+
+                    const msgText = form.querySelector('.form-textarea').value;
+                    const emailInputVal = form.querySelector('input[type="email"]').value;
+                    const lang = localStorage.getItem('portfolio_lang') || 'es';
+
+                    const formData = new FormData(form);
+                    formData.set('subject', `[Portfolio] - ${finalSubject}`);
+                    formData.set('email', emailInputVal);
+                    formData.set('motivo', finalSubject);
+                    formData.set('message', msgText);
+
+                    const submitBtn = form.querySelector('.drawer-submit-btn');
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = '0.7';
+
+                    try {
+                        const response = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            feedbackDiv.textContent = translations[lang]["msg.success"] || translations['es']["msg.success"];
+                            feedbackDiv.className = "form-feedback success";
+                            form.reset();
+
+                            if (formId === 'drawer-contact-form') {
+                                setTimeout(() => {
+                                    closeDrawer();
+                                    setTimeout(() => {
+                                        feedbackDiv.className = "form-feedback";
+                                        feedbackDiv.textContent = "";
+                                    }, 500);
+                                }, 3000);
+                            } else {
+                                setTimeout(() => {
+                                    feedbackDiv.classList.add('fade-out');
+                                    setTimeout(() => {
+                                        feedbackDiv.className = "form-feedback";
+                                        feedbackDiv.textContent = "";
+                                    }, 500);
+                                }, 5000);
+                            }
+                        } else {
+                            throw new Error(data.message || 'Error');
+                        }
+                    } catch (err) {
+                        feedbackDiv.textContent = translations[lang]["msg.error"] || translations['es']["msg.error"];
+                        feedbackDiv.className = "form-feedback error";
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                    }
+                });
+            }
+
+            setupForm('drawer-contact-form');
+            setupForm('footer-contact-form');
+        });
+    </script>
+</body>
+
+</html>
