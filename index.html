@@ -521,7 +521,7 @@
       display: block;
     }
 
-    /* EXPERIÈNCIA CARDS */
+    /* EXPERIÈNCIA CARDS (Proyectos Personales Interactivos) */
     .featured-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
@@ -530,11 +530,15 @@
       display: grid;
       grid-template-columns: 1.15fr 1fr;
       transition: all 0.25s ease;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
     }
 
     .featured-card:hover {
       border-color: var(--border-hover);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
     }
 
     .featured-content {
@@ -612,30 +616,24 @@
       color: var(--text-main);
     }
 
-    /* CONTENEDOR VISUAL ADAPTADO Y UNIFORME */
+    /* CONTENEDOR VISUAL CON ALTURA FIJA ESTRICTA PARA AMBAS TARJETAS */
     .featured-visual {
       position: relative;
       background: var(--bg-card);
       border-left: 1px solid var(--border-subtle);
       overflow: hidden;
-      width: 100%;
-      height: 100%;
-      min-height: 320px;
+      height: 280px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* IMÁGENES ADAPTADAS AL ESPACIO DE LA CAJA */
     .featured-visual img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* Cambia a 'contain' si prefieres que se vea toda la imagen sin recortes */
       object-position: center;
       display: block;
-      position: absolute;
-      inset: 0;
       transition: transform 0.4s ease;
     }
 
@@ -657,7 +655,7 @@
       align-items: center;
       gap: 0.5rem;
       transition: all 0.2s ease;
-      margin-top: 1rem;
+      cursor: pointer;
     }
 
     .btn-project-details:hover {
@@ -968,6 +966,7 @@
       text-align: center;
     }
 
+    /* ADAPTACIÓN EXCLUSIVA PARA MÓVILES (Pantallas menores o iguales a 960px) */
     @media (max-width: 960px) {
       .stack-spec-layout {
         grid-template-columns: repeat(2, 1fr);
@@ -1005,7 +1004,7 @@
       }
 
       .featured-visual {
-        min-height: 260px;
+        height: 220px;
         border-left: none;
         border-top: 1px solid var(--border-subtle);
       }
@@ -1104,7 +1103,7 @@
 
   <main id="top">
 
-    <!-- INICIO PANTALLA COMPLETA CON BOTÓN DE CV REUBICADO -->
+    <!-- INICIO PANTALLA COMPLETA CON BOTÓN DE CV CORREGIDO -->
     <section class="hero-block" id="home-hero">
       <div class="wrap hero-content">
         <h1 class="hero-headline">Alejandro Rubio Plana</h1>
@@ -1249,7 +1248,8 @@
         <!-- SUBAPARTADO 1: EXPERIENCIA PROFESIONAL -->
         <div class="experience-subsection-title" data-i18n="home.sub_exp_prof">Experiencia Profesional</div>
         <div class="experience-group">
-          <article class="featured-card" style="grid-template-columns: 1fr;">
+          <article class="featured-card"
+            style="grid-template-columns: 1fr; cursor: default; transform: none !important;">
             <div class="featured-content" style="padding: 3rem;">
               <div>
                 <div class="featured-tag" data-i18n="home.tbs_tag">// THE BREACH STUDIOS</div>
@@ -1285,7 +1285,7 @@
           Personales</div>
         <div class="experience-group" id="projects">
           <!-- NetworkMiddleware -->
-          <article class="featured-card" id="network-middleware">
+          <a href="project-network-middleware.html" class="featured-card" id="network-middleware">
             <div class="featured-content">
               <div>
                 <div class="featured-tag" data-i18n="home.nm_tag">// C++20 • MULTIPLAYER NETWORKING • SYSTEMS</div>
@@ -1297,20 +1297,15 @@
                   running at 100 Hz.
                 </p>
               </div>
-              <div>
-                <a href="project-network-middleware.html" class="btn-project-details" data-i18n="common.btn_details">Ver
-                  detalles del proyecto ➔</a>
-              </div>
             </div>
             <div class="featured-visual">
-              <!-- NETWORK MIDDLEWARE: Usando LyraProfile.png (o cambia por la imagen de red que prefieras) -->
               <img src="Neon Wallpaper.jfif" alt="Network Middleware Diagram"
                 onerror="this.src='https://via.placeholder.com/600x400/0E131A/38BDF8?text=Network+Middleware+C%2B%2B20'">
             </div>
-          </article>
+          </a>
 
-          <!-- Lyra con ID 'lyra' para anclaje de retorno -->
-          <article class="featured-card" id="lyra">
+          <!-- Lyra -->
+          <a href="project-lyra.html" class="featured-card" id="lyra">
             <div class="featured-content">
               <div>
                 <div class="featured-tag" data-i18n="home.lyra_tag">// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION</div>
@@ -1321,17 +1316,12 @@
                   worked as Gameplay Programmer & Producer. Best TFG – ENTI DemoDay 2026.
                 </p>
               </div>
-              <div>
-                <a href="project-lyra.html" class="btn-project-details" data-i18n="common.btn_details">Ver detalles del
-                  proyecto ➔</a>
-              </div>
             </div>
             <div class="featured-visual">
-              <!-- LYRA: LyraProfile.png -->
               <img src="LyraProfile.png" alt="Lyra"
                 onerror="this.src='https://via.placeholder.com/600x400/0E131A/38BDF8?text=Lyra+Best+TFG'">
             </div>
-          </article>
+          </a>
         </div>
 
       </div>
@@ -1500,7 +1490,6 @@
         "home.lyra_tag": "// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION",
         "home.lyra_role": "Gameplay Programmer & Producer",
         "home.lyra_summary": "Gameplay systems and character programming for a seven-person multidisciplinary project, where Alex worked as Gameplay Programmer & Producer. Best TFG – ENTI DemoDay 2026.",
-        "common.btn_details": "Ver detalles del proyecto ➔",
         "home.footer_cta_title": "¿Quieres contactar?",
         "drawer.title": "Hablemos directamente",
         "drawer.lede": "Elige el motivo:",
@@ -1565,7 +1554,6 @@
         "home.lyra_tag": "// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION",
         "home.lyra_role": "Gameplay Programmer & Producer",
         "home.lyra_summary": "Gameplay systems and character programming for a seven-person multidisciplinary project, where Alex worked as Gameplay Programmer & Producer. Best TFG – ENTI DemoDay 2026.",
-        "common.btn_details": "View project details ➔",
         "home.footer_cta_title": "Want to get in touch?",
         "drawer.title": "Let's connect directly",
         "drawer.lede": "Choose the reason:",
@@ -1630,7 +1618,6 @@
         "home.lyra_tag": "// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION",
         "home.lyra_role": "Gameplay Programmer & Producer",
         "home.lyra_summary": "Gameplay systems and character programming for a seven-person multidisciplinary project, where Alex worked as Gameplay Programmer & Producer. Best TFG – ENTI DemoDay 2026.",
-        "common.btn_details": "Ver detalles del proyecto ➔",
         "home.footer_cta_title": "Vols contactar?",
         "drawer.title": "Parlem directament",
         "drawer.lede": "Tria el motiu:",
