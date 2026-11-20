@@ -7,6 +7,7 @@
 }
 
 .project-hero-inner {
+  container-type: inline-size;
   max-width: 900px;
   margin: 0 auto;
 }
@@ -23,7 +24,10 @@
 
 .project-title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
+
+  /* Scales with the hero column (1cqi = 1% of .project-hero-inner) so long
+     single-word titles like "NetworkMiddleware" never overflow on phones. */
+  font-size: min(4rem, 10.5cqi);
   font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: 1rem;
