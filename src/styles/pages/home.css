@@ -528,7 +528,81 @@
   margin-bottom: 2.5rem;
 }
 
+/* --- Split hero: intro text + portrait -------------------------------- */
+.hero-content--split {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  text-align: left;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  max-width: 640px;
+}
+
+.hero-intro {
+  max-width: 52ch;
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  line-height: 1.7;
+}
+
+.hero-content--split .hero-actions {
+  justify-content: flex-start;
+}
+
+.hero-photo {
+  flex: 0 0 auto;
+  width: min(360px, 34vw);
+}
+
+.hero-photo .about-photo-card {
+  max-width: none;
+}
+
+/* About without the photo: one readable column */
+.about-editorial-wrap--single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 860px;
+  margin: 0; /* align with the section label, like every other section */
+}
+
 @media (max-width: 960px) {
+  .hero-block {
+    height: auto;
+    min-height: 100dvh;
+    padding: 7rem 0 4rem;
+  }
+
+  /* Portrait on top, text centred below */
+  .hero-content--split {
+    flex-direction: column-reverse;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .hero-text {
+    align-items: center;
+  }
+
+  .hero-content--split .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-photo {
+    width: min(220px, 60vw);
+  }
+
+  .hero-photo .about-photo-card {
+    padding: 0.75rem;
+  }
+
   .stack-spec-layout {
     grid-template-columns: repeat(2, 1fr);
   }
