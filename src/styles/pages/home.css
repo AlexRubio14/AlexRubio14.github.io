@@ -538,11 +538,21 @@
 }
 
 .hero-text {
+  /* Container for the name's cqi font-size (see .hero-headline below). */
+  container-type: inline-size;
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
-  max-width: 640px;
+}
+
+/* Name always on one line: the font scales with the text column width
+   (1cqi = 1% of .hero-text), capped at the original 4.9rem. */
+.hero-content--split .hero-headline {
+  white-space: nowrap;
+  font-size: min(4.9rem, 9.3cqi);
 }
 
 .hero-intro {
@@ -588,6 +598,7 @@
   }
 
   .hero-text {
+    width: 100%; /* inline-size containment needs an explicit width here */
     align-items: center;
   }
 
