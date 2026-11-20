@@ -27,7 +27,6 @@
   "home.exp_title": "Experiencia",
   "home.hero_cta_cv": "Descargar CV",
   "home.hero_cta_projects": "Ver proyectos ➔",
-  "home.hero_pitch": "Construyo sistemas multijugador server-authoritative en C++20 (protocolos UDP propios, replicación por snapshots y delta compression) y sistemas de gameplay en Unreal Engine y Unity.",
   "home.lyra_metrics": "<li>Mejor TFG 2026</li><li>Equipo de 7</li><li>Unreal Engine 5</li><li>FSM modular</li>",
   "home.lyra_role": "Character Programmer & Producer",
   "home.lyra_summary": "Arquitectura de personaje, interacciones con los dragones compañeros y sistemas de gameplay para un equipo multidisciplinar de siete personas, combinado con el rol de Producer.",

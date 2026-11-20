@@ -445,14 +445,6 @@
 }
 
 /* --- v2: hero pitch + actions ------------------------------------------ */
-.hero-pitch {
-  max-width: 60ch;
-  margin-top: 0.75rem;
-  color: var(--text-muted);
-  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
-  line-height: 1.7;
-}
-
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
