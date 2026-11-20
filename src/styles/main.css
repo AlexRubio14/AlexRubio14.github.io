@@ -1,0 +1,13 @@
+/*
+ * Global stylesheet: imported by every page entry (src/scripts/pages/*.js).
+ * Order matters: tokens -> base -> components. Page styles are imported
+ * after this file by each page, so they can override components.
+ */
+@import url('./base/tokens.css');
+@import url('./base/base.css');
+@import url('./base/utilities.css');
+@import url('./components/nav.css');
+@import url('./components/lang-switcher.css');
+@import url('./components/social-dock.css');
+@import url('./components/contact.css');
+@import url('./components/footer.css');

@@ -1,0 +1,327 @@
+/* NetworkMiddleware case study specifics. */
+
+/* Shared case-study layout first, so this page's rules can override it. */
+@import url('./case-study.css');
+
+.hero-cta-wrapper {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.metrics-ticker-track {
+  display: flex;
+  gap: 3.5rem;
+  width: max-content;
+  animation: tickerScroll 45s linear infinite;
+}
+
+.case-block ul {
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.arch-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hover);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-main);
+  width: 100%;
+  max-width: 280px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  overflow-wrap: anywhere;
+}
+
+.hero-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.code-box {
+  background: var(--bg-code, #090d13);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  overflow-x: auto;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+
+.arch-multi {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 360px;
+  justify-content: center;
+}
+
+.arch-multi .arch-box {
+  padding: 0.65rem 0.5rem;
+  font-size: 0.78rem;
+  max-width: 110px;
+  white-space: nowrap;
+}
+
+.replication-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 1.25rem;
+  border-radius: 8px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.rep-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.rep-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-main);
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.rep-bar-wrap {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  height: 20px;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+}
+
+.rep-bar {
+  /* Bar width is data, set per element: style="--w: 41.4%" */
+  width: var(--w, 100%);
+  background: var(--accent);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.rep-arrow {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0.1rem 0;
+}
+
+.prediction-interest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.pred-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 1.25rem;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.pred-flow-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hover);
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 4px;
+  color: var(--text-main);
+  overflow-wrap: anywhere;
+}
+
+.grid-fow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  background: var(--bg-surface);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.fow-cell {
+  background: var(--bg-card);
+  padding: 10px 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-radius: 2px;
+}
+
+.fow-cell.active {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  font-weight: bold;
+}
+
+.performance-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.perf-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.perf-bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.perf-bar-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.perf-bar-visual {
+  height: 28px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.perf-seg {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #07090d;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+
+.perf-seg.logic {
+  background: #38bdf8;
+  width: 34.4%;
+}
+
+.perf-seg.io-before {
+  background: #ef4444;
+  width: 65.6%;
+  color: #edf2f7;
+}
+
+.perf-seg.io-after {
+  background: #10b981;
+  width: 1.5%;
+  color: transparent;
+}
+
+.perf-seg.empty {
+  background: rgba(255, 255, 255, 0.03);
+  width: 64.1%;
+}
+
+/* --- v2: classes that replaced inline styles -------------------------- */
+.layer-note {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.pred-box__title {
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.pred-flow-arrow {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+.pred-box__caption {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+.pred-box__footer {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-top: auto;
+}
+
+.perf-value {
+  font-weight: 700;
+}
+
+.perf-value--baseline {
+  color: var(--accent);
+}
+
+.perf-value--bad {
+  color: #ef4444;
+}
+
+.perf-value--good {
+  color: #10b981;
+}
+
+@media (max-width: 768px) {
+  .prediction-interest-grid {
+    grid-template-columns: 1fr;
+  }
+}

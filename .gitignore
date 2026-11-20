@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# build output (deployed by GitHub Actions, never committed)
+dist/
+
+# logs / caches
+*.log
+.vite/
+.eslintcache
+.stylelintcache
+
+# OS / editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+.idea/

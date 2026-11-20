@@ -1,0 +1,31 @@
+<div class="contact-drawer-overlay" id="contact-drawer-overlay"></div>
+<aside
+  class="contact-drawer"
+  id="contact-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="drawer-title"
+  inert
+>
+  <div class="drawer-header">
+    <span class="drawer-tag">// CONNECTION CONSOLE</span>
+    <button
+      type="button"
+      class="drawer-close"
+      id="drawer-close"
+      aria-label="Close"
+      data-i18n-aria-label="drawer.close"
+    >
+      ×
+    </button>
+  </div>
+
+  <div class="drawer-body">
+    <h2 class="drawer-title" id="drawer-title" data-i18n="drawer.title">Let's connect directly</h2>
+    <p class="drawer-lede" data-i18n="drawer.lede">Choose the reason:</p>
+
+    <form class="drawer-form" id="drawer-contact-form">
+      <!-- @include contact-form-fields.html id="drawer" -->
+    </form>
+  </div>
+</aside>

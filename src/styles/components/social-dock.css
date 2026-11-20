@@ -1,0 +1,50 @@
+/* Fixed social links on the left edge. */
+
+.social-dock {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  z-index: 90;
+  transition: opacity 0.3s ease;
+}
+
+.dock-btn {
+  width: 50px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(14, 19, 26, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.dock-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.dock-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--accent);
+}
+
+.dock-btn--email {
+  background: rgb(14 19 26 / 90%);
+  border: 1px solid var(--border-subtle);
+}
+
+.social-dock.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}

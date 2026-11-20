@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 – Page not found | Alejandro Rubio Plana</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#07090D" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"
+    />
+    <script type="module" src="/src/scripts/pages/not-found.js"></script>
+  </head>
+  <body>
+    <!-- @include nav-project.html back="/" -->
+
+    <main id="main" class="project-hero">
+      <div class="wrap">
+        <div class="project-hero-inner">
+          <span class="project-tag">// ERROR 404</span>
+          <h1 class="project-title" data-i18n="notfound.title">Packet lost.</h1>
+          <p class="project-lede" data-i18n="notfound.lede">
+            The page you are looking for doesn't exist or has moved. No retransmission scheduled.
+          </p>
+          <div class="hero-cta-wrapper">
+            <a href="/" class="btn-action primary" data-i18n="nav.back">← Back to portfolio</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- @include contact-drawer.html -->
+  </body>
+</html>

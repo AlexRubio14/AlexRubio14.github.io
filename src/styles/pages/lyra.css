@@ -1,0 +1,96 @@
+/* Lyra case study specifics. */
+
+/* Shared case-study layout first, so this page's rules can override it. */
+@import url('./case-study.css');
+
+.hero-media-container {
+  margin-top: 3rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.hero-media-container video,
+.hero-media-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.card-item-visual {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.role-card {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.role-card__title {
+  color: var(--accent);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.role-card__list {
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.award-block {
+  text-align: center;
+}
+
+.award-block h2 {
+  justify-content: center;
+}
+
+.award-banner {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .cards-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

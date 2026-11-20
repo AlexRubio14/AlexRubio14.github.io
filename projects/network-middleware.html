@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="nm.page_title">NetworkMiddleware – Case Study | Alejandro Rubio Plana</title>
+    <meta
+      name="description"
+      content="Engine-agnostic, server-authoritative networking middleware in C++20: custom UDP protocol, snapshot replication with delta compression, 100 Hz simulation and 254 automated tests."
+    />
+    <meta name="author" content="Alejandro Rubio Plana" />
+    <meta name="theme-color" content="#07090D" />
+    <link rel="canonical" href="https://alexrubio14.github.io/projects/network-middleware.html" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph / social previews -->
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Alejandro Rubio Plana" />
+    <meta property="og:title" content="NetworkMiddleware – Case Study | Alejandro Rubio Plana" />
+    <meta
+      property="og:description"
+      content="Engine-agnostic, server-authoritative networking middleware in C++20: custom UDP protocol, snapshot replication with delta compression, 100 Hz simulation and 254 automated tests."
+    />
+    <meta property="og:url" content="https://alexrubio14.github.io/projects/network-middleware.html" />
+    <meta property="og:image" content="https://alexrubio14.github.io/og/og-network-middleware.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"
+    />
+
+    <script type="module" src="/src/scripts/pages/network-middleware.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
+    <!-- @include nav-project.html back="/#network-middleware" -->
+    <!-- @include social-dock.html -->
+
+    <main id="main">
+      <section class="project-hero">
+        <div class="wrap">
+          <div class="project-hero-inner">
+            <span class="project-tag" data-i18n="nm.tag">// C++20 | MULTIPLAYER NETWORKING | SYSTEMS</span>
+            <h1 class="project-title">NetworkMiddleware</h1>
+            <p class="project-meta" data-i18n="nm.meta">
+              Solo Developer | C++20 | Multiplayer Networking | Systems
+            </p>
+            <p class="project-lede" data-i18n="nm.lede">
+              An engine-agnostic, server-authoritative networking middleware for MOBA-style multiplayer games,
+              built in C++20 around a custom UDP protocol, snapshot replication and a 100 Hz authoritative
+              simulation.
+            </p>
+            <div class="hero-cta-wrapper">
+              <div class="hero-cta-buttons">
+                <a
+                  class="btn-action primary"
+                  href="https://github.com/AlexRubio14/NetworkMiddleware"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <svg aria-hidden="true" viewbox="0 0 24 24">
+                    <path
+                      d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                    ></path>
+                  </svg>
+                  <span data-i18n="nm.cta_github">GitHub Repository</span>
+                </a>
+                <a
+                  class="btn-action secondary"
+                  href="/docs/NetworkMiddleware-Technical-Documentation.pdf"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <svg aria-hidden="true" viewbox="0 0 24 24">
+                    <path
+                      d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                    ></path>
+                  </svg>
+                  <span data-i18n="nm.cta_docs">Technical Documentation</span>
+                </a>
+              </div>
+            </div>
+            <div class="glance-grid">
+              <div class="glance-item">
+                <span class="glance-label" data-i18n="nm.glance_role">Role</span>
+                <span class="glance-val">Solo Developer</span>
+              </div>
+              <div class="glance-item">
+                <span class="glance-label" data-i18n="nm.glance_lang">Language</span>
+                <span class="glance-val">C++20</span>
+              </div>
+              <div class="glance-item">
+                <span class="glance-label" data-i18n="nm.glance_arch">Architecture</span>
+                <span class="glance-val">Server-Authoritative</span>
+              </div>
+              <div class="glance-item">
+                <span class="glance-label" data-i18n="nm.glance_sim">Simulation</span>
+                <span class="glance-val">100 Hz</span>
+              </div>
+              <div class="glance-item">
+                <span class="glance-label" data-i18n="nm.glance_tests">Testing</span>
+                <span class="glance-val" data-i18n="nm.glance_tests_val">254 Tests</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics-ticker-section">
+        <div class="metrics-ticker-track" id="ticker-track">
+          <div class="metric-item">
+            <span class="metric-title" data-i18n="nm.m1_title">Authoritative Tick:</span>
+            <span class="metric-value">100 Hz</span>
+          </div>
+          <span class="metric-separator">//</span>
+          <div class="metric-item">
+            <span class="metric-title" data-i18n="nm.m2_title">Automated Tests:</span>
+            <span class="metric-value">254 passing</span>
+          </div>
+          <span class="metric-separator">//</span>
+          <div class="metric-item">
+            <span class="metric-title" data-i18n="nm.m3_title">Delta Compression:</span>
+            <span class="metric-value">74% reduction</span>
+          </div>
+          <span class="metric-separator">//</span>
+          <div class="metric-item">
+            <span class="metric-title" data-i18n="nm.m4_title">Post-I/O Optimization:</span>
+            <span class="metric-value">0.17 ms Network I/O</span>
+          </div>
+          <span class="metric-separator">//</span>
+
+          <div class="metric-item">
+            <span class="metric-title" data-i18n="nm.m1_title">Authoritative Tick:</span>
+            <span class="metric-value">100 Hz</span>
+          </div>
+          <span class="metric-separator">//</span>
+          <div class="metric-item">
+            <span class="metric-title" data-i18n="nm.m2_title">Automated Tests:</span>
+            <span class="metric-value">254 passing</span>
+          </div>
+          <span class="metric-separator">//</span>
+          <div class="metric-item">
+            <span class="metric-title" data-i18n="nm.m3_title">Delta Compression:</span>
+            <span class="metric-value">74% reduction</span>
+          </div>
+          <span class="metric-separator">//</span>
+          <div class="metric-item">
+            <span class="metric-title" data-i18n="nm.m4_title">Post-I/O Optimization:</span>
+            <span class="metric-value">0.17 ms Network I/O</span>
+          </div>
+          <span class="metric-separator">//</span>
+        </div>
+      </section>
+
+      <div class="wrap project-content-wrap">
+        <div class="case-block">
+          <h2 data-i18n="nm.p1_heading">01 | The Problem</h2>
+          <p data-i18n="nm.p1_desc">
+            The project started from a client-authoritative networking model where the client could directly
+            communicate its position to the server, while the server primarily replicated that state. This
+            created two fundamental problems: the server had limited authority over the actual game state, and
+            synchronization became increasingly difficult to reason about as the number of networked entities
+            grew.
+          </p>
+          <div class="metric-highlight mt-6" data-i18n="nm.p1_goals">
+            <strong>NetworkMiddleware Goals:</strong>
+            <br />
+            01 — Server Authority: Move game-state authority to the server and run the simulation at a stable
+            100 Hz tick rate.
+            <br />
+            02 — Efficient UDP Networking: Build the networking layer around UDP while providing reliability
+            guarantees.
+            <br />
+            03 — Efficient Replication: Reduce required bandwidth through bit-level serialization and delta
+            compression.
+            <br />
+            04 — Engine-Agnostic Design: Keep networking concerns independent via transport abstraction
+            ('ITransport').
+            <br />
+            05 — Testability: Enable full testing without depending on real network sockets ('MockTransport').
+          </div>
+        </div>
+        <div class="case-block">
+          <h2 data-i18n="nm.p2_heading">02 | Architecture &amp; Design Decisions</h2>
+          <p data-i18n="nm.p2_desc">
+            The middleware separates game simulation, networking logic, protocol handling and transport so
+            that each layer has a clearly defined responsibility.
+          </p>
+          <div class="architecture-diagram">
+            <div class="arch-box" data-i18n="nm.arch_sim">GAME / SIMULATION</div>
+            <div class="arch-arrow">▼</div>
+            <div class="arch-box">
+              <span data-i18n="nm.arch_mgr">NETWORK MANAGER</span>
+              <span class="layer-note" data-i18n="nm.arch_mgr_sub">Session &amp; network orchestration</span>
+            </div>
+            <div class="arch-arrow">▼</div>
+            <div class="arch-box">
+              <span data-i18n="nm.arch_proto">PROTOCOL / REPLICATION</span>
+              <span class="layer-note" data-i18n="nm.arch_proto_sub">Snapshots • ACKs • Delta</span>
+            </div>
+            <div class="arch-arrow">▼</div>
+            <div class="arch-box sub">ITransport (Interface)</div>
+            <div class="arch-arrow">▼</div>
+            <div class="arch-multi">
+              <div class="arch-box sub">UDP</div>
+              <div class="arch-box sub">SFML</div>
+              <div class="arch-box sub">Mock</div>
+            </div>
+          </div>
+          <ul>
+            <li>
+              <strong data-i18n="nm.p2_l1">Dependency Inversion:</strong>
+              <span data-i18n="nm.p2_l1_text">
+                The networking core depends on 'ITransport' rather than directly depending on a specific
+                socket implementation, decoupling core logic from underlying APIs.
+              </span>
+            </li>
+            <li>
+              <strong data-i18n="nm.p2_l2">No Singletons:</strong>
+              <span data-i18n="nm.p2_l2_text">
+                Dependencies are injected through constructors instead of being retrieved from global
+                singleton instances, keeping ownership explicit and testable.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="case-block">
+          <h2 data-i18n="nm.p3_heading">03 | Protocol Design &amp; Reliability</h2>
+          <p data-i18n="nm.p3_desc">
+            UDP provides the low-overhead transport required by the authoritative simulation, but it does not
+            provide delivery, ordering or acknowledgement guarantees. NetworkMiddleware implements reliability
+            at the protocol level.
+          </p>
+          <div class="architecture-diagram architecture-diagram--narrow">
+            <div class="arch-box sub arch-box--full">SEQUENCE</div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-box sub arch-box--full">ACK &amp; ACK BITMASK (32-bit mask)</div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-box sub arch-box--full">TYPE &amp; FLAGS</div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-box sub arch-box--full">TIMESTAMP</div>
+          </div>
+          <ul>
+            <li>
+              <strong data-i18n="nm.p3_l1">Sequence Numbers &amp; ACK Piggybacking:</strong>
+              <span data-i18n="nm.p3_l1_text">
+                Packets carry sequence information and acknowledgements are embedded directly into outgoing
+                gameplay packets via a 32-bit bitmask, eliminating dedicated acknowledgment packets.
+              </span>
+            </li>
+            <li>
+              <strong data-i18n="nm.p3_l2">Selective Reliability:</strong>
+              <span data-i18n="nm.p3_l2_text">
+                Time-sensitive state uses unreliable delivery where newer updates supersede older ones, while
+                critical messages use guaranteed ordered delivery.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="case-block">
+          <h2 data-i18n="nm.p4_heading">04 | State Replication &amp; Compression</h2>
+          <p data-i18n="nm.p4_desc">
+            The server continuously produces authoritative state that needs to be replicated to connected
+            clients. Sending the complete state of every entity on every tick would quickly become expensive,
+            so the replication pipeline progressively reduces the amount of data that needs to be transmitted.
+          </p>
+          <div class="replication-comparison">
+            <div class="rep-row">
+              <div class="rep-meta">
+                <span data-i18n="nm.rep_full">FULL STATE</span>
+                <span>360 bits / 45 bytes</span>
+              </div>
+              <div class="rep-bar-wrap">
+                <div class="rep-bar" style="--w: 100%"></div>
+              </div>
+            </div>
+            <div class="rep-arrow" data-i18n="nm.rep_arrow1">↓ Bit-level serialization</div>
+            <div class="rep-row">
+              <div class="rep-meta">
+                <span data-i18n="nm.rep_comp">COMPRESSED STATE</span>
+                <span>149 bits</span>
+              </div>
+              <div class="rep-bar-wrap">
+                <div class="rep-bar" style="--w: 41.4%"></div>
+              </div>
+            </div>
+            <div class="rep-arrow" data-i18n="nm.rep_arrow2">↓ Delta against baseline</div>
+            <div class="rep-row">
+              <div class="rep-meta">
+                <span data-i18n="nm.rep_unch">UNCHANGED TICK</span>
+                <span data-i18n="nm.rep_unch_val">38 bits for an unchanged tick</span>
+              </div>
+              <div class="rep-bar-wrap">
+                <div class="rep-bar" style="--w: 10.5%"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-4" data-i18n="nm.p4_baseline">
+            The key idea is to avoid retransmitting information that the client already knows. A 'baseline' is
+            simply a saved reference point of an entity's last known state. When an entity changes, the server
+            compares its current state against that baseline and only sends the differences. For a tick where
+            nothing changes, the data drops to 38 bits.
+          </p>
+        </div>
+        <div class="case-block">
+          <h2 data-i18n="nm.p5_heading">05 | Interest Management &amp; State Estimation</h2>
+          <p data-i18n="nm.p5_desc">
+            Two complementary approaches were explored to control how much state each client needs to process
+            and how movement can be estimated between network updates.
+          </p>
+          <div class="prediction-interest-grid">
+            <div class="pred-box">
+              <span class="pred-box__title" data-i18n="nm.pred_kalman_title">STATE ESTIMATION (KALMAN)</span>
+              <div class="pred-flow-item" data-i18n="nm.pred_step1">Received Network Update</div>
+              <div class="pred-flow-arrow">↓</div>
+              <div class="pred-flow-item">Kalman / Velocity Model</div>
+              <div class="pred-flow-arrow">↓</div>
+              <div class="pred-flow-item" data-i18n="nm.pred_step3">Smoothed Client Estimation</div>
+            </div>
+            <div class="pred-box">
+              <span class="pred-box__title" data-i18n="nm.fow_title">FOG OF WAR (SPATIAL HASH)</span>
+              <div class="pred-box__caption" data-i18n="nm.fow_caption">Uniform Grid ➔ Visibility Lookup</div>
+              <div class="grid-fow">
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell active">P1</div>
+                <div class="fow-cell active">P2</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell active">P3</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+                <div class="fow-cell">0</div>
+              </div>
+              <div class="pred-box__footer" data-i18n="nm.fow_footer">O(1) Grid Visibility &amp; LOD</div>
+            </div>
+          </div>
+        </div>
+        <div class="case-block">
+          <h2 data-i18n="nm.p6_heading">06 | Performance Engineering &amp; The I/O Journey</h2>
+          <p data-i18n="nm.p6_desc">
+            Profiling revealed that game logic simulation was stable, while network I/O syscall overhead
+            represented the primary bottleneck under benchmark loads.
+          </p>
+          <div class="performance-chart">
+            <div class="perf-timeline">
+              <div class="perf-bar-group">
+                <div class="perf-bar-label">
+                  <span data-i18n="nm.perf_logic_label">GAME LOGIC (Authoritative Tick)</span>
+                  <span class="perf-value perf-value--baseline">3.77 ms</span>
+                </div>
+                <div class="perf-bar-visual">
+                  <div class="perf-seg logic" title="Game Logic: 3.77 ms">3.77 ms</div>
+                  <div class="perf-seg empty"></div>
+                </div>
+              </div>
+              <div class="perf-bar-group mt-2">
+                <div class="perf-bar-label">
+                  <span data-i18n="nm.perf_io_before">NETWORK I/O (Before sendmmsg)</span>
+                  <span class="perf-value perf-value--bad">7.20 ms</span>
+                </div>
+                <div class="perf-bar-visual">
+                  <div class="perf-seg logic" title="Game Logic: 3.77 ms">3.77 ms</div>
+                  <div class="perf-seg io-before" title="Network I/O syscalls: 7.20 ms">
+                    Network I/O: 7.20 ms
+                  </div>
+                </div>
+              </div>
+              <div class="perf-bar-group mt-2">
+                <div class="perf-bar-label">
+                  <span data-i18n="nm.perf_io_after">NETWORK I/O (After sendmmsg)</span>
+                  <span class="perf-value perf-value--good">0.17 ms (-97.6%)</span>
+                </div>
+                <div class="perf-bar-visual">
+                  <div class="perf-seg logic" title="Game Logic: 3.77 ms">3.77 ms</div>
+                  <div class="perf-seg io-after" title="Network I/O: 0.17 ms"></div>
+                  <div class="perf-seg empty"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-4" data-i18n="nm.p6_desc2">
+            <strong>Key Takeaway:</strong>
+            Replacing individual 'send()' calls with Linux
+            <code>sendmmsg()</code>
+            batched syscalls via an asynchronous dispatcher reduced network I/O from 7.20 ms to 0.17 ms
+            (-97.6%), while game logic remained at ~3.77 ms.
+          </p>
+        </div>
+        <div class="case-block">
+          <h2 data-i18n="nm.p7_heading">07 | Testing &amp; Validation Architecture</h2>
+          <p data-i18n="nm.p7_desc">
+            Developed using Test-Driven Development (TDD) backed by
+            <strong>254 automated tests</strong>
+            using Google Test.
+          </p>
+          <div class="metric-highlight mt-6" data-i18n="nm.p7_goals">
+            <strong>MockTransport Integration:</strong>
+            <br />
+            • In-process transport implementation simulating bidirectional networking without real OS sockets.
+            <br />
+            • Deterministic test execution isolated from system network configurations.
+            <br />
+            • Reproducible network conditions (artificial packet loss and delivery delay simulation).
+          </div>
+        </div>
+        <div class="case-block">
+          <h2 data-i18n="nm.p8_heading">08 | Results, CI/CD &amp; Scalability Limit</h2>
+          <p data-i18n="nm.p8_desc">
+            Automated pipelines and stress testing validated production readiness and system limits:
+          </p>
+          <ul>
+            <li>
+              <strong data-i18n="nm.p8_ci">CI/CD &amp; Deployment:</strong>
+              <span data-i18n="nm.p8_ci_text">
+                GitHub Actions automated build/test pipelines, containerized via Docker and pushed to GitHub
+                Container Registry for Azure deployment.
+              </span>
+            </li>
+            <li>
+              <strong data-i18n="nm.p8_wan">WAN Validation:</strong>
+              <span data-i18n="nm.p8_wan_text">
+                Tested with 49 concurrent WAN clients with zero CRC errors observed during recorded tests.
+              </span>
+            </li>
+            <li>
+              <strong data-i18n="nm.p8_scale">Scalability Benchmark (99 clients):</strong>
+              <span data-i18n="nm.p8_scale_text">
+                Stress testing reached 99 clients at 14.24 ms loop time, highlighting the need for dynamic
+                relevancy sets in sessions beyond 5v5 MOBA scopes.
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="case-block">
+          <h2 data-i18n="nm.p9_heading">09 | Engineering Takeaways</h2>
+          <p data-i18n="nm.p9_desc1">
+            Building NetworkMiddleware from scratch changed the way I approach systems engineering. The
+            project taught me that designing a networking system is not only about making packets travel
+            between machines. The harder part is defining clear ownership, understanding how state flows
+            through the system and making decisions that remain maintainable as complexity increases.
+          </p>
+          <h3 class="case-subheading" data-i18n="nm.p9_sub1">Design Before Optimization</h3>
+          <p data-i18n="nm.p9_desc2">
+            One of the most important lessons was learning to separate assumptions from measured problems. The
+            performance work initially looked like a problem with the simulation loop, but profiling showed
+            that the main bottleneck was network I/O syscall overhead. That led to a targeted optimization
+            using batched Linux
+            <code>sendmmsg()</code>
+            calls instead of optimizing code that was not actually limiting performance.
+          </p>
+          <h3 class="case-subheading" data-i18n="nm.p9_sub2">State Ownership Matters</h3>
+          <p data-i18n="nm.p9_desc3">
+            The baseline issue showed how important ownership is when designing replicated state. An entity
+            does not have a single universal replication state. Each client can have a different reference
+            point for that entity. Modeling the baseline around the
+            <code>(Client, Entity)</code>
+            relationship made this ownership explicit and eliminated cross-client interference.
+          </p>
+          <h3 class="case-subheading" data-i18n="nm.p9_sub3">Testability Is an Architectural Property</h3>
+          <p data-i18n="nm.p9_desc4">
+            Using
+            <code>ITransport</code>
+            and
+            <code>MockTransport</code>
+            made testing part of the architecture rather than something added afterwards. Being able to
+            reproduce packet loss, delays and protocol behaviour without relying on real sockets made it
+            possible to validate the networking layer in isolation.
+          </p>
+          <h3 class="case-subheading" data-i18n="nm.p9_sub4">Measure the Limits</h3>
+          <p data-i18n="nm.p9_desc5">
+            The scalability benchmark was also an important part of the project. Reaching 99 clients exposed
+            the O(n²) cost of the current replication model. Instead of treating the benchmark only as a
+            performance result, it provided a concrete direction for future work: improving relevancy and
+            avoiding unnecessary state replication.
+          </p>
+          <h3 class="case-subheading" data-i18n="nm.p9_sub5">What I Would Explore Next</h3>
+          <p data-i18n="nm.p9_desc6">
+            The next step would be to evolve the replication and relevancy systems further, particularly
+            through dynamic relevancy sets, and complete the client-side prediction and server reconciliation
+            integration for Unreal Engine. The project gave me a much deeper understanding of multiplayer
+            networking, but more importantly, it taught me how to investigate complex systems, identify their
+            real constraints and make engineering decisions based on evidence rather than assumptions.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- @include footer.html -->
+    <!-- @include contact-drawer.html -->
+  </body>
+</html>

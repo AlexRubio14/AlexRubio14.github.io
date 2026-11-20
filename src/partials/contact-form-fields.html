@@ -1,0 +1,69 @@
+<input type="hidden" name="access_key" value="b3fae88e-56f3-416e-85f9-63971996377a" />
+<!-- Honeypot: bots fill it, humans never see it (Web3Forms spam filter). -->
+<input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" />
+
+<div class="form-group">
+  <div class="subject-chips" role="group" aria-label="Subject">
+    <button
+      type="button"
+      class="subject-chip active"
+      data-subject="Oportunidad laboral"
+      data-i18n="drawer.sub_job"
+    >
+      Job Opportunity
+    </button>
+    <button
+      type="button"
+      class="subject-chip"
+      data-subject="Colaboración técnica"
+      data-i18n="drawer.sub_collab"
+    >
+      Technical Collab
+    </button>
+    <button type="button" class="subject-chip" data-subject="Hacer networking" data-i18n="drawer.sub_net">
+      Networking & Connect
+    </button>
+    <button type="button" class="subject-chip" data-subject="custom" data-i18n="drawer.sub_other">
+      Other...
+    </button>
+  </div>
+  <div class="hidden-custom-subject">
+    <input
+      type="text"
+      name="custom_subject"
+      class="form-input"
+      aria-label="Subject"
+      placeholder="Type the reason..."
+      data-i18n-placeholder="drawer.placeholder_subject"
+    />
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="form-label" for="{{id}}-email" data-i18n="drawer.email_label">Your Contact Email</label>
+  <input
+    type="email"
+    name="name_or_email"
+    class="form-input"
+    id="{{id}}-email"
+    required
+    autocomplete="email"
+    placeholder="example@email.com"
+    data-i18n-placeholder="drawer.placeholder_email"
+  />
+</div>
+
+<div class="form-group">
+  <label class="form-label" for="{{id}}-msg" data-i18n="drawer.msg_label">Message</label>
+  <textarea
+    name="message"
+    class="form-textarea {{id}}-textarea"
+    id="{{id}}-msg"
+    required
+    placeholder="Type your message here..."
+    data-i18n-placeholder="drawer.placeholder_msg"
+  ></textarea>
+</div>
+
+<button type="submit" class="drawer-submit-btn" data-i18n="drawer.send_btn">Send message</button>
+<div class="form-feedback" role="status" aria-live="polite"></div>
