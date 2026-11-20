@@ -1,0 +1,19 @@
+{
+  "name": "portfolio-contact-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Contact form backend for the portfolio: Cloudflare Worker that validates submissions and sends them through Resend.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "secrets": "wrangler secret put RESEND_API_KEY && wrangler secret put CONTACT_TO"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "vitest": "^5.1.1",
+    "wrangler": "^4.166.0"
+  }
+}

@@ -14,7 +14,8 @@ framework. Available in English, Spanish and Catalan.
 - **i18n (EN / ES / CA)**: English lives in the HTML (readable without JS, indexed by search engines);
   Spanish and Catalan are JSON overlays, code-split and loaded only when selected.
 - **Shared HTML partials** (navbar, footer, contact drawer) through a small custom Vite plugin.
-- **Contact form** backed by [Web3Forms](https://web3forms.com), with a honeypot spam filter.
+- **Own contact backend**: a Cloudflare Worker (`workers/contact`) validates submissions, filters bots and
+  sends the email through [Resend](https://resend.com). Tested with Vitest, deployed by CI.
 - **Accessibility**: semantic landmarks, skip link, keyboard-friendly language menu and drawer
   (`inert`), visible focus, `prefers-reduced-motion` support.
 - **Performance**: WebP images with explicit dimensions and lazy loading, hashed assets, per-page CSS.
@@ -66,6 +67,7 @@ npm run preview   # serve dist/ locally
 │       ├── components/           # nav, footer, contact, social dock...
 │       ├── pages/                # page-specific styles
 │       └── main.css              # global stylesheet (imports base + components)
+├── workers/contact/              # Contact form backend (Cloudflare Worker + Resend)
 ├── config/vite-plugin-html-partials.js
 ├── vite.config.js
 └── .github/workflows/deploy.yml
@@ -100,12 +102,23 @@ Attributes become `{{placeholders}}` inside the partial.
 4. Add a card to the Projects section in `index.html`, the URL to `public/sitemap.xml` and an OG image
    in `public/og/`.
 
+## Contact form backend
+
+`workers/contact` is a small Cloudflare Worker: `POST /contact` → CORS check → validation → honeypot →
+Resend API. See [`workers/contact/README.md`](workers/contact/README.md) for setup.
+
+The frontend reads its URL from `VITE_CONTACT_ENDPOINT` (`.env.development` points to `wrangler dev`,
+`.env.production` to the deployed Worker).
+
 ## Deployment
 
 Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes `dist/` to
 GitHub Pages. Pull requests run the same checks without deploying.
 
 > One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+The Worker has its own workflow (`.github/workflows/worker.yml`): tests on every change, deploys from `main`
+once the `CLOUDFLARE_API_TOKEN` repository secret exists.
 
 ## License
 

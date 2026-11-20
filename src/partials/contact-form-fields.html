@@ -1,5 +1,4 @@
-<input type="hidden" name="access_key" value="b3fae88e-56f3-416e-85f9-63971996377a" />
-<!-- Honeypot: bots fill it, humans never see it (Web3Forms spam filter). -->
+<!-- Honeypot: humans never see it, naive bots tick it. Checked server-side in workers/contact. -->
 <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" />
 
 <div class="form-group">
@@ -31,6 +30,7 @@
     <input
       type="text"
       name="custom_subject"
+      maxlength="120"
       class="form-input"
       aria-label="Subject"
       placeholder="Type the reason..."
@@ -43,7 +43,8 @@
   <label class="form-label" for="{{id}}-email" data-i18n="drawer.email_label">Your Contact Email</label>
   <input
     type="email"
-    name="name_or_email"
+    name="email"
+    maxlength="254"
     class="form-input"
     id="{{id}}-email"
     required
@@ -57,6 +58,8 @@
   <label class="form-label" for="{{id}}-msg" data-i18n="drawer.msg_label">Message</label>
   <textarea
     name="message"
+    minlength="10"
+    maxlength="5000"
     class="form-textarea {{id}}-textarea"
     id="{{id}}-msg"
     required

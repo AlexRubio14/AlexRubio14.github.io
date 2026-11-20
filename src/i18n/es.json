@@ -109,6 +109,8 @@
   "msg.error": "Hubo un error al enviar el mensaje. Inténtalo de nuevo.",
   "msg.required": "Por favor, introduce una dirección de correo electrónico válida.",
   "msg.success": "¡Mensaje enviado con éxito! Te responderé pronto.",
+  "msg.too_long": "El mensaje es demasiado largo (máximo 5.000 caracteres).",
+  "msg.too_short": "El mensaje es demasiado corto (mínimo 10 caracteres).",
   "nav.about": "Sobre mí",
   "nav.back": "← Volver al portfolio",
   "nav.contact": "Contáctame",

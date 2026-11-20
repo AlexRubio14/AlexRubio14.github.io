@@ -1,5 +1,7 @@
 {
   "msg.error": "There was an error sending your message. Please try again.",
   "msg.required": "Please enter a valid email address.",
-  "msg.success": "Message sent successfully! I will get back to you soon."
+  "msg.success": "Message sent successfully! I will get back to you soon.",
+  "msg.too_long": "Your message is too long (5,000 characters max).",
+  "msg.too_short": "Your message is too short (at least 10 characters)."
 }

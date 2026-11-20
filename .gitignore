@@ -17,3 +17,7 @@ desktop.ini
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# Cloudflare Worker local secrets / state
+.dev.vars
+.wrangler/

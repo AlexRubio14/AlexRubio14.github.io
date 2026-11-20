@@ -109,6 +109,8 @@
   "msg.error": "S'ha produït un error en enviar el missatge. Torna-ho a provar.",
   "msg.required": "Si us plau, introdueix una adreça de correu electrònic vàlida.",
   "msg.success": "Missatge enviat amb èxit! Et respondré aviat.",
+  "msg.too_long": "El missatge és massa llarg (màxim 5.000 caràcters).",
+  "msg.too_short": "El missatge és massa curt (mínim 10 caràcters).",
   "nav.about": "Sobre mi",
   "nav.back": "← Tornar al portfolio",
   "nav.contact": "Contacta'm",
