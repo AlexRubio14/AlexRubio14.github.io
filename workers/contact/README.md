@@ -68,4 +68,4 @@ npm run dev                      # http://localhost:8787/contact
 npm test                         # Vitest
 ```
 
-The site's `npm run dev` already points to `http://localhost:8787/contact`.
+The site's `npm run dev` uses the deployed Worker; to point it at `wrangler dev`, create `.env.development.local` with `VITE_CONTACT_ENDPOINT=http://localhost:8787/contact`.

@@ -107,8 +107,8 @@ Attributes become `{{placeholders}}` inside the partial.
 `workers/contact` is a small Cloudflare Worker: `POST /contact` → CORS check → validation → honeypot →
 Resend API. See [`workers/contact/README.md`](workers/contact/README.md) for setup.
 
-The frontend reads its URL from `VITE_CONTACT_ENDPOINT` (`.env.development` points to `wrangler dev`,
-`.env.production` to the deployed Worker).
+The frontend reads its URL from `VITE_CONTACT_ENDPOINT` (both `.env.development` and `.env.production` point to the deployed Worker; override locally with
+`.env.development.local`).
 
 ## Deployment
 

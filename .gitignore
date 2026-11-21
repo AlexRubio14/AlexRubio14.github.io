@@ -21,3 +21,6 @@ desktop.ini
 # Cloudflare Worker local secrets / state
 .dev.vars
 .wrangler/
+
+# Vite local env overrides
+*.local
