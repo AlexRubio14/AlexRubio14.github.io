@@ -630,6 +630,11 @@
   line-height: 1.5;
 }
 
+.xp-body {
+  /* Container for the summary's cqi font-size (1cqi = 1% of this column). */
+  container-type: inline-size;
+}
+
 .xp-summary {
   max-width: 65ch;
   margin-bottom: 1.5rem;
@@ -697,6 +702,16 @@
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.72rem;
+}
+
+/* Wide screens: summary on a single line. The longest translation (ES) measures
+   ~44.9em, so 2.15cqi fills at most ~96% of the column; capped at 1rem. */
+@media (min-width: 1101px) {
+  .xp-summary {
+    max-width: none;
+    font-size: min(1rem, 2.15cqi);
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 1100px) {
