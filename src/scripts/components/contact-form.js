@@ -1,4 +1,5 @@
 import { getLanguage, onLanguageChange, t } from '../core/i18n.js';
+import { attachTurnstile, isTurnstileEnabled } from './turnstile.js';
 
 /**
  * Contact form -> own backend (Cloudflare Worker in workers/contact, which sends via Resend).
@@ -10,6 +11,8 @@ const REQUEST_TIMEOUT_MS = 15000;
 
 /** Server error code -> translation key shown to the visitor. */
 function messageKeyFor(result) {
+  if (result?.error === 'rate_limited') return 'msg.rate_limited';
+  if (result?.error === 'captcha_failed' || result?.error === 'captcha_unavailable') return 'msg.captcha';
   if (result?.error === 'validation_failed') {
     const { email, message } = result.fields ?? {};
     if (email) return 'msg.required';
@@ -33,6 +36,8 @@ function setupForm(form, { onSuccess } = {}) {
   const botcheck = form.querySelector('input[name="botcheck"]');
   const feedback = form.querySelector('.form-feedback');
   const submitBtn = form.querySelector('[type="submit"]');
+  const captchaSlot = form.querySelector('[data-turnstile]');
+  const captcha = isTurnstileEnabled() && captchaSlot ? attachTurnstile(captchaSlot, form) : null;
 
   // One id per message: if the same message is sent twice (double click, retry),
   // the Worker forwards it as Resend's Idempotency-Key and only one email goes out.
@@ -86,6 +91,20 @@ function setupForm(form, { onSuccess } = {}) {
         ? customInput?.value.trim() || 'Contacto Portfolio'
         : (activeChip?.dataset.subject ?? 'Contacto Portfolio');
 
+    submitBtn.disabled = true;
+    submitBtn.setAttribute('aria-busy', 'true');
+
+    let turnstileToken;
+    if (captcha) {
+      turnstileToken = await captcha.getToken();
+      if (!turnstileToken) {
+        showFeedback('error', 'msg.captcha');
+        submitBtn.disabled = false;
+        submitBtn.removeAttribute('aria-busy');
+        return;
+      }
+    }
+
     const payload = {
       subject,
       email: emailInput.value,
@@ -93,10 +112,9 @@ function setupForm(form, { onSuccess } = {}) {
       botcheck: botcheck?.checked ?? false,
       lang: getLanguage(),
       requestId,
+      ...(turnstileToken && { turnstileToken }),
     };
 
-    submitBtn.disabled = true;
-    submitBtn.setAttribute('aria-busy', 'true');
     try {
       const response = await fetch(ENDPOINT, {
         method: 'POST',
@@ -124,6 +142,7 @@ function setupForm(form, { onSuccess } = {}) {
       console.error('[contact-form]', error);
       showFeedback('error', 'msg.error');
     } finally {
+      captcha?.reset(); // tokens are single-use
       submitBtn.disabled = false;
       submitBtn.removeAttribute('aria-busy');
     }

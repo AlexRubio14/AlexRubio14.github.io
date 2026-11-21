@@ -186,3 +186,101 @@ describe('POST /contact', () => {
     spy.mockRestore();
   });
 });
+
+describe('rate limiting', () => {
+  const withIp = (body) => {
+    const req = post(body);
+    const headers = new Headers(req.headers);
+    headers.set('CF-Connecting-IP', '203.0.113.7');
+    return new Request(req, { headers });
+  };
+
+  it('returns 429 when the limiter says no, before calling Resend', async () => {
+    const fetchImpl = resendOk();
+    const limiter = { limit: vi.fn(async () => ({ success: false })) };
+    const res = await handleRequest(withIp(valid), { ...env, CONTACT_LIMITER: limiter }, { fetchImpl });
+    expect(res.status).toBe(429);
+    expect(await res.json()).toEqual({ ok: false, error: 'rate_limited' });
+    expect(limiter.limit).toHaveBeenCalledWith({ key: 'contact:203.0.113.7' });
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+
+  it('does not block legitimate users if the limiter itself fails', async () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const limiter = {
+      limit: vi.fn(async () => {
+        throw new Error('binding unavailable');
+      }),
+    };
+    const res = await handleRequest(
+      withIp(valid),
+      { ...env, CONTACT_LIMITER: limiter },
+      { fetchImpl: resendOk() },
+    );
+    expect(res.status).toBe(200);
+    spy.mockRestore();
+  });
+});
+
+describe('Turnstile', () => {
+  const SITEVERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+  const envTs = { ...env, TURNSTILE_SECRET: 'ts_secret' };
+  const router = (verdict) =>
+    vi.fn(async (url) =>
+      url === SITEVERIFY
+        ? new Response(JSON.stringify(verdict), { status: 200 })
+        : new Response(JSON.stringify({ id: 'email_1' }), { status: 200 }),
+    );
+
+  it('verifies the token with Cloudflare, then sends the email', async () => {
+    const fetchImpl = router({ success: true, hostname: 'alexrubio14.github.io', action: 'contact' });
+    const res = await handleRequest(post({ ...valid, turnstileToken: 'tok' }), envTs, { fetchImpl });
+    expect(res.status).toBe(200);
+    const [url, init] = fetchImpl.mock.calls[0];
+    expect(url).toBe(SITEVERIFY);
+    expect(JSON.parse(init.body)).toMatchObject({ secret: 'ts_secret', response: 'tok' });
+    expect(fetchImpl.mock.calls[1][0]).toBe('https://api.resend.com/emails');
+  });
+
+  it.each([
+    ['missing token', {}, { success: true, hostname: 'alexrubio14.github.io' }, 'missing_token'],
+    [
+      'rejected token',
+      { turnstileToken: 'bad' },
+      { success: false, 'error-codes': ['invalid-input-response'] },
+      'invalid_token',
+    ],
+    [
+      'token from another site',
+      { turnstileToken: 't' },
+      { success: true, hostname: 'evil.example' },
+      'wrong_hostname',
+    ],
+    [
+      'token for another form',
+      { turnstileToken: 't' },
+      { success: true, hostname: 'localhost', action: 'login' },
+      'wrong_action',
+    ],
+  ])('403 on %s, without sending', async (_, extra, verdict, reason) => {
+    const fetchImpl = router(verdict);
+    const res = await handleRequest(post({ ...valid, ...extra }), envTs, { fetchImpl });
+    expect(res.status).toBe(403);
+    expect(await res.json()).toEqual({ ok: false, error: 'captcha_failed', reason });
+    expect(fetchImpl.mock.calls.some(([url]) => url.includes('resend'))).toBe(false);
+  });
+
+  it('503 when Cloudflare siteverify is unreachable', async () => {
+    const fetchImpl = vi.fn(async () => {
+      throw new TypeError('fetch failed');
+    });
+    const res = await handleRequest(post({ ...valid, turnstileToken: 't' }), envTs, { fetchImpl });
+    expect(res.status).toBe(503);
+    expect(await res.json()).toEqual({ ok: false, error: 'captcha_unavailable' });
+  });
+
+  it('is not required while TURNSTILE_SECRET is not set', async () => {
+    const res = await handleRequest(post(valid), env, { fetchImpl: resendOk() });
+    expect(res.status).toBe(200);
+  });
+});

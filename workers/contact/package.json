@@ -9,7 +9,8 @@
     "deploy": "wrangler deploy",
     "test": "vitest run",
     "test:watch": "vitest",
-    "secrets": "wrangler secret put RESEND_API_KEY && wrangler secret put CONTACT_TO"
+    "secrets": "wrangler secret put RESEND_API_KEY && wrangler secret put CONTACT_TO",
+    "secret:turnstile": "wrangler secret put TURNSTILE_SECRET"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",

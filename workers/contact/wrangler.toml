@@ -14,6 +14,18 @@ ALLOWED_ORIGINS = "https://alexrubio14.github.io,http://localhost:5173,http://lo
 # and only delivers to the address of your own Resend account (which is exactly what a contact form needs).
 MAIL_FROM = "Portfolio <onboarding@resend.dev>"
 
+# Max 3 submissions per minute per IP (approximate, per Cloudflare location).
+# https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/
+[[ratelimits]]
+name = "CONTACT_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 3
+  period = 60
+
 # Secrets (never committed). Set them once with:  npm run secrets
-#   RESEND_API_KEY  -> API key from https://resend.com/api-keys ("Sending access" is enough)
-#   CONTACT_TO      -> where messages arrive; must be your Resend account email
+#   RESEND_API_KEY    -> API key from https://resend.com/api-keys ("Sending access" is enough)
+#   CONTACT_TO        -> where messages arrive; must be your Resend account email
+#   TURNSTILE_SECRET  -> secret key of the Turnstile widget (Cloudflare dashboard > Turnstile).
+#                        While it is not set, the Worker does not require a captcha token.

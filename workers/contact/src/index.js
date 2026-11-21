@@ -1,15 +1,16 @@
 /**
  * Portfolio contact API — Cloudflare Worker.
  *
- *   POST /contact   { subject, email, message, botcheck?, lang?, requestId? }
+ *   POST /contact   { subject, email, message, turnstileToken?, botcheck?, lang?, requestId? }
  *     200 { ok: true }
  *     4xx { ok: false, error: <code>, fields?: { <field>: <code> } }
  *     502 { ok: false, error: 'send_failed' }
  *
- * Flow: CORS check -> method/content-type -> size limit -> JSON parse ->
- *       honeypot -> validation -> Resend.
+ * Flow: CORS check -> method/content-type -> rate limit -> size limit -> JSON parse ->
+ *       honeypot -> validation -> Turnstile -> Resend.
  */
 import { buildEmail, sendWithResend } from './email.js';
+import { allowedHostnames, verifyTurnstile } from './turnstile.js';
 import { isBot, validateSubmission } from './validate.js';
 
 const MAX_BODY_BYTES = 16 * 1024;
@@ -60,6 +61,18 @@ export async function handleRequest(request, env, { fetchImpl = fetch } = {}) {
     return reply({ ok: false, error: 'unsupported_media_type' }, 415);
   }
 
+  // Cheap flood protection before doing any work. The binding is approximate and per
+  // Cloudflare location (fine for a contact form). If it is missing or errors, don't block.
+  const ip = request.headers.get('CF-Connecting-IP') ?? undefined;
+  if (env.CONTACT_LIMITER && ip) {
+    try {
+      const { success } = await env.CONTACT_LIMITER.limit({ key: `contact:${ip}` });
+      if (!success) return reply({ ok: false, error: 'rate_limited' }, 429);
+    } catch (error) {
+      console.error('[contact] Rate limiter error', error);
+    }
+  }
+
   const raw = await request.text();
   if (new TextEncoder().encode(raw).length > MAX_BODY_BYTES) {
     return reply({ ok: false, error: 'payload_too_large' }, 413);
@@ -77,6 +90,21 @@ export async function handleRequest(request, env, { fetchImpl = fetch } = {}) {
 
   const result = validateSubmission(body);
   if (!result.ok) return reply({ ok: false, error: 'validation_failed', fields: result.errors }, 422);
+
+  // Human check. Only enforced once the TURNSTILE_SECRET secret exists, so the
+  // frontend (site key) and the backend (secret) can be rolled out in either order.
+  if (env.TURNSTILE_SECRET) {
+    const captcha = await verifyTurnstile(body.turnstileToken, {
+      secret: env.TURNSTILE_SECRET,
+      remoteIp: ip,
+      hostnames: allowedHostnames(allowedOrigins(env)),
+      fetchImpl,
+    });
+    if (!captcha.ok) {
+      if (captcha.reason === 'unavailable') return reply({ ok: false, error: 'captcha_unavailable' }, 503);
+      return reply({ ok: false, error: 'captcha_failed', reason: captcha.reason }, 403);
+    }
+  }
 
   if (!env.RESEND_API_KEY || !env.CONTACT_TO) {
     console.error('[contact] Missing RESEND_API_KEY or CONTACT_TO secret');

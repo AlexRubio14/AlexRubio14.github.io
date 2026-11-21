@@ -1,3 +1,5 @@
 # Copy to .dev.vars for `npm run dev` (wrangler dev). Never commit .dev.vars.
 RESEND_API_KEY="re_xxxxxxxxxxxxxxxx"
 CONTACT_TO="your-resend-account-email@example.com"
+# Optional: Turnstile test secret that always passes (pairs with sitekey 1x00000000000000000000AA)
+# TURNSTILE_SECRET="1x0000000000000000000000000000000AA"
