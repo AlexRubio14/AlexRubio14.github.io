@@ -177,25 +177,6 @@
   margin-bottom: 3.5rem;
 }
 
-.experience-subsection-title {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 1.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.experience-subsection-title::after {
-  content: '';
-  flex-grow: 1;
-  height: 1px;
-  background: rgba(56, 189, 248, 0.2);
-}
-
 .experience-group {
   display: flex;
   flex-direction: column;
@@ -355,46 +336,6 @@
   line-height: 1.7;
 }
 
-.nda-notice {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  background: var(--accent-dim);
-  border: 1px solid var(--border-subtle);
-  padding: 0.8rem 1rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
-
-.spec-bullets {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  margin-bottom: 1.5rem;
-}
-
-.spec-bullets li {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  position: relative;
-  padding-left: 1.25rem;
-  line-height: 1.6;
-}
-
-.spec-bullets li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-weight: bold;
-}
-
-.spec-bullets strong {
-  color: var(--text-main);
-}
-
 .featured-visual {
   position: relative;
   min-height: 280px;
@@ -484,19 +425,6 @@
   border-top: 1px solid var(--border-subtle);
 }
 
-.featured-card--static {
-  grid-template-columns: 1fr;
-  cursor: default;
-}
-
-.featured-card--static:hover {
-  transform: none;
-}
-
-.featured-content--padded {
-  padding: 3rem;
-}
-
 .featured-card__cta {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -578,8 +506,233 @@
 /* About without the photo: one readable column */
 .about-editorial-wrap--single {
   grid-template-columns: minmax(0, 1fr);
+  width: 100%;
   max-width: 860px;
-  margin: 0; /* align with the section label, like every other section */
+}
+
+/* About is centred on the page: label and card share the same axis. */
+#about .wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- Experience: timeline entries ------------------------------------------ */
+.xp-timeline {
+  position: relative;
+  list-style: none;
+  padding-left: 2rem;
+}
+
+/* Vertical rail, fading out: room for future entries. */
+.xp-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0.4rem;
+  width: 1px;
+  background: linear-gradient(var(--accent), transparent);
+}
+
+.xp-item {
+  position: relative;
+}
+
+.xp-item + .xp-item {
+  margin-top: 2rem;
+}
+
+/* Node on the rail */
+.xp-item::before {
+  content: '';
+  position: absolute;
+  top: 2.6rem;
+  left: calc(-2rem + 0.4rem - 5px);
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 4px var(--accent-dim),
+    0 0 14px var(--accent-glow);
+}
+
+.xp-card {
+  display: grid;
+  grid-template-columns: minmax(0, 250px) minmax(0, 1fr);
+  gap: 2.5rem;
+  padding: 2.25rem 2.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  transition: border-color 0.25s ease;
+}
+
+.xp-card:hover {
+  border-color: var(--border-hover);
+}
+
+.xp-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-right: 2rem;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.xp-dates {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.xp-company {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.xp-role {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.xp-nda {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.xp-nda svg {
+  width: 12px;
+  height: 12px;
+  fill: currentcolor;
+}
+
+.xp-nda-note {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.xp-summary {
+  max-width: 65ch;
+  margin-bottom: 1.5rem;
+  color: #cad2d9;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.xp-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.xp-highlight {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.xp-highlight:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.xp-num {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.xp-highlight h4 {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.xp-highlight p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.xp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  list-style: none;
+}
+
+.xp-tags li {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+@media (max-width: 1100px) {
+  .xp-highlights {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .xp-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 1.75rem;
+  }
+
+  .xp-meta {
+    padding-right: 0;
+    padding-bottom: 1.25rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+}
+
+@media (max-width: 540px) {
+  .xp-timeline {
+    padding-left: 0;
+  }
+
+  .xp-timeline::before,
+  .xp-item::before {
+    display: none;
+  }
+
+  .xp-card {
+    padding: 1.5rem 1.25rem;
+  }
 }
 
 @media (max-width: 960px) {
@@ -661,8 +814,7 @@
 }
 
 @media (max-width: 540px) {
-  .featured-content,
-  .featured-content--padded {
+  .featured-content {
     padding: 1.75rem 1.5rem;
   }
 
