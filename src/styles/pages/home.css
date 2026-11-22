@@ -764,6 +764,10 @@
 }
 
 .featured-visual .card-clip-cover {
+  /* The cover is wider (1.54:1) than the card (~1.1:1), so `cover` crops the sides. The "Lyra"
+     logo is not centred in the image (it spans ~10-70% of the width), so a centred crop cut the
+     "L". Shifting the crop window left keeps the whole logo in frame. */
+  object-position: 12% center;
   transition:
     opacity 0.25s ease,
     transform 0.4s ease;
