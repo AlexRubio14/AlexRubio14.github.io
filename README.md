@@ -18,7 +18,8 @@ framework. Available in English, Spanish and Catalan.
   sends the email through [Resend](https://resend.com). Tested with Vitest, deployed by CI.
 - **Accessibility**: semantic landmarks, skip link, keyboard-friendly language menu and drawer
   (`inert`), visible focus, `prefers-reduced-motion` support.
-- **Performance**: WebP images with explicit dimensions and lazy loading, hashed assets, per-page CSS.
+- **Performance**: WebP images with explicit dimensions and lazy loading, hashed assets, per-page CSS,
+  self-hosted fonts (no third-party requests).
 - **SEO / sharing**: canonical URLs, Open Graph cards, `sitemap.xml`, `robots.txt`.
 - **CI/CD**: formatting, linting and HTML validation on every push and PR; automatic deploy to GitHub
   Pages from `main`.
@@ -96,8 +97,10 @@ Attributes become `{{placeholders}}` inside the partial.
 ### Add a new project page
 
 1. Copy `projects/lyra.html` to `projects/<slug>.html` and replace the `<main>` content.
-2. Create `src/scripts/pages/<slug>.js` (import `initApp` + your page CSS) and
-   `src/styles/pages/<slug>.css` (start with `@import url('./case-study.css');`).
+2. Create `src/scripts/pages/<slug>.js` (import and call `initApp`) and
+   `src/styles/pages/<slug>.css`, starting with `@import url('./case-study.css');` and
+   `@import url('./case-components.css');`. Link `main.css` and the page CSS in the page's `<head>`
+   (CSS is never imported from JS, so the page never paints unstyled).
 3. Register the page in `vite.config.js` → `build.rollupOptions.input`.
 4. Add a card to the Projects section in `index.html`, the URL to `public/sitemap.xml` and an OG image
    in `public/og/`.
