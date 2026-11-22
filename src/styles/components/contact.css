@@ -1,80 +1,224 @@
 /* Contact form + slide-in contact drawer. */
 
+/*
+ * Motion notes
+ * - Only transform, opacity and filter are animated: the browser can run them on the
+ *   compositor without re-laying out the page, so they stay smooth.
+ * - Properties are listed explicitly instead of `transition: all`, which would also
+ *   animate things nobody asked for (layout, colours on load...).
+ * - --ease-out-expo starts fast and settles slowly: the panel "arrives" instead of sliding
+ *   at constant speed.
+ */
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --drawer-in: 0.55s;
+  --drawer-out: 0.3s;
+}
+
+/* --- Overlay ----------------------------------------------------------------- */
 .contact-drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 6, 8, 0.75);
-  backdrop-filter: blur(4px);
   z-index: 998;
+  background: rgb(4 6 8 / 70%);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  backdrop-filter: blur(0);
+  transition:
+    opacity var(--drawer-out) ease,
+    backdrop-filter var(--drawer-out) ease,
+    visibility 0s linear var(--drawer-out);
 }
 
 .contact-drawer-overlay.open {
   opacity: 1;
   visibility: visible;
+  backdrop-filter: blur(6px);
+  transition:
+    opacity var(--drawer-in) ease,
+    backdrop-filter var(--drawer-in) ease,
+    visibility 0s;
 }
 
+/* --- Panel ------------------------------------------------------------------- */
 .contact-drawer {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 100%;
-  max-width: 440px;
-  background: var(--bg-surface);
-  border-left: 1px solid var(--border-subtle);
   z-index: 999;
-  padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.7);
+  width: 100%;
+  max-width: 460px;
+  padding: 2.25rem 2.5rem 2.5rem;
   overflow-y: auto;
+  background: radial-gradient(120% 60% at 100% 0%, rgb(56 189 248 / 9%), transparent 60%), var(--bg-surface);
+  border-left: 1px solid var(--border-subtle);
+  box-shadow: -30px 0 60px rgb(0 0 0 / 65%);
+  transform: translateX(104%);
+  transition: transform var(--drawer-out) cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+/* A thin line of light along the inner edge. */
+.contact-drawer::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--accent) 30%, var(--accent) 60%, transparent);
+  opacity: 0;
+  content: '';
+  transition: opacity 0.6s ease 0.25s;
 }
 
 .contact-drawer.open {
   transform: translateX(0);
+  transition: transform var(--drawer-in) var(--ease-out-expo);
 }
 
+.contact-drawer.open::before {
+  opacity: 0.8;
+}
+
+/* --- Staggered entrance -------------------------------------------------------
+ * Each block starts 14px lower and transparent, and rises into place once the
+ * panel is open. The delay grows by 45 ms per item, so they arrive one after another.
+ * On close there is no delay: everything leaves together with the panel. */
+.drawer-header,
+.drawer-body > *,
+.contact-drawer .drawer-form > :not([type='checkbox']) {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.contact-drawer.open .drawer-header,
+.contact-drawer.open .drawer-body > *,
+.contact-drawer.open .drawer-form > :not([type='checkbox']) {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.45s ease var(--delay, 0s),
+    transform 0.55s var(--ease-out-expo) var(--delay, 0s);
+}
+
+/* The form itself is a wrapper: its children animate, not the wrapper. */
+.contact-drawer.open .drawer-body > .drawer-form,
+.drawer-body > .drawer-form {
+  opacity: 1;
+  transform: none;
+}
+
+.contact-drawer.open .drawer-header {
+  --delay: 0.1s;
+}
+
+.contact-drawer.open .drawer-title {
+  --delay: 0.16s;
+}
+
+.contact-drawer.open .drawer-lede {
+  --delay: 0.21s;
+}
+
+.contact-drawer.open .drawer-form > :nth-child(2) {
+  --delay: 0.26s;
+}
+
+.contact-drawer.open .drawer-form > :nth-child(3) {
+  --delay: 0.31s;
+}
+
+.contact-drawer.open .drawer-form > :nth-child(4) {
+  --delay: 0.36s;
+}
+
+.contact-drawer.open .drawer-form > :nth-child(n + 5) {
+  --delay: 0.41s;
+}
+
+/* --- Header ------------------------------------------------------------------ */
 .drawer-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
 }
 
 .drawer-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--accent);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
+/* "Online" dot: a solid core plus a ring that expands and fades. */
+.drawer-status {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  background: #34d399;
+  border-radius: 50%;
+}
+
+.drawer-status::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #34d399;
+  border-radius: 50%;
+  content: '';
+  animation: drawer-ping 1.8s ease-out infinite;
+}
+
+@keyframes drawer-ping {
+  from {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
 .drawer-close {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  color: var(--text-main);
-  width: 36px;
-  height: 36px;
   border-radius: 50%;
-  font-size: 1.2rem;
+  color: var(--text-main);
+  font-size: 1.25rem;
+  line-height: 1;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  transition:
+    transform 0.3s var(--ease-out-expo),
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
 }
 
-.drawer-close:hover {
+.drawer-close:hover,
+.drawer-close:focus-visible {
+  background: var(--accent-dim);
   border-color: var(--accent);
   color: var(--accent);
-  background: var(--accent-dim);
+  transform: rotate(90deg);
 }
 
+/* --- Body -------------------------------------------------------------------- */
 .drawer-body {
   display: flex;
   flex-direction: column;
@@ -83,7 +227,7 @@
 
 .drawer-title {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
@@ -107,11 +251,17 @@
 }
 
 .form-label {
+  color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--text-muted);
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+/* The label lights up while you type in its field. */
+.form-group:focus-within .form-label {
+  color: var(--accent);
 }
 
 .subject-chips {
@@ -121,47 +271,64 @@
 }
 
 .subject-chip {
+  padding: 0.45rem 0.85rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
+  border-radius: 6px;
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  padding: 0.45rem 0.85rem;
-  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .subject-chip:hover,
 .subject-chip.active {
-  color: var(--accent);
-  border-color: var(--accent);
   background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.subject-chip:active {
+  transform: scale(0.96);
 }
 
 .form-input,
 .form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  padding: 0.75rem 1rem;
   color: var(--text-main);
   font-family: var(--font-body);
   font-size: 0.9rem;
-  transition: all 0.2s ease;
-  width: 100%;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.form-input:hover,
+.form-textarea:hover {
+  border-color: var(--border-hover);
 }
 
 .form-input:focus,
 .form-textarea:focus {
-  outline: none;
+  background: rgb(56 189 248 / 4%);
   border-color: var(--accent);
-  box-shadow: 0 0 10px var(--accent-dim);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-dim);
 }
 
 .form-textarea {
-  resize: vertical;
   min-height: 120px;
+  resize: vertical;
 }
 
 .hidden-custom-subject {
@@ -171,45 +338,135 @@
 
 .hidden-custom-subject.show {
   display: block;
+  animation: drawer-reveal 0.3s var(--ease-out-expo);
 }
 
+@keyframes drawer-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* --- Submit button: idle -> sending (spinner) -> sent (check) ------------------ */
 .drawer-submit-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  overflow: hidden;
   background: var(--accent);
+  border: none;
+  border-radius: 8px;
   color: #07090d;
   font-family: var(--font-mono);
-  font-weight: 600;
   font-size: 0.9rem;
-  padding: 0.85rem 1.5rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  font-weight: 600;
   text-align: center;
-  margin-top: 0.5rem;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.15s ease;
+}
+
+/* A soft highlight sweeps across on hover. */
+.drawer-submit-btn::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 35%) 50%, transparent 70%);
+  content: '';
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
 }
 
 .drawer-submit-btn:hover {
   background: #7dd3fc;
-  box-shadow: 0 0 16px var(--accent-glow);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.drawer-submit-btn:hover::after {
+  transform: translateX(120%);
+}
+
+.drawer-submit-btn:active {
+  transform: scale(0.98);
+}
+
+.drawer-submit-btn:disabled {
+  cursor: progress;
+}
+
+.drawer-submit-btn[aria-busy='true']::before {
+  width: 1em;
+  height: 1em;
+  border: 2px solid rgb(7 9 13 / 25%);
+  border-top-color: #07090d;
+  border-radius: 50%;
+  content: '';
+  animation: drawer-spin 0.7s linear infinite;
+}
+
+@keyframes drawer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.drawer-submit-btn.is-sent {
+  background: #34d399;
+  box-shadow: 0 0 20px rgb(52 211 153 / 35%);
+}
+
+.drawer-submit-btn.is-sent::before {
+  width: 0.45em;
+  height: 0.85em;
+  margin-top: -0.2em;
+  border-right: 2px solid #07090d;
+  border-bottom: 2px solid #07090d;
+  content: '';
+  transform: rotate(45deg);
+  animation: drawer-check 0.35s var(--ease-out-expo);
+}
+
+@keyframes drawer-check {
+  from {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.4);
+  }
 }
 
 .form-feedback {
+  margin-top: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.82rem;
   text-align: center;
-  margin-top: 0.5rem;
   opacity: 1;
   transition: opacity 0.5s ease;
 }
 
 .form-feedback.success {
-  color: #10b981;
   display: block;
+  color: #10b981;
 }
 
 .form-feedback.error {
-  color: #ef4444;
   display: block;
+  color: #ef4444;
+  animation: drawer-shake 0.35s ease;
+}
+
+@keyframes drawer-shake {
+  25% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
 }
 
 .form-feedback.fade-out {
@@ -217,8 +474,8 @@
 }
 
 .footer-contact-wrap .drawer-lede {
-  text-align: center;
   margin-top: -1rem;
+  text-align: center;
 }
 
 /* Cloudflare Turnstile: takes no space while invisible (interaction-only). */
@@ -228,4 +485,43 @@
 
 .turnstile-slot {
   margin-bottom: 0.5rem;
+}
+
+@media (width <= 480px) {
+  .contact-drawer {
+    padding: 1.75rem 1.5rem 2rem;
+  }
+}
+
+/* No motion for people who asked for none: same states, no travel, no spinning dot. */
+@media (prefers-reduced-motion: reduce) {
+  .contact-drawer,
+  .contact-drawer.open,
+  .contact-drawer-overlay,
+  .contact-drawer-overlay.open,
+  .drawer-header,
+  .drawer-body > *,
+  .contact-drawer .drawer-form > :not([type='checkbox']),
+  .contact-drawer.open .drawer-header,
+  .contact-drawer.open .drawer-body > *,
+  .contact-drawer.open .drawer-form > :not([type='checkbox']) {
+    transition-duration: 0.01s;
+    transition-delay: 0s;
+  }
+
+  .drawer-header,
+  .drawer-body > *,
+  .contact-drawer .drawer-form > :not([type='checkbox']) {
+    transform: none;
+  }
+
+  .drawer-status::after,
+  .drawer-submit-btn::after,
+  .form-feedback.error {
+    animation: none;
+  }
+
+  .drawer-submit-btn::after {
+    display: none;
+  }
 }

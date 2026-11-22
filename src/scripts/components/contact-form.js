@@ -129,12 +129,14 @@ function setupForm(form, { onSuccess } = {}) {
       }
 
       showFeedback('success', 'msg.success');
+      submitBtn.classList.add('is-sent'); // green + check mark until the panel closes
       form.reset();
       requestId = crypto.randomUUID(); // next message is a new one
       chips.forEach((c, i) => c.classList.toggle('active', i === 0));
       customWrap?.classList.remove('show');
       setTimeout(() => {
         clearFeedback();
+        submitBtn.classList.remove('is-sent');
         onSuccess?.();
       }, FEEDBACK_TIMEOUT_MS);
     } catch (error) {
