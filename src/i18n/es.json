@@ -32,7 +32,7 @@
   "home.lyra_summary": "Arquitectura de personaje, interacciones con los dragones compañeros y sistemas de gameplay para un equipo multidisciplinar de siete personas, combinado con el rol de Producer.",
   "home.lyra_tag": "// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION",
   "home.nm_meta": "Solo Developer • C++20 • Multiplayer Networking • Systems",
-  "home.nm_metrics": "<li>Tick a 100 Hz</li><li>254 tests</li><li>−74% ancho de banda</li><li>−97,6% tiempo de I/O</li>",
+  "home.nm_metrics": "<li>Tick a 100 Hz</li><li>254 tests</li><li>−74% ancho de banda</li><li>49 clientes por WAN, 0 errores CRC</li>",
   "home.nm_summary": "Una capa de networking server-authoritative e independiente del motor, diseñada para juegos multijugador estilo MOBA a 100 Hz.",
   "home.nm_tag": "// C++20 • MULTIPLAYER NETWORKING • SYSTEMS",
   "home.page_title": "Alejandro Rubio Plana | Game Software Engineer",

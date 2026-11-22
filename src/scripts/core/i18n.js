@@ -121,5 +121,7 @@ export function onLanguageChange(fn) {
 export function initI18n() {
   const lang = readStoredLang() ?? DEFAULT_LANG;
   // English is already in the HTML: nothing to do until the user picks another language.
-  return lang === DEFAULT_LANG ? Promise.resolve() : setLanguage(lang);
+  const ready = lang === DEFAULT_LANG ? Promise.resolve() : setLanguage(lang);
+  // The inline script in <head> hid the page while the translation loads; show it now.
+  return ready.finally(() => document.documentElement.classList.remove('i18n-pending'));
 }

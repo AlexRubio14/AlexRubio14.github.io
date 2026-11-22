@@ -3,7 +3,6 @@
  * common partials (navbar, social dock, contact drawer, footer form).
  * Page entries import this and add whatever is specific to them.
  */
-import '../../styles/main.css';
 
 import { initContactDrawer } from '../components/contact-drawer.js';
 import { initContactForms } from '../components/contact-form.js';

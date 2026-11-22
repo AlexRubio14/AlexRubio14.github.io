@@ -34,6 +34,38 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"
     />
 
+    <!-- CSS as <link> in the head, not imported from JS: the browser waits for it before the
+
+         first paint, so the page never shows unstyled (in dev or in production). -->
+
+    <link rel="stylesheet" href="/src/styles/main.css" />
+
+    <link rel="stylesheet" href="/src/styles/pages/lyra.css" />
+
+    <!-- Visitors who picked ES/CA: hide the page until the translation is applied, so they never
+
+         see the English text swap. i18n.js removes the class; the timeout is a safety net. -->
+
+    <script>
+      try {
+        var lang = localStorage.getItem('portfolio_lang');
+
+        if (lang === 'es' || lang === 'ca') {
+          document.documentElement.classList.add('i18n-pending');
+
+          setTimeout(function () {
+            document.documentElement.classList.remove('i18n-pending');
+          }, 1500);
+        }
+      } catch (e) {}
+    </script>
+
+    <style>
+      .i18n-pending body {
+        visibility: hidden;
+      }
+    </style>
+
     <script type="module" src="/src/scripts/pages/lyra.js"></script>
   </head>
   <body>

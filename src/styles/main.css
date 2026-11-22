@@ -1,6 +1,6 @@
 /*
- * Global stylesheet: imported by every page entry (src/scripts/pages/*.js).
- * Order matters: tokens -> base -> components. Page styles are imported
+ * Global stylesheet: linked in the <head> of every page.
+ * Order matters: tokens -> base -> components. Page styles are linked
  * after this file by each page, so they can override components.
  */
 @import url('./base/tokens.css');
