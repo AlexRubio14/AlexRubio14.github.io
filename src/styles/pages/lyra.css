@@ -3,18 +3,24 @@
 /* Shared case-study layout first, so this page's rules can override it. */
 @import url('./case-study.css');
 
+:root {
+  --fire: #fb923c;
+  --fire-dim: rgb(251 146 60 / 12%);
+}
+
+/* --- Hero media ------------------------------------------------------------ */
 .hero-media-container {
-  margin-top: 3rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  margin-top: 3rem;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgb(0 0 0 / 60%);
 }
 
 .hero-media-container video,
@@ -24,24 +30,276 @@
   object-fit: cover;
 }
 
-.cards-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-top: 1.5rem;
+/* --- Results band (replaces the ticker) ------------------------------------ */
+.results-band {
+  padding: 2.5rem 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.card-item-visual {
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.25rem 1rem;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.result-item:first-child {
+  border-left: none;
+}
+
+.result-value {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.result-item--award .result-value {
+  color: var(--text-main);
+}
+
+.result-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+/* --- Layout: sticky table of contents + content ----------------------------- */
+.case-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.case-toc {
+  display: none;
+}
+
+/* With margin: auto a grid item shrinks to its content instead of stretching, so the
+   widest child (the objectives table) would set the column width on phones. */
+.case-layout .project-content-wrap {
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .case-layout {
+    grid-template-columns: 200px minmax(0, 900px);
+    justify-content: center;
+    gap: 3rem;
+  }
+
+  .case-layout .project-content-wrap {
+    max-width: none;
+    margin: 0;
+  }
+
+  .case-toc {
+    position: sticky;
+    top: 7rem;
+    display: block;
+    align-self: start;
+    margin-top: 5rem;
+  }
+}
+
+.case-toc__title {
+  margin-bottom: 0.9rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.case-toc ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  list-style: none;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.toc-link {
+  display: block;
+  margin-left: -1px;
+  padding: 0.35rem 0 0.35rem 1rem;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.toc-link:hover,
+.toc-link.active {
+  color: var(--text-main);
+  border-left-color: var(--accent);
+}
+
+/* Consecutive paragraphs inside a block need air */
+.case-block p + p {
+  margin-top: 1rem;
+}
+
+/* Anchor targets clear the fixed navbar */
+.case-block[id] {
+  scroll-margin-top: 6.5rem;
+}
+
+/* --- TL;DR ----------------------------------------------------------------- */
+.tldr {
+  padding: 1.75rem 2rem;
+  background: linear-gradient(135deg, var(--accent-dim), transparent 60%);
+  border: 1px solid var(--border-hover);
+  border-radius: 12px;
+}
+
+.tldr__title {
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.tldr ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-left: 1.1rem;
+}
+
+.tldr li {
+  color: #cad2d9;
+  line-height: 1.65;
+}
+
+.tldr strong {
+  color: var(--text-main);
+}
+
+/* --- Gallery ----------------------------------------------------------------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.gallery-item {
+  margin: 0;
+}
+
+.gallery-item--wide {
+  grid-column: 1 / -1;
+}
+
+.gallery-open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  padding: 1rem;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
+  cursor: zoom-in;
 }
 
+.gallery-open img,
+.gallery-open video {
+  display: block;
+  width: 100%;
+  height: auto; /* the HTML height attribute would otherwise beat aspect-ratio */
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-open:hover img,
+.gallery-open:hover video {
+  transform: scale(1.03);
+}
+
+.gallery-item figcaption {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+/* Dev-only placeholders (removed from production builds by pages/lyra.js) */
+.gallery-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 12px, rgb(56 189 248 / 4%) 12px 24px), var(--bg-card);
+  border: 1px dashed var(--border-hover);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.figure-placeholder {
+  margin-top: 1.5rem;
+}
+
+/* --- Lightbox ---------------------------------------------------------------- */
+.lightbox {
+  max-width: min(92vw, 1400px);
+  max-height: 90vh;
+  margin: auto;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: none;
+}
+
+.lightbox::backdrop {
+  background: rgb(7 9 13 / 88%);
+  backdrop-filter: blur(4px);
+}
+
+.lightbox__media img,
+.lightbox__media video {
+  display: block;
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 30px 60px rgb(0 0 0 / 70%);
+}
+
+.lightbox__close {
+  position: absolute;
+  top: -2.75rem;
+  right: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  color: var(--text-main);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* --- My role ----------------------------------------------------------------- */
 .role-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -50,16 +308,16 @@
 }
 
 .role-card {
-  background: var(--bg-card);
   padding: 1.5rem;
-  border-radius: 8px;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
+  border-radius: 8px;
 }
 
 .role-card__title {
-  color: var(--accent);
   display: block;
   margin-bottom: 0.75rem;
+  color: var(--accent);
 }
 
 .role-card__list {
@@ -67,30 +325,589 @@
   font-size: 0.9rem;
 }
 
-.award-block {
+/* --- FSM diagram ------------------------------------------------------------- */
+.fsm-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 2rem 0;
+  padding: 2rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.fsm-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.fsm-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 210px;
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
   text-align: center;
 }
 
-.award-block h2 {
-  justify-content: center;
+.fsm-node--core,
+.fsm-node--owner {
+  border-color: var(--border-hover);
 }
 
-.award-banner {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
+.fsm-node--core {
+  box-shadow: 0 0 24px var(--accent-dim);
+}
+
+.fsm-node__name {
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.fsm-node__type {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.fsm-link {
   color: var(--accent);
-  font-weight: 700;
-  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
 }
 
-@media (max-width: 600px) {
-  .role-grid {
-    grid-template-columns: 1fr;
+.fsm-lifecycle {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.fsm-lifecycle span {
+  padding: 0.2rem 0.5rem;
+  background: var(--accent-dim);
+  border-radius: 4px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+/* --- Patterns -------------------------------------------------------------- */
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.case-block .pattern-grid {
+  display: grid;
+  padding-left: 0;
+}
+
+.pattern-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 1.1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.pattern-card__name {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.note {
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 8px;
+  font-size: 0.92rem;
+}
+
+/* --- Dragons + flow ---------------------------------------------------------- */
+.dragon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+
+.dragon-card {
+  position: relative;
+  padding: 1.5rem;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.dragon-card::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.35;
+}
+
+.dragon-card--fire {
+  border-color: rgb(251 146 60 / 35%);
+}
+
+.dragon-card--fire::after {
+  background: var(--fire);
+}
+
+.dragon-card--water {
+  border-color: var(--border-hover);
+}
+
+.dragon-card--water::after {
+  background: var(--accent);
+}
+
+.dragon-card__element {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.dragon-card--fire .dragon-card__element {
+  color: var(--fire);
+}
+
+.dragon-card--water .dragon-card__element {
+  color: var(--accent);
+}
+
+.dragon-card__name {
+  margin: 0.25rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.75rem;
+  counter-reset: none;
+  list-style: none;
+}
+
+.case-block .flow-steps {
+  display: grid;
+  padding-left: 0;
+}
+
+.flow-steps li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.flow-steps li:not(:last-child)::after {
+  content: '›';
+  position: absolute;
+  right: -0.6rem;
+  z-index: 1;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.flow-steps__num {
+  display: inline-grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: var(--accent-dim);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+
+/* --- Camera SVG -------------------------------------------------------------- */
+.camera-figure {
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.camera-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.svg-rail {
+  fill: none;
+  stroke: var(--border-hover);
+  stroke-width: 2;
+  stroke-dasharray: 6 6;
+}
+
+.svg-box {
+  fill: var(--bg-surface);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.svg-player {
+  fill: var(--fire);
+}
+
+.svg-accent-line {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+
+.svg-muted-line {
+  stroke: var(--text-muted);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+
+.svg-accent-fill {
+  fill: var(--accent);
+}
+
+.svg-muted-fill {
+  fill: var(--text-muted);
+}
+
+.svg-label {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.svg-label--accent {
+  fill: var(--accent);
+}
+
+/* --- Debugging --------------------------------------------------------------- */
+.bug-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.bug-card {
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.bug-card__title {
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+.bug-card__steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.2rem;
+}
+
+.bug-card__steps dt {
+  margin-top: 0.6rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bug-card__steps dd {
+  margin: 0;
+  color: #cad2d9;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* --- Production stats ---------------------------------------------------------- */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  list-style: none;
+}
+
+.case-block .stat-row {
+  display: grid;
+  padding-left: 0;
+}
+
+.stat-row li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 1rem 1.1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.stat-row__val {
+  color: var(--text-main);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* --- Results: bars, award, objectives ------------------------------------------ */
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin: 0.5rem 0 2rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.bar-row__label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.bar-row__track {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  width: var(--w, 100%);
+  height: 1.6rem;
+  padding: 0 0.6rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.bar--target {
+  background: transparent;
+  border: 1px dashed var(--text-muted);
+  color: var(--text-muted);
+}
+
+.bar--real {
+  background: linear-gradient(90deg, var(--accent), rgb(56 189 248 / 55%));
+  color: var(--bg-main);
+  font-weight: 600;
+}
+
+.award-banner-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgb(251 191 36 / 10%), transparent 70%);
+  border: 1px solid rgb(251 191 36 / 30%);
+  border-radius: 10px;
+}
+
+.award-banner-card__icon {
+  font-size: 2rem;
+}
+
+.award-banner-card__title {
+  color: var(--text-main);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Flex items default to min-width: auto (= their content's minimum width), so a wide
+   table or diagram would stretch the whole column on phones. */
+.project-content-wrap > * {
+  min-width: 0;
+}
+
+.obj-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.obj-table th {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border-hover);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.obj-table td {
+  padding: 0.8rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: #cad2d9;
+  line-height: 1.55;
+  vertical-align: top;
+}
+
+.obj-table td:first-child {
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.status--ok {
+  background: rgb(16 185 129 / 12%);
+  color: #34d399;
+}
+
+.status--partial {
+  background: rgb(251 191 36 / 12%);
+  color: #fbbf24;
+}
+
+.credits {
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+/* --- Responsive -------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .results-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.5rem;
+  }
+
+  .result-item {
+    border-left: none;
+  }
+
+  .result-item--award {
+    grid-column: 1 / -1;
   }
 }
 
-@media (max-width: 900px) {
-  .cards-grid-4 {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 700px) {
+  .role-grid,
+  .gallery,
+  .pattern-grid,
+  .dragon-grid,
+  .bug-grid,
+  .stat-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .flow-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .flow-steps li:nth-child(2)::after {
+    content: none;
+  }
+
+  .bar-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4rem;
+  }
+
+  .fsm-node {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .fsm-link--side {
+    transform: rotate(90deg);
+  }
+
+  .tldr {
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* Objectives table becomes stacked cards: no sideways scrolling on phones */
+  .obj-table thead {
+    display: none;
+  }
+
+  .obj-table tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.4rem 0.75rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .obj-table td {
+    padding: 0;
+    border: none;
+  }
+
+  .obj-table td:first-child {
+    white-space: normal;
+  }
+
+  .obj-table td:last-child {
+    grid-column: 1 / -1;
   }
 }

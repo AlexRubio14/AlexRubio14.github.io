@@ -1,9 +1,11 @@
 /**
- * Highlights the navbar link of the section currently in view.
+ * Highlights the link of the section currently in view.
  * Links declare their target with `data-section="<section id>"`.
+ *
+ * @param {string} [selector] links to manage (navbar by default; case-study TOC uses '.toc-link')
  */
-export function initScrollSpy() {
-  const links = [...document.querySelectorAll('.nav-link[data-section]')];
+export function initScrollSpy(selector = '.nav-link[data-section]') {
+  const links = [...document.querySelectorAll(selector)];
   const sections = links.map((link) => document.getElementById(link.dataset.section)).filter(Boolean);
   if (!sections.length) return;
 

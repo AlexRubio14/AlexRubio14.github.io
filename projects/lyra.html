@@ -42,6 +42,7 @@
     <!-- @include social-dock.html -->
 
     <main id="main">
+      <!-- ================= HERO ================= -->
       <section class="project-hero">
         <div class="wrap">
           <div class="project-hero-inner">
@@ -51,9 +52,9 @@
               Character Programmer &amp; Producer • Team of 7 • Best TFG - ENTI DemoDay 2026
             </p>
             <p class="project-lede" data-i18n="lyra.lede">
-              A third-person soft-fantasy adventure developed in Unreal Engine 5. As Character Programmer
-              &amp; Producer, I designed the character architecture, companion interactions and gameplay
-              systems while coordinating the production pipeline of a seven-person multidisciplinary team.
+              A cozy, Ghibli-inspired puzzle adventure built in Unreal Engine 5.6. As Character Programmer
+              &amp; Producer, I designed the character architecture and the dragon companion interactions
+              while coordinating the production of a seven-person multidisciplinary team.
             </p>
             <div class="hero-cta-wrapper">
               <a
@@ -63,7 +64,7 @@
                 rel="noopener"
                 target="_blank"
               >
-                Itch.io Page
+                Play on itch.io
               </a>
               <a
                 class="btn-action secondary"
@@ -82,7 +83,7 @@
               </div>
               <div class="glance-item">
                 <span class="glance-label" data-i18n="lyra.glance_engine">Engine</span>
-                <span class="glance-val">Unreal Engine 5</span>
+                <span class="glance-val">Unreal Engine 5.6 · Blueprints</span>
               </div>
               <div class="glance-item">
                 <span class="glance-label" data-i18n="lyra.glance_team">Team Size</span>
@@ -111,240 +112,643 @@
           </div>
         </div>
       </section>
-      <section class="metrics-ticker-section">
-        <div class="metrics-ticker-track" id="ticker-track">
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="lyra.m1_title">Finite State Machine:</span>
-            <span class="metric-value">Modular FSM (SOLID)</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="lyra.m2_title">Award Recognition:</span>
-            <span class="metric-value">Best TFG DemoDay 2026</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="lyra.m3_title">Version Control:</span>
-            <span class="metric-value">Perforce Helix Core</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="lyra.m4_title">CI/CD Pipeline:</span>
-            <span class="metric-value">Jenkins Nightly Builds</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="lyra.m1_title">Finite State Machine:</span>
-            <span class="metric-value">Modular FSM (SOLID)</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="lyra.m2_title">Award Recognition:</span>
-            <span class="metric-value">Best TFG DemoDay 2026</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="lyra.m3_title">Version Control:</span>
-            <span class="metric-value">Perforce Helix Core</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="lyra.m4_title">CI/CD Pipeline:</span>
-            <span class="metric-value">Jenkins Nightly Builds</span>
-          </div>
-          <span class="metric-separator">//</span>
-        </div>
-      </section>
-      <div class="wrap project-content-wrap">
-        <div class="case-block">
-          <h2 data-i18n="lyra.p1_heading">01 | My Role</h2>
-          <p data-i18n="lyra.p1_desc">
-            Lyra was developed by La Mapachanda, a seven-person multidisciplinary team. My role combined two
-            areas that had to work closely together: Character Programming and Production.
-          </p>
-          <div class="role-grid">
-            <div class="role-card">
-              <strong class="role-card__title" data-i18n="lyra.role_prog_title">Character Programming</strong>
-              <ul class="role-card__list" data-i18n="lyra.role_prog_list">
-                <li>Character controller and movement systems</li>
-                <li>Camera-relative locomotion</li>
-                <li>Character state architecture</li>
-                <li>Enhanced Input integration</li>
-                <li>Companion interaction systems</li>
-                <li>Animation and gameplay integration</li>
-              </ul>
-            </div>
-            <div class="role-card">
-              <strong class="role-card__title" data-i18n="lyra.role_prod_title">Production</strong>
-              <ul class="role-card__list" data-i18n="lyra.role_prod_list">
-                <li>Scrumban planning and sprint coordination</li>
-                <li>Milestone and roadmap tracking</li>
-                <li>Cross-discipline communication</li>
-                <li>Perforce workflow</li>
-                <li>Jenkins CI/CD pipeline</li>
-              </ul>
-            </div>
-          </div>
-          <div class="metric-highlight mt-6" data-i18n="lyra.p1_takeaway">
-            I wasn't only implementing gameplay — I was also responsible for keeping the team moving towards
-            the final build.
-          </div>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p2_heading">02 | Character Architecture</h2>
-          <p data-i18n="lyra.p2_problem">
-            <strong>The Problem:</strong>
-            As character interactions grew, movement, companion actions and gameplay states could easily
-            become coupled through boolean flags and conditional logic. I wanted each character state to own
-            its behaviour instead of having the character controller decide what should happen through a
-            growing set of conditions.
-          </p>
-          <p class="mt-4" data-i18n="lyra.p2_solution">
-            <strong>The Solution:</strong>
-            I designed a modular Finite State Machine where each state follows a common interface and
-            explicitly controls its own lifecycle.
-          </p>
-          <div class="architecture-diagram">
-            <div class="arch-box" data-i18n="lyra.arch_root">CHARACTER SYSTEM</div>
-            <div class="arch-arrow">▼</div>
-            <div class="arch-box sub" data-i18n="lyra.arch_mgr">FSM Manager</div>
-            <div class="arch-arrow">▼</div>
-            <div class="arch-row">
-              <div class="arch-box sub arch-box--sm">State A</div>
-              <div class="arch-box sub arch-box--sm">State B</div>
-              <div class="arch-box sub arch-box--sm">State C</div>
-            </div>
-          </div>
-          <div class="metric-highlight" data-i18n="lyra.p2_decisions">
-            <strong>Engineering Decisions:</strong>
-            <br />
-            •
-            <strong>State Encapsulation:</strong>
-            Each state owns the behaviour associated with its lifecycle (OnEnter, OnUpdate, OnExit).
-            <br />
-            •
-            <strong>Interfaces:</strong>
-            States communicate through defined contracts rather than depending directly on concrete
-            implementations.
-            <br />
-            •
-            <strong>Design Patterns:</strong>
-            State • Strategy • Observer • Mediator.
-          </div>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p3_heading">03 | From State to Gameplay</h2>
-          <p data-i18n="lyra.p3_desc">
-            The FSM was not designed as an isolated programming exercise. Its purpose was to coordinate the
-            different systems involved in the player's moment-to-moment interactions.
-          </p>
-          <div class="architecture-diagram architecture-diagram--narrow">
-            <div class="arch-box sub arch-box--full">INPUT (Enhanced Input)</div>
-            <div class="arch-arrow">↓</div>
-            <div class="arch-box sub arch-box--full">Character State (FSM)</div>
-            <div class="arch-arrow">↓</div>
-            <div class="arch-box sub arch-box--full">Gameplay Action (Companion / Movement)</div>
-            <div class="arch-arrow">↓</div>
-            <div class="arch-box sub arch-box--full">Animation Notify &amp; Event</div>
-          </div>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p4_heading">04 | Companion System</h2>
-          <p data-i18n="lyra.p4_desc">
-            The companion system is one of Lyra's core gameplay mechanics. The player can invoke, pick up, aim
-            and throw dragons to interact with the environment and solve environmental puzzles.
-          </p>
-          <div class="cards-grid-4">
-            <div class="card-item-visual" data-i18n="lyra.comp_invoke">INVOKE</div>
-            <div class="card-item-visual" data-i18n="lyra.comp_pickup">PICK UP</div>
-            <div class="card-item-visual" data-i18n="lyra.comp_aim">AIM</div>
-            <div class="card-item-visual" data-i18n="lyra.comp_throw">THROW</div>
-          </div>
-          <p class="mt-6" data-i18n="lyra.p4_input">
-            <strong>Input Architecture:</strong>
-            Different character states require different available inputs. Instead of keeping every action
-            permanently active, Lyra dynamically switches Input Mapping Contexts (IMC) depending on the
-            current character state.
-          </p>
-          <p class="mt-4" data-i18n="lyra.p4_attach">
-            <strong>Attachment &amp; Animation:</strong>
-            When a dragon is picked up, its attachment to the character's skeletal mesh is synchronized with
-            animation events. Sockets provide the attachment point, while animation notifies coordinate the
-            moment when the gameplay state changes.
-          </p>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p5_heading">05 | Camera-Relative Locomotion</h2>
-          <p data-i18n="lyra.p5_desc">
-            Lyra uses fixed cameras placed along rails, with smooth transitions between viewpoints. During a
-            camera transition, world-space movement can make the player's controls feel inconsistent with what
-            the player sees.
-          </p>
-          <div class="metric-highlight" data-i18n="lyra.p5_solution">
-            <strong>Solution:</strong>
-            Movement input is calculated relative to the active camera (Camera Forward) instead of directly
-            using absolute world-space directions, ensuring input direction remains intuitive while the camera
-            changes.
-          </div>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p6_heading">06 | Production Pipeline</h2>
-          <p data-i18n="lyra.p6_desc">
-            Working within a real production meant adopting industry-standard version control and tracking
-            pipelines tailored for Unreal Engine projects.
-          </p>
-          <ul>
-            <li data-i18n="lyra.p6_scrumban">
-              <strong>Scrumban:</strong>
-              Organized using weekly sprints, milestone tracking and cross-discipline coordination via Jira
-              and Confluence across programming, design, art and animation.
+
+      <!-- ================= RESULTS BAND ================= -->
+      <section class="results-band" aria-labelledby="results-band-title">
+        <div class="wrap">
+          <h2 class="visually-hidden" id="results-band-title" data-i18n="lyra.results_title">Results</h2>
+          <ul class="results-grid">
+            <li class="result-item result-item--award">
+              <span class="result-value" data-i18n="lyra.r_award_val">Best TFG</span>
+              <span class="result-label" data-i18n="lyra.r_award_lbl">ENTI DemoDay 2026</span>
             </li>
-            <li data-i18n="lyra.p6_perforce">
-              <strong>Perforce Helix Core:</strong>
-              Configured with exclusive checkout policies for
-              <code>.uasset</code>
-              files to reduce conflicting binary edits and make asset ownership explicit.
+            <li class="result-item">
+              <span class="result-value">3</span>
+              <span class="result-label" data-i18n="lyra.r_levels_lbl">levels shipped (2 planned)</span>
+            </li>
+            <li class="result-item">
+              <span class="result-value">38 min</span>
+              <span class="result-label" data-i18n="lyra.r_session_lbl">
+                average playtest session (target 20)
+              </span>
+            </li>
+            <li class="result-item">
+              <span class="result-value">60 FPS</span>
+              <span class="result-label" data-i18n="lyra.r_perf_lbl">stable, with 0 crashes</span>
+            </li>
+            <li class="result-item">
+              <span class="result-value">8.7k</span>
+              <span class="result-label" data-i18n="lyra.r_tiktok_lbl">TikTok views on dev content</span>
             </li>
           </ul>
         </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p7_heading">07 | CI/CD &amp; Nightly Builds</h2>
-          <p data-i18n="lyra.p7_desc">
-            To keep the team working against a reproducible build, I configured a Jenkins CI pipeline for
-            automated nightly builds, ensuring synchronization, compilation, cooking and packaging run
-            reliably.
-          </p>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p8_heading">08 | From Prototype to Final Build</h2>
-          <p data-i18n="lyra.p8_desc">
-            Lyra evolved from an early gameplay prototype into a polished vertical slice combining character
-            systems, companion interactions, environmental puzzles and a final art pass.
-          </p>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p9_heading">09 | Final Vertical Slice</h2>
-          <p data-i18n="lyra.p9_desc">
-            Exploration • Character Movement • Dragon Companions • Environmental Puzzles • Camera Transitions
-          </p>
-        </div>
-        <div class="case-block award-block">
-          <h2 class="" data-i18n="lyra.p10_heading">10 | Awards &amp; Academic Recognition</h2>
-          <p class="award-banner" data-i18n="lyra.p10_award">🏆 BEST TFG — ENTI DEMODAY 2026</p>
-          <p class="mt-3" data-i18n="lyra.p10_desc">
-            Lyra received the Best Final Degree Project award at ENTI DemoDay 2026.
-          </p>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="lyra.p11_heading">11 | Engineering Takeaways</h2>
-          <p data-i18n="lyra.p11_desc">
-            Designing the FSM taught me to think about gameplay systems in terms of ownership and
-            responsibilities. Working as Producer alongside programming changed the way I approach technical
-            decisions, ensuring systems are maintainable not only for the programmer, but for designers,
-            artists and other teammates.
-          </p>
+      </section>
+
+      <!-- ================= CONTENT + TOC ================= -->
+      <div class="wrap case-layout">
+        <nav class="case-toc" aria-label="On this page" data-i18n-aria-label="lyra.toc_title">
+          <p class="case-toc__title" data-i18n="lyra.toc_title">On this page</p>
+          <ol>
+            <li>
+              <a class="toc-link" data-section="game" href="#game" data-i18n="lyra.toc_game">The game</a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="role" href="#role" data-i18n="lyra.toc_role">My role</a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="architecture" href="#architecture" data-i18n="lyra.toc_arch">
+                Character architecture
+              </a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="companions" href="#companions" data-i18n="lyra.toc_comp">
+                Dragon companions
+              </a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="camera" href="#camera" data-i18n="lyra.toc_camera">
+                Camera-relative movement
+              </a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="debugging" href="#debugging" data-i18n="lyra.toc_debug">
+                Debugging stories
+              </a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="production" href="#production" data-i18n="lyra.toc_prod">
+                Production
+              </a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="outcome" href="#outcome" data-i18n="lyra.toc_outcome">
+                Results &amp; reflection
+              </a>
+            </li>
+          </ol>
+        </nav>
+
+        <div class="project-content-wrap">
+          <!-- TL;DR -->
+          <aside class="tldr" aria-labelledby="tldr-title">
+            <p class="tldr__title" id="tldr-title" data-i18n="lyra.tldr_title">// IN 30 SECONDS</p>
+            <ul data-i18n="lyra.tldr_list">
+              <li>
+                <strong>What:</strong>
+                a cozy puzzle adventure in UE 5.6 (Blueprints) by a team of 7. Best TFG at ENTI DemoDay 2026.
+              </li>
+              <li>
+                <strong>My code:</strong>
+                the player character: a data-driven state machine, layered Enhanced Input and the dragon
+                companion interactions.
+              </li>
+              <li>
+                <strong>My production work:</strong>
+                Scrumban planning, Perforce workflow, playtesting and social media for 7 people across 4
+                disciplines.
+              </li>
+              <li>
+                <strong>Outcome:</strong>
+                3 levels instead of 2, playtest sessions nearly twice as long as targeted, stable 60 FPS and
+                zero crashes.
+              </li>
+            </ul>
+          </aside>
+
+          <!-- 01 THE GAME -->
+          <section class="case-block" id="game" aria-labelledby="game-title">
+            <h2 id="game-title" data-i18n="lyra.s1_heading">01 | The Game</h2>
+            <p data-i18n="lyra.s1_desc">
+              Lyra explores a mysterious island with two baby dragons: Pochi breathes fire and Mochi shoots
+              water. Puzzles are solved by combining both: melting wooden barriers, lighting torches, growing
+              bridges, filling pools and throwing the dragons to reach new areas, from the Sunlit Hills to the
+              Crystal Cave.
+            </p>
+            <div class="gallery" data-gallery>
+              <figure class="gallery-item gallery-item--wide">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge image"
+                  data-i18n-aria-label="lyra.gallery_open"
+                >
+                  <img
+                    alt="Lyra key art: Lyra on a boat approaching the island"
+                    height="1041"
+                    loading="lazy"
+                    decoding="async"
+                    src="/src/assets/images/lyra-cover.webp"
+                    width="1600"
+                  />
+                </button>
+                <figcaption data-i18n="lyra.g_keyart">Key art</figcaption>
+              </figure>
+              <!-- Placeholders: removed automatically in production builds (see pages/lyra.js). -->
+              <figure class="gallery-item gallery-item--placeholder" data-placeholder>
+                <div class="gallery-placeholder"><span>Sunlit Hills</span></div>
+                <figcaption>Screenshot · Sunlit Hills</figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--placeholder" data-placeholder>
+                <div class="gallery-placeholder"><span>Crystal Cave</span></div>
+                <figcaption>Screenshot · Crystal Cave</figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--placeholder" data-placeholder>
+                <div class="gallery-placeholder"><span>Pochi · fire</span></div>
+                <figcaption>Clip · Pochi melting wood</figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--placeholder" data-placeholder>
+                <div class="gallery-placeholder"><span>Mochi · water</span></div>
+                <figcaption>Clip · Mochi growing a bridge</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <!-- 02 MY ROLE -->
+          <section class="case-block" id="role" aria-labelledby="role-title">
+            <h2 id="role-title" data-i18n="lyra.s2_heading">02 | My Role</h2>
+            <p data-i18n="lyra.s2_desc">
+              Lyra was developed by La Mapachanda, a seven-person multidisciplinary team. My role combined two
+              areas that had to work closely together: Character Programming and Production.
+            </p>
+            <div class="role-grid">
+              <div class="role-card">
+                <strong class="role-card__title" data-i18n="lyra.role_prog_title">
+                  Character Programming
+                </strong>
+                <ul class="role-card__list" data-i18n="lyra.role_prog_list">
+                  <li>Character controller and movement</li>
+                  <li>Data-driven state machine</li>
+                  <li>Enhanced Input by context</li>
+                  <li>Dragon companion interactions</li>
+                  <li>Animation and gameplay integration</li>
+                </ul>
+              </div>
+              <div class="role-card">
+                <strong class="role-card__title" data-i18n="lyra.role_prod_title">Production</strong>
+                <ul class="role-card__list" data-i18n="lyra.role_prod_list">
+                  <li>Scrumban planning and sprints</li>
+                  <li>Perforce workflow</li>
+                  <li>Capacity planning with CFD and velocity</li>
+                  <li>Playtesting sessions</li>
+                  <li>Social media and marketing</li>
+                </ul>
+              </div>
+            </div>
+            <p class="metric-highlight" data-i18n="lyra.s2_quote">
+              I wasn't only implementing gameplay: I was also responsible for keeping the team moving towards
+              the final build.
+            </p>
+          </section>
+
+          <!-- 03 CHARACTER ARCHITECTURE -->
+          <section class="case-block" id="architecture" aria-labelledby="arch-title">
+            <h2 id="arch-title" data-i18n="lyra.s3_heading">03 | Character Architecture</h2>
+            <p data-i18n="lyra.s3_problem">
+              <strong>The problem:</strong>
+              as interactions grew, movement, companion actions and gameplay states started to depend on each
+              other through boolean flags. I wanted each state to own its behaviour instead of the character
+              controller deciding everything through an ever-growing list of conditions.
+            </p>
+            <p data-i18n="lyra.s3_solution">
+              <strong>The solution:</strong>
+              a flat, data-driven finite state machine. Every state follows the same interface and controls
+              its own lifecycle, and the state configuration lives in a Data Asset instead of being
+              hard-coded.
+            </p>
+
+            <!-- TODO: replace the generic BP_State* label with the real state names when Alex confirms them. -->
+            <div
+              class="fsm-diagram"
+              role="img"
+              aria-label="State machine architecture"
+              data-i18n-aria-label="lyra.fsm_alt"
+            >
+              <div class="fsm-node fsm-node--owner">
+                <span class="fsm-node__name">BP_LyraCharacter</span>
+                <span class="fsm-node__type" data-i18n="lyra.fsm_character">Character</span>
+              </div>
+              <span class="fsm-link" aria-hidden="true" data-i18n="lyra.fsm_owns">owns ▾</span>
+              <div class="fsm-row">
+                <div class="fsm-node fsm-node--core">
+                  <span class="fsm-node__name">BPC_StateMachine</span>
+                  <span class="fsm-node__type" data-i18n="lyra.fsm_component">Actor Component</span>
+                </div>
+                <span class="fsm-link fsm-link--side" aria-hidden="true" data-i18n="lyra.fsm_reads">
+                  ◂ reads
+                </span>
+                <div class="fsm-node">
+                  <span class="fsm-node__name">DA_LyraStateConfiguration</span>
+                  <span class="fsm-node__type" data-i18n="lyra.fsm_data">
+                    Data Asset · state configuration
+                  </span>
+                </div>
+              </div>
+              <span class="fsm-link" aria-hidden="true" data-i18n="lyra.fsm_runs">
+                runs the current state ▾
+              </span>
+              <div class="fsm-node fsm-node--states">
+                <span class="fsm-node__name">BP_State*</span>
+                <span class="fsm-node__type" data-i18n="lyra.fsm_states">
+                  one Blueprint per state · implements I_StateEvents
+                </span>
+                <span class="fsm-lifecycle">
+                  <span>OnEnter</span>
+                  <span>OnUpdate</span>
+                  <span>OnExit</span>
+                </span>
+              </div>
+            </div>
+
+            <h3 class="case-subheading" data-i18n="lyra.s3_patterns_title">Patterns, and where they live</h3>
+            <!-- TODO: add where the Strategy pattern is used once Alex confirms it. -->
+            <ul class="pattern-grid">
+              <li class="pattern-card">
+                <span class="pattern-card__name">State</span>
+                <span data-i18n="lyra.pat_state">BPC_StateMachine + one BP_State* per state</span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">Observer</span>
+                <span data-i18n="lyra.pat_observer">Integration with Level Sequences</span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">Mediator</span>
+                <span data-i18n="lyra.pat_mediator">Character ↔ dragon companion communication</span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">Strategy</span>
+                <span data-i18n="lyra.pat_strategy">
+                  Interchangeable behaviours behind a common interface
+                </span>
+              </li>
+            </ul>
+            <p data-i18n="lyra.s3_perf">
+              <strong>Performance:</strong>
+              states are created lazily the first time they are needed, and Tick only runs where it is
+              required. Lyra held a stable 60 FPS with zero crashes on the documented target hardware.
+            </p>
+            <p class="note" data-i18n="lyra.s3_bp_note">
+              <strong>Why Blueprints and not C++?</strong>
+              Nobody on the team had solid Unreal experience, so we kept the whole project in Blueprints to
+              let designers and artists read and tweak logic. The architecture rules above (single
+              responsibility, interfaces, data-driven configuration) were how I kept a visual codebase
+              maintainable.
+            </p>
+          </section>
+
+          <!-- 04 DRAGON COMPANIONS -->
+          <section class="case-block" id="companions" aria-labelledby="comp-title">
+            <h2 id="comp-title" data-i18n="lyra.s4_heading">04 | Dragon Companions</h2>
+            <p data-i18n="lyra.s4_desc">
+              The companions are Lyra's core mechanic. I built the character side of the interaction: how the
+              player calls, carries, aims and throws each dragon.
+            </p>
+            <div class="dragon-grid">
+              <article class="dragon-card dragon-card--fire">
+                <span class="dragon-card__element" data-i18n="lyra.pochi_el">Fire</span>
+                <h3 class="dragon-card__name">Pochi</h3>
+                <p data-i18n="lyra.pochi_desc">Melts wooden barriers and lights torches.</p>
+              </article>
+              <article class="dragon-card dragon-card--water">
+                <span class="dragon-card__element" data-i18n="lyra.mochi_el">Water</span>
+                <h3 class="dragon-card__name">Mochi</h3>
+                <p data-i18n="lyra.mochi_desc">Grows bridges and fills pools.</p>
+              </article>
+            </div>
+            <ol class="flow-steps" aria-label="Interaction flow" data-i18n-aria-label="lyra.flow_alt">
+              <li>
+                <span class="flow-steps__num">1</span>
+                <span data-i18n="lyra.comp_invoke">INVOKE</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">2</span>
+                <span data-i18n="lyra.comp_pickup">PICK UP</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">3</span>
+                <span data-i18n="lyra.comp_aim">AIM</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">4</span>
+                <span data-i18n="lyra.comp_throw">THROW</span>
+              </li>
+            </ol>
+            <p data-i18n="lyra.s4_input">
+              <strong>Input by context:</strong>
+              instead of keeping every action permanently bound, Input Mapping Contexts are layered by meaning
+              (for example
+              <code>IMC_LyraDragonActions</code>
+              ) and swapped by the state machine, so each state only exposes the inputs that make sense.
+            </p>
+            <p data-i18n="lyra.p4_attach">
+              <strong>Attachment &amp; Animation:</strong>
+              When a dragon is picked up, its attachment to the character's skeletal mesh is synchronized with
+              animation events. Sockets provide the attachment point, while animation notifies coordinate the
+              moment when the gameplay state changes.
+            </p>
+          </section>
+
+          <!-- 05 CAMERA -->
+          <section class="case-block" id="camera" aria-labelledby="camera-title">
+            <h2 id="camera-title" data-i18n="lyra.s5_heading">05 | Camera-Relative Movement</h2>
+            <p data-i18n="lyra.p5_desc">
+              Lyra uses fixed cameras placed along rails, with smooth transitions between viewpoints. During a
+              camera transition, world-space movement can make the player's controls feel inconsistent with
+              what the player sees.
+            </p>
+            <figure class="camera-figure">
+              <svg viewBox="0 0 520 220" role="img" aria-labelledby="camera-svg-title">
+                <title id="camera-svg-title" data-i18n="lyra.cam_alt">
+                  Pushing the stick forward moves Lyra along the camera's forward vector, not the world X
+                  axis.
+                </title>
+                <defs>
+                  <marker
+                    id="arrow-accent"
+                    viewBox="0 0 10 10"
+                    refX="9"
+                    refY="5"
+                    markerWidth="7"
+                    markerHeight="7"
+                    orient="auto-start-reverse"
+                  >
+                    <path d="M0 0 10 5 0 10z" class="svg-accent-fill" />
+                  </marker>
+                  <marker
+                    id="arrow-muted"
+                    viewBox="0 0 10 10"
+                    refX="9"
+                    refY="5"
+                    markerWidth="7"
+                    markerHeight="7"
+                    orient="auto-start-reverse"
+                  >
+                    <path d="M0 0 10 5 0 10z" class="svg-muted-fill" />
+                  </marker>
+                </defs>
+                <!-- rail -->
+                <path d="M40 190 Q 140 120 250 150 T 480 110" class="svg-rail" />
+                <!-- camera -->
+                <g transform="translate(90 165) rotate(-28)">
+                  <rect x="-16" y="-10" width="26" height="20" rx="3" class="svg-box" />
+                  <path d="M10 -6 22 -12 22 12 10 6z" class="svg-box" />
+                </g>
+                <text x="60" y="210" class="svg-label" data-i18n="lyra.cam_camera">camera on rail</text>
+                <!-- player -->
+                <circle cx="300" cy="80" r="11" class="svg-player" />
+                <text x="318" y="70" class="svg-label" data-i18n="lyra.cam_player">Lyra</text>
+                <!-- world forward -->
+                <line
+                  x1="300"
+                  y1="80"
+                  x2="420"
+                  y2="80"
+                  class="svg-muted-line"
+                  marker-end="url(#arrow-muted)"
+                />
+                <text x="428" y="84" class="svg-label" data-i18n="lyra.cam_world">world X</text>
+                <!-- camera forward -->
+                <line
+                  x1="300"
+                  y1="80"
+                  x2="372"
+                  y2="22"
+                  class="svg-accent-line"
+                  marker-end="url(#arrow-accent)"
+                />
+                <text x="380" y="22" class="svg-label svg-label--accent" data-i18n="lyra.cam_forward">
+                  camera forward
+                </text>
+              </svg>
+            </figure>
+            <p class="metric-highlight" data-i18n="lyra.p5_solution">
+              <strong>Solution:</strong>
+              movement input is calculated relative to the active camera (Camera Forward) instead of directly
+              using absolute world-space directions, so input direction stays intuitive while the camera
+              changes.
+            </p>
+          </section>
+
+          <!-- 06 DEBUGGING -->
+          <section class="case-block" id="debugging" aria-labelledby="debug-title">
+            <h2 id="debug-title" data-i18n="lyra.s6_heading">06 | Debugging Stories</h2>
+            <p data-i18n="lyra.s6_desc">
+              Two bugs that taught me to diagnose layer by layer instead of guessing.
+            </p>
+            <div class="bug-grid">
+              <article class="bug-card">
+                <h3 class="bug-card__title" data-i18n="lyra.bug1_title">Invisible subtitles in cinematics</h3>
+                <dl class="bug-card__steps">
+                  <dt data-i18n="lyra.bug_symptom">Symptom</dt>
+                  <dd data-i18n="lyra.bug1_symptom">
+                    The subtitle widget never appeared while a Level Sequence played; everything fired at once
+                    when it ended.
+                  </dd>
+                  <dt data-i18n="lyra.bug_ruled">Ruled out</dt>
+                  <dd data-i18n="lyra.bug1_ruled">Widget ZOrder, Cinematic Mode, OnCameraCut.</dd>
+                  <dt data-i18n="lyra.bug_cause">Root cause</dt>
+                  <dd data-i18n="lyra.bug1_cause">
+                    The Event Track's Fire Mode was misconfigured, so the Director Blueprint did nothing
+                    during playback.
+                  </dd>
+                  <dt data-i18n="lyra.bug_fix">Fix</dt>
+                  <dd data-i18n="lyra.bug1_fix">
+                    Correct Fire Mode on the Event Track: subtitles fire in sync.
+                  </dd>
+                </dl>
+              </article>
+              <article class="bug-card">
+                <h3 class="bug-card__title" data-i18n="lyra.bug2_title">UI manager race condition</h3>
+                <dl class="bug-card__steps">
+                  <dt data-i18n="lyra.bug_symptom">Symptom</dt>
+                  <dd data-i18n="lyra.bug2_symptom">
+                    "Accessed None" errors and broken fades when the player entered and left a trigger
+                    quickly.
+                  </dd>
+                  <dt data-i18n="lyra.bug_cause">Root cause</dt>
+                  <dd data-i18n="lyra.bug2_cause">
+                    RemoveFromParent on a reference that was no longer valid, plus overlapping fade logic.
+                  </dd>
+                  <dt data-i18n="lyra.bug_fix">Fix</dt>
+                  <dd data-i18n="lyra.bug2_fix">
+                    IsValid guards, state reduced to two references (CurrentWidget, WidgetToHide) and one
+                    Timeline driven with PlayFromStart / ReverseFromEnd.
+                  </dd>
+                </dl>
+              </article>
+            </div>
+          </section>
+
+          <!-- 07 PRODUCTION -->
+          <section class="case-block" id="production" aria-labelledby="prod-title">
+            <h2 id="prod-title" data-i18n="lyra.s7_heading">07 | Production</h2>
+            <p data-i18n="lyra.s7_desc">
+              Seven people across programming, design, art and animation shipping a vertical slice in one
+              academic year. My job was to keep that machine predictable.
+            </p>
+            <ul class="stat-row">
+              <li>
+                <span class="stat-row__val">16</span>
+                <span data-i18n="lyra.st_sprints">sprints (Scrumban)</span>
+              </li>
+              <li>
+                <span class="stat-row__val">940</span>
+                <span data-i18n="lyra.st_cl">changelists in Perforce</span>
+              </li>
+              <li>
+                <span class="stat-row__val">8</span>
+                <span data-i18n="lyra.st_playtests">playtesting sessions</span>
+              </li>
+            </ul>
+            <ul data-i18n="lyra.s7_list">
+              <li>
+                <strong>Scrumban:</strong>
+                weekly sprints, milestone tracking and cross-discipline coordination in Jira and Confluence. I
+                used the Cumulative Flow Diagram and the velocity chart to spot bottlenecks and reassign
+                capacity.
+              </li>
+              <li>
+                <strong>Perforce Helix Core:</strong>
+                exclusive checkout for
+                <code>.uasset</code>
+                files to avoid conflicting binary edits and make asset ownership explicit. The workflow
+                evolved with the team during the year.
+              </li>
+              <li>
+                <strong>Nightly builds:</strong>
+                the team worked against nightly builds from a Jenkins pipeline, so everyone tested the same
+                reproducible version.
+              </li>
+              <li>
+                <strong>Marketing:</strong>
+                development content on social media: 8,686 views on TikTok across 9 videos and 7,718 on
+                Instagram.
+              </li>
+            </ul>
+            <!-- TODO: replace with the CFD / velocity figure from the TFG memory. -->
+            <figure class="gallery-item gallery-item--placeholder figure-placeholder" data-placeholder>
+              <div class="gallery-placeholder"><span>CFD / velocity chart</span></div>
+              <figcaption>Figure · Cumulative Flow Diagram from Jira</figcaption>
+            </figure>
+          </section>
+
+          <!-- 08 RESULTS & REFLECTION -->
+          <section class="case-block" id="outcome" aria-labelledby="outcome-title">
+            <h2 id="outcome-title" data-i18n="lyra.s8_heading">08 | Results &amp; Reflection</h2>
+
+            <div
+              class="bars"
+              role="img"
+              aria-label="Planned versus achieved"
+              data-i18n-aria-label="lyra.bars_alt"
+            >
+              <div class="bar-row">
+                <span class="bar-row__label" data-i18n="lyra.bar_session">Average session</span>
+                <span class="bar-row__track">
+                  <span class="bar bar--target" style="--w: 52%">
+                    <span data-i18n="lyra.bar_target20">target 20 min</span>
+                  </span>
+                  <span class="bar bar--real" style="--w: 100%"><span>38:22</span></span>
+                </span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-row__label" data-i18n="lyra.bar_levels">Levels</span>
+                <span class="bar-row__track">
+                  <span class="bar bar--target" style="--w: 66%">
+                    <span data-i18n="lyra.bar_target2">2 planned</span>
+                  </span>
+                  <span class="bar bar--real" style="--w: 100%">
+                    <span data-i18n="lyra.bar_real3">3 shipped</span>
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="award-banner-card">
+              <span class="award-banner-card__icon" aria-hidden="true">🏆</span>
+              <div>
+                <p class="award-banner-card__title" data-i18n="lyra.award_title">
+                  Best TFG — ENTI DemoDay 2026
+                </p>
+                <p data-i18n="lyra.award_desc">
+                  Lyra received the Best Final Degree Project award at ENTI DemoDay 2026.
+                </p>
+              </div>
+            </div>
+
+            <h3 class="case-subheading" data-i18n="lyra.obj_title">My objectives, honestly</h3>
+            <div class="table-scroll">
+              <table class="obj-table">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="lyra.obj_col_goal">Objective</th>
+                    <th scope="col" data-i18n="lyra.obj_col_result">Result</th>
+                    <th scope="col" data-i18n="lyra.obj_col_why">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-i18n="lyra.obj1_goal">Performance &amp; stability</td>
+                    <td><span class="status status--ok" data-i18n="lyra.status_ok">Met</span></td>
+                    <td data-i18n="lyra.obj1_why">
+                      Stable 60 FPS and zero crashes on the documented hardware.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td data-i18n="lyra.obj2_goal">SOLID architecture</td>
+                    <td>
+                      <span class="status status--partial" data-i18n="lyra.status_partial">Partial</span>
+                    </td>
+                    <td data-i18n="lyra.obj2_why">
+                      The character and the dragon handler exceed my coupling threshold (12 and 10 external
+                      references vs 8). They are integrators by nature, but I'd split them today.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td data-i18n="lyra.obj3_goal">Estimation stability</td>
+                    <td>
+                      <span class="status status--partial" data-i18n="lyra.status_partial">Partial</span>
+                    </td>
+                    <td data-i18n="lyra.obj3_why">
+                      Only 3 of 16 sprints had a recorded commitment, and Jira's free plan couldn't roll
+                      subtask estimates up to stories.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td data-i18n="lyra.obj4_goal">Team management</td>
+                    <td><span class="status status--ok" data-i18n="lyra.status_ok">Met</span></td>
+                    <td data-i18n="lyra.obj4_why">
+                      All 7 members have their own changelists and there was no systematic delegation of work.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="case-subheading" data-i18n="lyra.takeaways_title">What I'd keep doing</h3>
+            <p data-i18n="lyra.p11_desc">
+              Designing the FSM taught me to think about gameplay systems in terms of ownership and
+              responsibilities. Working as Producer alongside programming changed the way I approach technical
+              decisions: systems must be maintainable not only for the programmer, but for designers, artists
+              and other teammates.
+            </p>
+            <p class="metric-highlight" data-i18n="lyra.lesson">
+              Lesson: validate a tool technically before using it as the source of your metrics.
+            </p>
+            <!-- TODO: list teammates and roles once Alex confirms it's OK to name them. -->
+            <p class="credits" data-i18n="lyra.credits">
+              Made by La Mapachanda, a team of 7 students at ENTI (Universitat de Barcelona).
+            </p>
+          </section>
         </div>
       </div>
+
+      <!-- Lightbox for the gallery -->
+      <dialog class="lightbox" id="lightbox" aria-label="Image viewer" data-i18n-aria-label="lyra.lightbox">
+        <button type="button" class="lightbox__close" aria-label="Close" data-i18n-aria-label="drawer.close">
+          ×
+        </button>
+        <div class="lightbox__media"></div>
+      </dialog>
     </main>
 
     <!-- @include footer.html -->
