@@ -78,13 +78,41 @@
       <section aria-label="Introduction" class="hero-block" id="top">
         <div class="wrap hero-content hero-content--split">
           <div class="hero-text">
+            <p class="hero-status">
+              <span class="hero-status__dot" aria-hidden="true"></span>
+              <span data-i18n="home.hero_status">Open to gameplay and multiplayer programming roles</span>
+            </p>
             <h1 class="hero-headline">Alejandro Rubio Plana</h1>
             <p class="hero-subtitle">Game Software Engineer</p>
             <p class="hero-specialty">C++ • Systems • Multiplayer Networking • Gameplay</p>
-            <p class="hero-intro" data-i18n="home.about_p1">
-              I'm a Game Software Engineer focused on C++ systems, multiplayer networking and gameplay
-              programming.
+            <p class="hero-intro" data-i18n="home.hero_intro">
+              I design and build game systems end to end: server-authoritative networking in C++, gameplay
+              architecture in Unreal and Unity, and the tests and pipelines that keep them reliable.
             </p>
+            <ul class="hero-stats">
+              <li>
+                <span class="hero-stats__val" data-i18n="home.hs_tfg_val">Best TFG</span>
+                <span class="hero-stats__lbl" data-i18n="home.hs_tfg_lbl">Lyra · ENTI DemoDay 2026</span>
+              </li>
+              <li>
+                <span class="hero-stats__val">100 Hz</span>
+                <span class="hero-stats__lbl" data-i18n="home.hs_server_lbl">
+                  authoritative server in C++20
+                </span>
+              </li>
+              <li>
+                <span class="hero-stats__val">49</span>
+                <span class="hero-stats__lbl" data-i18n="home.hs_wan_lbl">
+                  clients over real WAN, 0 CRC errors
+                </span>
+              </li>
+              <li>
+                <span class="hero-stats__val" data-i18n="home.hs_studio_val">11 months</span>
+                <span class="hero-stats__lbl" data-i18n="home.hs_studio_lbl">
+                  gameplay programmer in a studio
+                </span>
+              </li>
+            </ul>
             <div class="hero-actions">
               <a class="btn-project-details" data-i18n="home.hero_cta_projects" href="#projects">
                 View projects ➔
@@ -99,7 +127,7 @@
                 Download CV
               </a>
               <a class="btn-ghost" href="https://github.com/AlexRubio14" rel="noopener" target="_blank">
-                <svg aria-hidden="true" viewbox="0 0 24 24">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
                   <path
                     d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
                   ></path>
@@ -124,6 +152,7 @@
           </div>
         </div>
       </section>
+
       <!-- PROJECTS -->
       <section aria-labelledby="projects-title" class="section-pad" id="projects">
         <div class="wrap">
@@ -141,31 +170,99 @@
                     // C++20 • MULTIPLAYER NETWORKING • SYSTEMS
                   </div>
                   <h3>NetworkMiddleware</h3>
-                  <p class="featured-role" data-i18n="home.nm_meta">
-                    Solo Developer • C++20 • Multiplayer Networking • Systems
-                  </p>
+                  <p class="featured-role" data-i18n="home.nm_role">Solo developer · Jan - Mar 2026</p>
                   <p class="featured-summary" data-i18n="home.nm_summary">
-                    An engine-agnostic, server-authoritative networking layer designed for MOBA-style
-                    multiplayer games running at 100 Hz.
+                    An engine-agnostic, server-authoritative networking middleware for MOBA games: custom UDP
+                    protocol, delta-compressed snapshots and a 100 Hz simulation, tested over the real
+                    internet on Azure.
                   </p>
-                  <ul class="featured-metrics" data-i18n="home.nm_metrics">
-                    <li>100 Hz tick</li>
-                    <li>254 tests</li>
-                    <li>−74% bandwidth</li>
-                    <li>49 WAN clients, 0 CRC errors</li>
+                  <ul class="card-stats">
+                    <li>
+                      <span class="card-stats__val">38 bits</span>
+                      <span class="card-stats__lbl" data-i18n="home.nm_s1">unchanged hero (360 raw)</span>
+                    </li>
+                    <li>
+                      <span class="card-stats__val">254</span>
+                      <span class="card-stats__lbl" data-i18n="home.nm_s2">automated tests</span>
+                    </li>
+                    <li>
+                      <span class="card-stats__val">49</span>
+                      <span class="card-stats__lbl" data-i18n="home.nm_s3">WAN clients, 0 CRC errors</span>
+                    </li>
                   </ul>
                 </div>
                 <span class="featured-card__cta" data-i18n="home.card_cta">Read case study ➔</span>
               </div>
-              <div class="featured-visual">
-                <img
-                  alt=""
-                  decoding="async"
-                  height="1174"
-                  loading="lazy"
-                  src="/src/assets/images/network-middleware-cover.webp"
-                  width="660"
-                />
+              <!-- The same picture as the case study's hero: bots over the internet talking to the server. -->
+              <div class="featured-visual featured-visual--diagram" aria-hidden="true">
+                <svg class="card-net" viewBox="0 0 420 260">
+                  <g class="card-net__bots">
+                    <circle cx="40" cy="70" r="4.5" />
+                    <circle cx="58" cy="70" r="4.5" />
+                    <circle cx="76" cy="70" r="4.5" />
+                    <circle cx="94" cy="70" r="4.5" />
+                    <circle cx="112" cy="70" r="4.5" />
+                    <circle cx="130" cy="70" r="4.5" />
+                    <circle cx="148" cy="70" r="4.5" />
+                    <circle cx="40" cy="88" r="4.5" />
+                    <circle cx="58" cy="88" r="4.5" />
+                    <circle cx="76" cy="88" r="4.5" />
+                    <circle cx="94" cy="88" r="4.5" />
+                    <circle cx="112" cy="88" r="4.5" />
+                    <circle cx="130" cy="88" r="4.5" />
+                    <circle cx="148" cy="88" r="4.5" />
+                    <circle cx="40" cy="106" r="4.5" />
+                    <circle cx="58" cy="106" r="4.5" />
+                    <circle cx="76" cy="106" r="4.5" />
+                    <circle cx="94" cy="106" r="4.5" />
+                    <circle cx="112" cy="106" r="4.5" />
+                    <circle cx="130" cy="106" r="4.5" />
+                    <circle cx="148" cy="106" r="4.5" />
+                    <circle cx="40" cy="124" r="4.5" />
+                    <circle cx="58" cy="124" r="4.5" />
+                    <circle cx="76" cy="124" r="4.5" />
+                    <circle cx="94" cy="124" r="4.5" />
+                    <circle cx="112" cy="124" r="4.5" />
+                    <circle cx="130" cy="124" r="4.5" />
+                    <circle cx="148" cy="124" r="4.5" />
+                    <circle cx="40" cy="142" r="4.5" />
+                    <circle cx="58" cy="142" r="4.5" />
+                    <circle cx="76" cy="142" r="4.5" />
+                    <circle cx="94" cy="142" r="4.5" />
+                    <circle cx="112" cy="142" r="4.5" />
+                    <circle cx="130" cy="142" r="4.5" />
+                    <circle cx="148" cy="142" r="4.5" />
+                    <circle cx="40" cy="160" r="4.5" />
+                    <circle cx="58" cy="160" r="4.5" />
+                    <circle cx="76" cy="160" r="4.5" />
+                    <circle cx="94" cy="160" r="4.5" />
+                    <circle cx="112" cy="160" r="4.5" />
+                    <circle cx="130" cy="160" r="4.5" />
+                    <circle cx="148" cy="160" r="4.5" />
+                    <circle cx="40" cy="178" r="4.5" />
+                    <circle cx="58" cy="178" r="4.5" />
+                    <circle cx="76" cy="178" r="4.5" />
+                    <circle cx="94" cy="178" r="4.5" />
+                    <circle cx="112" cy="178" r="4.5" />
+                    <circle cx="130" cy="178" r="4.5" />
+                    <circle cx="148" cy="178" r="4.5" />
+                  </g>
+                  <line x1="168" y1="110" x2="292" y2="110" class="card-net__in" />
+                  <line x1="292" y1="150" x2="168" y2="150" class="card-net__out" />
+                  <g class="card-net__packets card-net__packets--in">
+                    <rect x="170" y="106" width="9" height="8" rx="2" />
+                    <rect x="170" y="106" width="9" height="8" rx="2" />
+                  </g>
+                  <g class="card-net__packets card-net__packets--out">
+                    <rect x="280" y="145" width="12" height="10" rx="2" />
+                    <rect x="280" y="145" width="12" height="10" rx="2" />
+                    <rect x="280" y="145" width="12" height="10" rx="2" />
+                  </g>
+                  <rect x="300" y="72" width="96" height="116" rx="12" class="card-net__server" />
+                  <circle cx="348" cy="142" r="22" class="card-net__tick" />
+                  <text x="348" y="104" text-anchor="middle" class="card-net__name">NetServer</text>
+                  <text x="348" y="147" text-anchor="middle" class="card-net__hz">100 Hz</text>
+                </svg>
               </div>
             </a>
             <a class="featured-card" href="/projects/lyra.html" id="lyra">
@@ -175,202 +272,196 @@
                     // UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION
                   </div>
                   <h3>Lyra</h3>
-                  <p class="featured-role" data-i18n="home.lyra_role">Character Programmer &amp; Producer</p>
-                  <p class="featured-summary" data-i18n="home.lyra_summary">
-                    Character architecture, dragon-companion interactions and gameplay systems for a
-                    seven-person multidisciplinary team, combined with the Producer role.
+                  <p class="featured-role" data-i18n="home.lyra_role2">
+                    Character Programmer &amp; Producer · team of 7
                   </p>
-                  <ul class="featured-metrics" data-i18n="home.lyra_metrics">
-                    <li>Best TFG 2026</li>
-                    <li>Team of 7</li>
-                    <li>Unreal Engine 5</li>
-                    <li>Modular FSM</li>
+                  <p class="featured-summary" data-i18n="home.lyra_summary2">
+                    A cozy puzzle adventure with two baby dragons. I built the character's state machine and
+                    the dragon interactions, and ran production for the team through the final build.
+                  </p>
+                  <ul class="card-stats">
+                    <li class="card-stats__award">
+                      <span class="card-stats__val" data-i18n="home.lyra_s1_val">Best TFG</span>
+                      <span class="card-stats__lbl">ENTI DemoDay 2026</span>
+                    </li>
+                    <li>
+                      <span class="card-stats__val">3</span>
+                      <span class="card-stats__lbl" data-i18n="home.lyra_s2">levels shipped (2 planned)</span>
+                    </li>
+                    <li>
+                      <span class="card-stats__val">60 FPS</span>
+                      <span class="card-stats__lbl" data-i18n="home.lyra_s3">stable, 0 crashes</span>
+                    </li>
                   </ul>
                 </div>
                 <span class="featured-card__cta" data-i18n="home.card_cta">Read case study ➔</span>
               </div>
+              <!-- A real gameplay clip plays on hover (mouse only); otherwise the cover stays still. -->
               <div class="featured-visual">
-                <img
-                  alt=""
-                  decoding="async"
-                  height="1041"
-                  loading="lazy"
-                  src="/src/assets/images/lyra-cover.webp"
-                  width="1600"
-                />
+                <video
+                  class="card-clip"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  poster="/src/assets/images/lyra-cover-800.webp"
+                  width="960"
+                  height="540"
+                  aria-hidden="true"
+                >
+                  <source src="/src/assets/video/lyra-clip-throw.mp4" type="video/mp4" />
+                </video>
               </div>
             </a>
           </div>
         </div>
       </section>
+
       <!-- EXPERIENCE -->
       <section aria-labelledby="experience-title" class="section-pad section-pad--bordered" id="experience">
         <div class="wrap">
           <span class="section-label" data-i18n="home.exp_label">// PROFESSIONAL EXPERIENCE</span>
           <h2 class="section-heading" data-i18n="home.exp_title" id="experience-title">Experience</h2>
-          <p class="section-sub" data-i18n="home.exp_lede">
-            Professional game programming in a studio production environment.
-          </p>
-          <ol class="xp-timeline">
-            <li class="xp-item">
-              <article class="xp-card">
-                <header class="xp-meta">
-                  <p class="xp-dates" data-i18n="home.tbs_dates">Jul 2025 - May 2026</p>
-                  <h3 class="xp-company" data-i18n="home.tbs_title">The Breach Studios</h3>
-                  <p class="xp-role" data-i18n="home.tbs_position">Junior Gameplay Programmer</p>
-                  <p class="xp-nda">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path
-                        d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"
-                      />
-                    </svg>
-                    <span data-i18n="home.tbs_nda_badge">Under NDA</span>
-                  </p>
-                  <p class="xp-nda-note" data-i18n="home.tbs_nda_note">
-                    Visuals and source code from the project can't be shown.
-                  </p>
-                </header>
-                <div class="xp-body">
-                  <p class="xp-summary" data-i18n="home.tbs_summary">
-                    Professional gameplay programming experience on an unannounced prototype under NDA.
-                  </p>
-                  <ul class="xp-highlights">
-                    <li class="xp-highlight">
-                      <span class="xp-num" aria-hidden="true">01</span>
-                      <h4 data-i18n="home.tbs_h1_title">Map Generation &amp; Serialization</h4>
-                      <p data-i18n="home.tbs_h1_desc">
-                        Internal map generation tool, procedural asset spawning, manual placement, Custom
-                        ScriptableObjects, serialization, and layout workflows.
-                      </p>
-                    </li>
-                    <li class="xp-highlight">
-                      <span class="xp-num" aria-hidden="true">02</span>
-                      <h4 data-i18n="home.tbs_h2_title">Dynamic Multi-Camera System</h4>
-                      <p data-i18n="home.tbs_h2_desc">
-                        Dynamic camera system in Unity/C#, runtime camera switching, smooth blending,
-                        transitions, and contextual zoom.
-                      </p>
-                    </li>
-                    <li class="xp-highlight">
-                      <span class="xp-num" aria-hidden="true">03</span>
-                      <h4 data-i18n="home.tbs_h3_title">Gameplay Systems Implementation</h4>
-                      <p data-i18n="home.tbs_h3_desc">
-                        Implementation of gameplay features working directly with the Technical Lead,
-                        independently delivering functionality into existing codebases within an Agile
-                        environment (Fibery / Gitea).
-                      </p>
-                    </li>
-                  </ul>
-                  <ul class="xp-tags" aria-label="Technologies">
-                    <li>Unity</li>
-                    <li>C#</li>
-                    <li>ScriptableObjects</li>
-                    <li>Gitea</li>
-                    <li>Fibery</li>
-                    <li>Agile</li>
-                  </ul>
-                </div>
-              </article>
-            </li>
-          </ol>
+          <article class="xp-card">
+            <header class="xp-meta">
+              <p class="xp-dates" data-i18n="home.tbs_dates">Jul 2025 - May 2026</p>
+              <h3 class="xp-company" data-i18n="home.tbs_title">The Breach Studios</h3>
+              <p class="xp-role" data-i18n="home.tbs_position2">
+                Junior Gameplay Programmer · part-time, remote
+              </p>
+              <p class="xp-nda">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"
+                  />
+                </svg>
+                <span data-i18n="home.tbs_nda_badge">Under NDA</span>
+              </p>
+            </header>
+            <div class="xp-body">
+              <p class="xp-summary" data-i18n="home.tbs_summary2">
+                Gameplay programming on an unannounced Unity prototype, working directly with the Technical
+                Lead. Visuals and code can't be shown.
+              </p>
+              <ul class="xp-points">
+                <li>
+                  <strong data-i18n="home.tbs_h1_title">Map Generation &amp; Serialization</strong>
+                  <span data-i18n="home.tbs_p1">
+                    internal map tool, procedural spawning and ScriptableObject serialization
+                  </span>
+                </li>
+                <li>
+                  <strong data-i18n="home.tbs_h2_title">Dynamic Multi-Camera System</strong>
+                  <span data-i18n="home.tbs_p2">runtime switching, smooth blending and contextual zoom</span>
+                </li>
+                <li>
+                  <strong data-i18n="home.tbs_h3_title">Gameplay Systems Implementation</strong>
+                  <span data-i18n="home.tbs_p3">
+                    features delivered into an existing codebase, Agile with Fibery and Gitea
+                  </span>
+                </li>
+              </ul>
+              <ul class="xp-tags" aria-label="Technologies">
+                <li>Unity</li>
+                <li>C#</li>
+                <li>ScriptableObjects</li>
+                <li>Gitea</li>
+                <li>Fibery</li>
+              </ul>
+            </div>
+          </article>
         </div>
       </section>
+
       <!-- STACK -->
-      <section aria-labelledby="stack-title" class="stack-spec-section" id="stack">
+      <section aria-labelledby="stack-title" class="section-pad section-pad--bordered" id="stack">
         <div class="wrap">
           <span class="section-label" data-i18n="stack.label">// TOOLBOX</span>
           <h2 class="section-heading" data-i18n="stack.title" id="stack-title">Technical stack</h2>
-          <div class="stack-spec-layout">
-            <div class="spec-col">
-              <div class="spec-col-header">
-                <span class="spec-num">01</span>
-                <span class="spec-title" data-i18n="stack.col1_title">C++ &amp; Systems</span>
-              </div>
-              <ul class="spec-items">
-                <li>C++20</li>
-                <li data-i18n="stack.col1_ds">Data Structures</li>
-                <li>SOLID / GRASP</li>
-                <li>CMake</li>
-                <li>Linux POSIX</li>
-                <li>Google Test</li>
-                <li>TDD</li>
-              </ul>
-            </div>
-            <div class="spec-col">
-              <div class="spec-col-header">
-                <span class="spec-num">02</span>
-                <span class="spec-title" data-i18n="stack.col2_title">Game Development</span>
-              </div>
-              <ul class="spec-items">
-                <li>Unreal Engine 5</li>
-                <li>Unity</li>
-                <li>C#</li>
-                <li data-i18n="stack.col2_gp">Gameplay Programming</li>
-                <li data-i18n="stack.col2_fsm">Finite State Machines</li>
-                <li>SFML</li>
-                <li>OpenGL</li>
-              </ul>
-            </div>
-            <div class="spec-col">
-              <div class="spec-col-header">
-                <span class="spec-num">03</span>
-                <span class="spec-title" data-i18n="stack.col3_title">Multiplayer</span>
-              </div>
-              <ul class="spec-items">
-                <li>UDP</li>
-                <li data-i18n="stack.col3_csp">Client-Side Prediction</li>
-                <li data-i18n="stack.col3_sr">Server Reconciliation</li>
-                <li data-i18n="stack.col3_dc">Delta Compression</li>
-                <li data-i18n="stack.col3_bs">Binary Serialization</li>
-                <li data-i18n="stack.col3_100hz">100 Hz Simulation</li>
-              </ul>
-            </div>
-            <div class="spec-col">
-              <div class="spec-col-header">
-                <span class="spec-num">04</span>
-                <span class="spec-title" data-i18n="stack.col4_title">Engineering Workflow</span>
-              </div>
-              <ul class="spec-items">
-                <li>Git</li>
-                <li>Perforce</li>
-                <li>GitHub Actions</li>
-                <li>Docker</li>
-                <li>Azure</li>
-                <li>Jira</li>
-                <li>Gitea</li>
-              </ul>
-            </div>
-          </div>
+          <p class="section-sub" data-i18n="stack.lede">What I use most, and where you can see it.</p>
+          <p class="skill-group" data-i18n="stack.daily">Daily drivers</p>
+          <ul class="skill-list">
+            <li class="skill-row">
+              <span class="skill-row__name">C++20</span>
+              <span class="skill-row__detail" data-i18n="stack.cpp">
+                CMake, Linux / POSIX sockets, std::jthread
+              </span>
+              <a class="skill-row__proof" href="/projects/network-middleware.html">NetworkMiddleware</a>
+            </li>
+            <li class="skill-row">
+              <span class="skill-row__name" data-i18n="stack.net">Multiplayer networking</span>
+              <span class="skill-row__detail" data-i18n="stack.net_d">
+                UDP reliability, bit-level serialization, delta compression, lag compensation
+              </span>
+              <a class="skill-row__proof" href="/projects/network-middleware.html">NetworkMiddleware</a>
+            </li>
+            <li class="skill-row">
+              <span class="skill-row__name">Unreal Engine 5</span>
+              <span class="skill-row__detail" data-i18n="stack.ue">
+                Blueprints, state machines, Enhanced Input, Sequencer
+              </span>
+              <a class="skill-row__proof" href="/projects/lyra.html">Lyra</a>
+            </li>
+            <li class="skill-row">
+              <span class="skill-row__name">Unity · C#</span>
+              <span class="skill-row__detail" data-i18n="stack.unity">
+                tools, cameras and gameplay in a studio codebase
+              </span>
+              <a class="skill-row__proof" href="#experience">The Breach Studios</a>
+            </li>
+            <li class="skill-row">
+              <span class="skill-row__name" data-i18n="stack.testing">Testing &amp; CI</span>
+              <span class="skill-row__detail" data-i18n="stack.testing_d">
+                Google Test, test doubles, GitHub Actions, Docker, Azure
+              </span>
+              <a class="skill-row__proof" href="/projects/network-middleware.html#testing">
+                NetworkMiddleware
+              </a>
+            </li>
+            <li class="skill-row">
+              <span class="skill-row__name" data-i18n="stack.prod">Production</span>
+              <span class="skill-row__detail" data-i18n="stack.prod_d">
+                Scrumban, Jira, Perforce for binary assets
+              </span>
+              <a class="skill-row__proof" href="/projects/lyra.html#production">Lyra</a>
+            </li>
+          </ul>
+          <p class="skill-also">
+            <span class="skill-also__label" data-i18n="stack.also">Also worked with</span>
+            Git · SFML · OpenGL · Gitea · Fibery
+          </p>
+          <p class="skill-also">
+            <span class="skill-also__label" data-i18n="stack.learning">Learning now</span>
+            <span data-i18n="stack.learning_d">
+              Kubernetes and platform engineering (UPC School postgraduate, 2026-27)
+            </span>
+          </p>
         </div>
       </section>
+
       <!-- ABOUT -->
-      <section aria-labelledby="about-title" class="section-pad" id="about">
+      <section aria-labelledby="about-title" class="section-pad section-pad--bordered" id="about">
         <div class="wrap">
           <span class="section-label" data-i18n="home.about_section_label">// ABOUT ME</span>
-          <div class="about-editorial-wrap about-editorial-wrap--single">
-            <div class="about-text-container">
+          <div class="about-card">
+            <img
+              class="about-card__photo"
+              alt=""
+              decoding="async"
+              height="1093"
+              loading="lazy"
+              src="/src/assets/images/profile.webp"
+              width="820"
+            />
+            <div class="about-card__text">
               <h2 class="about-greeting-title" data-i18n="home.about_greeting" id="about-title">
                 Hi, I'm Alex!
               </h2>
-              <p data-i18n="home.about_p2">
-                I enjoy understanding how things work under the hood, especially when the problem is complex.
-                I like designing systems from the ground up, figuring out how their pieces should interact,
-                and finding ways to keep them reliable and maintainable as they grow.
-              </p>
-              <p data-i18n="home.about_p3">
-                My experience combines professional gameplay programming at The Breach Studios with personal
-                work in Unreal Engine, C++ and multiplayer networking. Through these projects, I've worked on
-                everything from gameplay systems and character controllers to low-level networking,
-                serialization, prediction and automated testing.
-              </p>
-              <p data-i18n="home.about_p4">
-                I'm naturally curious and tend to dig deeper whenever I encounter something I don't
-                understand. That's what led me to build NetworkMiddleware from scratch: to explore multiplayer
-                networking beyond the engine level and understand the systems underneath it.
-              </p>
-              <p data-i18n="home.about_p5">
-                I'm looking to keep working on technically challenging problems, learn from experienced
-                engineers, and build game technology that I'm genuinely proud of.
+              <p data-i18n="home.about_short">
+                I like understanding how things work under the hood. That curiosity is why I built a
+                networking middleware from scratch instead of only using an engine's: I wanted to see the
+                systems underneath. I'm looking for a team where I can keep working on hard technical problems
+                and learn from experienced engineers.
               </p>
             </div>
           </div>
