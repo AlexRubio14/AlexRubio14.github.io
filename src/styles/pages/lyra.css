@@ -30,6 +30,112 @@
   object-fit: cover;
 }
 
+/* YouTube facade: poster + play button until clicked (see components/youtube.js). */
+.yt-facade {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: #000;
+  border: 0;
+  cursor: pointer;
+}
+
+.yt-facade img {
+  transition:
+    transform 0.4s ease,
+    filter 0.4s ease;
+}
+
+.yt-facade:hover img,
+.yt-facade:focus-visible img {
+  filter: brightness(0.85);
+  transform: scale(1.02);
+}
+
+.yt-facade__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  background: rgb(7 9 13 / 75%);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 30px var(--accent-dim);
+  color: var(--accent);
+  transform: translate(-50%, -50%);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.yt-facade:hover .yt-facade__play,
+.yt-facade:focus-visible .yt-facade__play {
+  background: var(--accent);
+  color: #07090d;
+}
+
+.yt-facade__play svg {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-left: 0.2rem; /* optical centring of the triangle */
+  fill: currentcolor;
+}
+
+.yt-facade__label {
+  position: absolute;
+  bottom: 0.9rem;
+  left: 0.9rem;
+  padding: 0.3rem 0.7rem;
+  background: rgb(7 9 13 / 75%);
+  border-radius: 999px;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.yt-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (width <= 600px) {
+  .yt-facade__play {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .yt-facade__play svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .yt-facade__label {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    font-size: 0.62rem;
+  }
+}
+
+/* On small phones the label would touch the play button; the button says enough. */
+@media (width <= 480px) {
+  .yt-facade__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yt-facade img {
+    transition: none;
+  }
+}
+
 /* --- Results band (replaces the ticker) ------------------------------------ */
 .results-band {
   padding: 2.5rem 0;
@@ -346,6 +452,12 @@
   stroke-width: 2.5;
 }
 
+/* [hidden] loses against display: grid above, so restate it. */
+.lightbox__arrow[hidden],
+.lightbox__count[hidden] {
+  display: none;
+}
+
 .carousel__arrow {
   position: absolute;
   top: 50%;
@@ -563,7 +675,7 @@
     'sm     reads da'
     'runs   .     .'
     'states .     .';
-  grid-template-columns: minmax(0, 17rem) 8rem minmax(0, 17rem);
+  grid-template-columns: 17rem 8rem 19rem;
   justify-content: center;
   margin: 2rem 0;
   padding: 2rem 1.5rem;
@@ -622,7 +734,7 @@
   font-family: var(--font-mono);
   font-size: 0.95rem;
   font-weight: 700;
-  overflow-wrap: break-word; /* <wbr> after each "_" gives cleaner break points */
+  white-space: nowrap; /* Unreal asset names are one word: never split them */
 }
 
 .case-block .fsm-node__type {
@@ -729,6 +841,17 @@
   font-size: 0.78rem;
 }
 
+@media (width <= 1000px) {
+  .fsm-diagram {
+    grid-template-columns: 14rem 5.5rem 16rem;
+    padding: 2rem 1rem;
+  }
+
+  .case-block .fsm-node__name {
+    font-size: 0.82rem;
+  }
+}
+
 /* Phones: one column. The Data Asset moves inside the state machine box,
    so the spine stays a single straight line. */
 @media (width <= 700px) {
@@ -744,7 +867,11 @@
   }
 
   .case-block .fsm-node__name {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
+  }
+
+  .fsm-node {
+    padding-inline: 0.6rem;
   }
 
   /* Labels may wrap instead of running past the edge. */
@@ -766,7 +893,26 @@
     color: var(--accent);
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    overflow-wrap: break-word;
+  }
+
+  .fsm-node__reads-name {
+    white-space: nowrap;
+  }
+}
+
+/* Very narrow phones (≈320px): a bit less padding and type so the
+   long asset names still fit on one line. */
+@media (width <= 360px) {
+  .fsm-diagram {
+    padding-inline: 0.6rem;
+  }
+
+  .fsm-node {
+    padding-inline: 0.4rem;
+  }
+
+  .fsm-node__reads {
+    font-size: 0.68rem;
   }
 }
 

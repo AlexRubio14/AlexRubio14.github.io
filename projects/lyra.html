@@ -99,15 +99,30 @@
               </div>
             </div>
             <div class="hero-media-container">
-              <!-- TODO: swap for a muted autoplay gameplay <video> (with poster) when the clip is ready. -->
-              <img
-                alt="Lyra key art"
-                decoding="async"
-                fetchpriority="high"
-                height="1041"
-                src="/src/assets/images/lyra-cover.webp"
-                width="1600"
-              />
+              <!-- Click-to-load: YouTube's player (and its cookies) only loads when the visitor asks for it. -->
+              <button
+                type="button"
+                class="yt-facade"
+                data-youtube-id="p2ZFFhlheSs"
+                data-youtube-title="Lyra - Gameplay Showcase (Demoday - 2026)"
+                aria-label="Play the Lyra gameplay showcase video"
+                data-i18n-aria-label="lyra.video_play"
+              >
+                <img
+                  alt=""
+                  decoding="async"
+                  fetchpriority="high"
+                  height="1041"
+                  src="/src/assets/images/lyra-cover.webp"
+                  width="1600"
+                />
+                <span class="yt-facade__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg>
+                </span>
+                <span class="yt-facade__label" data-i18n="lyra.video_label">
+                  Gameplay showcase · DemoDay 2026
+                </span>
+              </button>
             </div>
           </div>
         </div>
@@ -501,40 +516,26 @@
               data-i18n-aria-label="lyra.fsm_alt"
             >
               <div class="fsm-node fsm-node--owner">
-                <span class="fsm-node__name">
-                  BP_
-                  <wbr />
-                  LyraCharacter
-                </span>
+                <span class="fsm-node__name">BP_LyraCharacter</span>
                 <span class="fsm-node__type" data-i18n="lyra.fsm_character">Character</span>
               </div>
               <div class="fsm-arrow fsm-arrow--down fsm-arrow--owns" aria-hidden="true">
                 <span data-i18n="lyra.fsm_owns">owns</span>
               </div>
               <div class="fsm-node fsm-node--core">
-                <span class="fsm-node__name">
-                  BPC_
-                  <wbr />
-                  StateMachine
-                </span>
+                <span class="fsm-node__name">BPC_StateMachine</span>
                 <span class="fsm-node__type" data-i18n="lyra.fsm_component">Actor Component</span>
                 <!-- Phones only: the Data Asset is shown inside this box instead of beside it. -->
                 <span class="fsm-node__reads">
                   <span data-i18n="lyra.fsm_reads">reads</span>
-                  DA_
-                  <wbr />
-                  LyraStateConfiguration
+                  <span class="fsm-node__reads-name">DA_LyraStateConfiguration</span>
                 </span>
               </div>
               <div class="fsm-arrow fsm-arrow--right" aria-hidden="true">
                 <span data-i18n="lyra.fsm_reads">reads</span>
               </div>
               <div class="fsm-node fsm-node--data">
-                <span class="fsm-node__name">
-                  DA_
-                  <wbr />
-                  LyraStateConfiguration
-                </span>
+                <span class="fsm-node__name">DA_LyraStateConfiguration</span>
                 <span class="fsm-node__type" data-i18n="lyra.fsm_data">Data Asset · state configuration</span>
               </div>
               <div class="fsm-arrow fsm-arrow--down fsm-arrow--runs" aria-hidden="true">

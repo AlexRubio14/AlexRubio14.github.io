@@ -190,6 +190,8 @@
   "lyra.toc_prod": "Producció",
   "lyra.toc_role": "El meu rol",
   "lyra.toc_title": "En aquesta pàgina",
+  "lyra.video_label": "Gameplay · DemoDay 2026",
+  "lyra.video_play": "Reproduir el vídeo de gameplay de Lyra",
   "msg.captcha": "No hem pogut verificar que ets humà. Torna-ho a provar.",
   "msg.error": "S'ha produït un error en enviar el missatge. Torna-ho a provar.",
   "msg.rate_limited": "Massa missatges en poc temps. Espera un minut i torna-ho a provar.",
