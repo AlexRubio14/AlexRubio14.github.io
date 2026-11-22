@@ -207,6 +207,10 @@
   grid-column: 1 / -1;
 }
 
+.gallery--single {
+  margin-top: 1.25rem;
+}
+
 .gallery-open {
   display: block;
   width: 100%;
