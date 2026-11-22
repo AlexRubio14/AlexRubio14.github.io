@@ -6,7 +6,7 @@
     <title data-i18n="nm.page_title">NetworkMiddleware case study | Alejandro Rubio Plana</title>
     <meta
       name="description"
-      content="Engine-agnostic, server-authoritative networking middleware in C++20: custom UDP protocol, snapshot replication with delta compression, 100 Hz simulation and 254 automated tests."
+      content="Engine-agnostic, server-authoritative networking middleware for MOBA games, written solo in C++20: custom UDP protocol, delta-compressed snapshots, a 100 Hz tick, 254 tests and a real WAN test on Azure."
     />
     <meta name="author" content="Alejandro Rubio Plana" />
     <meta name="theme-color" content="#07090D" />
@@ -19,7 +19,7 @@
     <meta property="og:title" content="NetworkMiddleware case study | Alejandro Rubio Plana" />
     <meta
       property="og:description"
-      content="Engine-agnostic, server-authoritative networking middleware in C++20: custom UDP protocol, snapshot replication with delta compression, 100 Hz simulation and 254 automated tests."
+      content="Engine-agnostic, server-authoritative networking middleware for MOBA games, written solo in C++20: custom UDP protocol, delta-compressed snapshots, a 100 Hz tick, 254 tests and a real WAN test on Azure."
     />
     <meta property="og:url" content="https://alexrubio14.github.io/projects/network-middleware.html" />
     <meta property="og:image" content="https://alexrubio14.github.io/og/og-network-middleware.jpg" />
@@ -42,458 +42,1197 @@
     <!-- @include social-dock.html -->
 
     <main id="main">
+      <!-- ================= HERO ================= -->
       <section class="project-hero">
         <div class="wrap">
           <div class="project-hero-inner">
-            <span class="project-tag" data-i18n="nm.tag">// C++20 | MULTIPLAYER NETWORKING | SYSTEMS</span>
+            <span class="project-tag" data-i18n="nm.tag">// C++20 • MULTIPLAYER NETWORKING • SYSTEMS</span>
             <h1 class="project-title">NetworkMiddleware</h1>
-            <p class="project-meta" data-i18n="nm.meta">
-              Solo Developer | C++20 | Multiplayer Networking | Systems
-            </p>
+            <p class="project-meta" data-i18n="nm.meta">Solo Developer</p>
             <p class="project-lede" data-i18n="nm.lede">
-              An engine-agnostic, server-authoritative networking middleware for MOBA-style multiplayer games,
-              built in C++20 around a custom UDP protocol, snapshot replication and a 100 Hz authoritative
-              simulation.
+              An engine-agnostic, server-authoritative networking middleware for MOBA games, written from
+              scratch in C++20. I designed and built the whole stack on my own: a custom UDP protocol,
+              delta-compressed snapshots, a 100 Hz authoritative simulation, the test suite and the deployment
+              to Azure.
             </p>
             <div class="hero-cta-wrapper">
-              <div class="hero-cta-buttons">
-                <a
-                  class="btn-action primary"
-                  href="https://github.com/AlexRubio14/NetworkMiddleware"
-                  rel="noopener"
-                  target="_blank"
-                >
-                  <svg aria-hidden="true" viewbox="0 0 24 24">
-                    <path
-                      d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
-                    ></path>
-                  </svg>
-                  <span data-i18n="nm.cta_github">GitHub Repository</span>
-                </a>
-                <a
-                  class="btn-action secondary"
-                  href="/docs/NetworkMiddleware-Technical-Documentation.pdf"
-                  rel="noopener"
-                  target="_blank"
-                >
-                  <svg aria-hidden="true" viewbox="0 0 24 24">
-                    <path
-                      d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                    ></path>
-                  </svg>
-                  <span data-i18n="nm.cta_docs">Technical Documentation</span>
-                </a>
+              <a
+                class="btn-action primary"
+                href="https://github.com/AlexRubio14/NetworkMiddleware"
+                rel="noopener"
+                target="_blank"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                  ></path>
+                </svg>
+                <span data-i18n="nm.cta_github">GitHub Repository</span>
+              </a>
+              <a
+                class="btn-action secondary"
+                href="/docs/NetworkMiddleware-Technical-Documentation.pdf"
+                rel="noopener"
+                target="_blank"
+              >
+                <span data-i18n="nm.cta_docs">Technical Documentation</span>
+              </a>
+            </div>
+            <div class="glance-grid glance-grid--3">
+              <div class="glance-item">
+                <span class="glance-label" data-i18n="nm.glance_stack">Stack</span>
+                <span class="glance-val">C++20 · CMake · Docker</span>
+              </div>
+              <div class="glance-item">
+                <span class="glance-label" data-i18n="nm.glance_team">Team Size</span>
+                <span class="glance-val" data-i18n="nm.glance_team_val">Solo</span>
+              </div>
+              <div class="glance-item">
+                <span class="glance-label" data-i18n="nm.glance_duration">Duration</span>
+                <span class="glance-val">Jan 2026 - Mar 2026</span>
               </div>
             </div>
-            <div class="glance-grid">
-              <div class="glance-item">
-                <span class="glance-label" data-i18n="nm.glance_role">Role</span>
-                <span class="glance-val">Solo Developer</span>
-              </div>
-              <div class="glance-item">
-                <span class="glance-label" data-i18n="nm.glance_lang">Language</span>
-                <span class="glance-val">C++20</span>
-              </div>
-              <div class="glance-item">
-                <span class="glance-label" data-i18n="nm.glance_arch">Architecture</span>
-                <span class="glance-val">Server-Authoritative</span>
-              </div>
-              <div class="glance-item">
-                <span class="glance-label" data-i18n="nm.glance_sim">Simulation</span>
-                <span class="glance-val">100 Hz</span>
-              </div>
-              <div class="glance-item">
-                <span class="glance-label" data-i18n="nm.glance_tests">Testing</span>
-                <span class="glance-val" data-i18n="nm.glance_tests_val">254 Tests</span>
-              </div>
-            </div>
+            <!-- No gameplay footage for a server, so the hero shows what the system does: bots over a real
+                 WAN talking to the authoritative server. Packets move with CSS; reduced motion stops them. -->
+            <figure class="hero-media-container hero-media-container--diagram">
+              <svg
+                class="net-hero"
+                viewBox="0 0 900 300"
+                role="img"
+                aria-labelledby="hero-svg-title"
+                data-fit-pills
+              >
+                <title id="hero-svg-title" data-i18n="nm.hero_alt">
+                  49 headless bots in Spain send 24-bit inputs over the internet to the authoritative server
+                  on Azure, which simulates the world at 100 Hz and answers with delta-compressed snapshots.
+                </title>
+                <defs>
+                  <marker
+                    id="nm-arrow-accent"
+                    viewBox="0 0 12 12"
+                    refX="10"
+                    refY="6"
+                    markerWidth="16"
+                    markerHeight="16"
+                    markerUnits="userSpaceOnUse"
+                    orient="auto"
+                  >
+                    <path d="M0 0 12 6 0 12z" class="svg-accent-fill" />
+                  </marker>
+                  <marker
+                    id="nm-arrow-muted"
+                    viewBox="0 0 12 12"
+                    refX="10"
+                    refY="6"
+                    markerWidth="16"
+                    markerHeight="16"
+                    markerUnits="userSpaceOnUse"
+                    orient="auto"
+                  >
+                    <path d="M0 0 12 6 0 12z" class="svg-muted-fill" />
+                  </marker>
+                </defs>
+                <!-- bots: 7 x 7 = 49 -->
+                <g class="net-bots" aria-hidden="true">
+                  <circle cx="70" cy="90" r="5" />
+                  <circle cx="90" cy="90" r="5" />
+                  <circle cx="110" cy="90" r="5" />
+                  <circle cx="130" cy="90" r="5" />
+                  <circle cx="150" cy="90" r="5" />
+                  <circle cx="170" cy="90" r="5" />
+                  <circle cx="190" cy="90" r="5" />
+                  <circle cx="70" cy="110" r="5" />
+                  <circle cx="90" cy="110" r="5" />
+                  <circle cx="110" cy="110" r="5" />
+                  <circle cx="130" cy="110" r="5" />
+                  <circle cx="150" cy="110" r="5" />
+                  <circle cx="170" cy="110" r="5" />
+                  <circle cx="190" cy="110" r="5" />
+                  <circle cx="70" cy="130" r="5" />
+                  <circle cx="90" cy="130" r="5" />
+                  <circle cx="110" cy="130" r="5" />
+                  <circle cx="130" cy="130" r="5" />
+                  <circle cx="150" cy="130" r="5" />
+                  <circle cx="170" cy="130" r="5" />
+                  <circle cx="190" cy="130" r="5" />
+                  <circle cx="70" cy="150" r="5" />
+                  <circle cx="90" cy="150" r="5" />
+                  <circle cx="110" cy="150" r="5" />
+                  <circle cx="130" cy="150" r="5" />
+                  <circle cx="150" cy="150" r="5" />
+                  <circle cx="170" cy="150" r="5" />
+                  <circle cx="190" cy="150" r="5" />
+                  <circle cx="70" cy="170" r="5" />
+                  <circle cx="90" cy="170" r="5" />
+                  <circle cx="110" cy="170" r="5" />
+                  <circle cx="130" cy="170" r="5" />
+                  <circle cx="150" cy="170" r="5" />
+                  <circle cx="170" cy="170" r="5" />
+                  <circle cx="190" cy="170" r="5" />
+                  <circle cx="70" cy="190" r="5" />
+                  <circle cx="90" cy="190" r="5" />
+                  <circle cx="110" cy="190" r="5" />
+                  <circle cx="130" cy="190" r="5" />
+                  <circle cx="150" cy="190" r="5" />
+                  <circle cx="170" cy="190" r="5" />
+                  <circle cx="190" cy="190" r="5" />
+                  <circle cx="70" cy="210" r="5" />
+                  <circle cx="90" cy="210" r="5" />
+                  <circle cx="110" cy="210" r="5" />
+                  <circle cx="130" cy="210" r="5" />
+                  <circle cx="150" cy="210" r="5" />
+                  <circle cx="170" cy="210" r="5" />
+                  <circle cx="190" cy="210" r="5" />
+                </g>
+                <g class="svg-pill">
+                  <rect x="40" y="236" width="180" height="33" rx="10" />
+                  <text x="52" y="243" dominant-baseline="hanging" class="svg-label" data-i18n="nm.hero_bots">
+                    49 headless bots · Spain
+                  </text>
+                </g>
+                <!-- inputs: client to server -->
+                <line
+                  x1="222"
+                  y1="125"
+                  x2="640"
+                  y2="125"
+                  class="svg-muted-line"
+                  marker-end="url(#nm-arrow-muted)"
+                />
+                <g class="net-packets net-packets--in" aria-hidden="true">
+                  <rect x="226" y="121" width="10" height="8" rx="2" />
+                  <rect x="226" y="121" width="10" height="8" rx="2" />
+                  <rect x="226" y="121" width="10" height="8" rx="2" />
+                </g>
+                <g class="svg-pill svg-pill--muted net-line-label">
+                  <rect x="340" y="80" width="160" height="33" rx="10" />
+                  <text
+                    x="352"
+                    y="87"
+                    dominant-baseline="hanging"
+                    class="svg-label"
+                    data-i18n="nm.hero_input"
+                  >
+                    input · 24 bits
+                  </text>
+                </g>
+                <!-- snapshots: server to client -->
+                <line
+                  x1="652"
+                  y1="175"
+                  x2="232"
+                  y2="175"
+                  class="svg-accent-line"
+                  marker-end="url(#nm-arrow-accent)"
+                />
+                <g class="net-packets net-packets--out" aria-hidden="true">
+                  <rect x="630" y="170" width="14" height="10" rx="2" />
+                  <rect x="630" y="170" width="14" height="10" rx="2" />
+                  <rect x="630" y="170" width="14" height="10" rx="2" />
+                  <rect x="630" y="170" width="14" height="10" rx="2" />
+                </g>
+                <g class="svg-pill svg-pill--accent net-line-label">
+                  <rect x="300" y="190" width="240" height="33" rx="10" />
+                  <text
+                    x="312"
+                    y="197"
+                    dominant-baseline="hanging"
+                    class="svg-label"
+                    data-i18n="nm.hero_snapshot"
+                  >
+                    snapshot · delta-compressed
+                  </text>
+                </g>
+                <!-- server -->
+                <rect x="662" y="78" width="176" height="144" rx="14" class="svg-box net-server" />
+                <circle cx="750" cy="160" r="30" class="net-tick" />
+                <text x="750" y="118" text-anchor="middle" class="net-server__name">NetServer</text>
+                <text x="750" y="165" text-anchor="middle" class="net-server__hz">100 Hz</text>
+                <g class="svg-pill">
+                  <rect x="640" y="236" width="220" height="33" rx="10" />
+                  <text
+                    x="652"
+                    y="243"
+                    dominant-baseline="hanging"
+                    class="svg-label"
+                    data-i18n="nm.hero_server"
+                  >
+                    Azure VM · Switzerland North
+                  </text>
+                </g>
+              </svg>
+              <!-- Phones: the line labels would collide inside the shrunken SVG, so they move here. -->
+              <p class="net-legend" aria-hidden="true">
+                <span class="net-legend__in" data-i18n="nm.hero_input">input · 24 bits</span>
+                <span class="net-legend__out" data-i18n="nm.hero_snapshot">snapshot · delta-compressed</span>
+              </p>
+            </figure>
           </div>
         </div>
       </section>
 
-      <section class="metrics-ticker-section">
-        <div class="metrics-ticker-track" id="ticker-track">
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="nm.m1_title">Authoritative Tick:</span>
-            <span class="metric-value">100 Hz</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="nm.m2_title">Automated Tests:</span>
-            <span class="metric-value">254 passing</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="nm.m3_title">Delta Compression:</span>
-            <span class="metric-value">74% reduction</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="nm.m4_title">Post-I/O Optimization:</span>
-            <span class="metric-value">0.17 ms Network I/O</span>
-          </div>
-          <span class="metric-separator">//</span>
-
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="nm.m1_title">Authoritative Tick:</span>
-            <span class="metric-value">100 Hz</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="nm.m2_title">Automated Tests:</span>
-            <span class="metric-value">254 passing</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="nm.m3_title">Delta Compression:</span>
-            <span class="metric-value">74% reduction</span>
-          </div>
-          <span class="metric-separator">//</span>
-          <div class="metric-item">
-            <span class="metric-title" data-i18n="nm.m4_title">Post-I/O Optimization:</span>
-            <span class="metric-value">0.17 ms Network I/O</span>
-          </div>
-          <span class="metric-separator">//</span>
+      <!-- ================= RESULTS BAND ================= -->
+      <section class="results-band" aria-labelledby="results-band-title">
+        <div class="wrap">
+          <h2 class="visually-hidden" id="results-band-title" data-i18n="nm.results_title">Results</h2>
+          <ul class="results-grid">
+            <li class="result-item result-item--award">
+              <span class="result-value">100 Hz</span>
+              <span class="result-label" data-i18n="nm.r_tick_lbl">server-authoritative tick</span>
+            </li>
+            <li class="result-item">
+              <span class="result-value">254</span>
+              <span class="result-label" data-i18n="nm.r_tests_lbl">automated tests (Google Test)</span>
+            </li>
+            <li class="result-item">
+              <span class="result-value">38 bits</span>
+              <span class="result-label" data-i18n="nm.r_delta_lbl">for an unchanged hero (149 in full)</span>
+            </li>
+            <li class="result-item">
+              <span class="result-value">49</span>
+              <span class="result-label" data-i18n="nm.r_wan_lbl">clients over real WAN, 0 CRC errors</span>
+            </li>
+            <li class="result-item">
+              <span class="result-value">~20 kbps</span>
+              <span class="result-label" data-i18n="nm.r_bw_lbl">per client on Azure (10-bot run)</span>
+            </li>
+          </ul>
         </div>
       </section>
 
-      <div class="wrap project-content-wrap">
-        <div class="case-block">
-          <h2 data-i18n="nm.p1_heading">01 | The Problem</h2>
-          <p data-i18n="nm.p1_desc">
-            The project started from a client-authoritative networking model where the client could directly
-            communicate its position to the server, while the server primarily replicated that state. This
-            created two fundamental problems: the server had limited authority over the actual game state, and
-            synchronization became increasingly difficult to reason about as the number of networked entities
-            grew.
-          </p>
-          <div class="metric-highlight mt-6" data-i18n="nm.p1_goals">
-            <strong>NetworkMiddleware Goals:</strong>
-            <br />
-            01. Server Authority: Move game-state authority to the server and run the simulation at a stable
-            100 Hz tick rate.
-            <br />
-            02. Efficient UDP Networking: Build the networking layer around UDP while providing reliability
-            guarantees.
-            <br />
-            03. Efficient Replication: Reduce required bandwidth through bit-level serialization and delta
-            compression.
-            <br />
-            04. Engine-Agnostic Design: Keep networking concerns independent via transport abstraction
-            ('ITransport').
-            <br />
-            05. Testability: Enable full testing without depending on real network sockets ('MockTransport').
-          </div>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="nm.p2_heading">02 | Architecture &amp; Design Decisions</h2>
-          <p data-i18n="nm.p2_desc">
-            The middleware separates game simulation, networking logic, protocol handling and transport so
-            that each layer has a clearly defined responsibility.
-          </p>
-          <div class="architecture-diagram">
-            <div class="arch-box" data-i18n="nm.arch_sim">GAME / SIMULATION</div>
-            <div class="arch-arrow">▼</div>
-            <div class="arch-box">
-              <span data-i18n="nm.arch_mgr">NETWORK MANAGER</span>
-              <span class="layer-note" data-i18n="nm.arch_mgr_sub">Session &amp; network orchestration</span>
-            </div>
-            <div class="arch-arrow">▼</div>
-            <div class="arch-box">
-              <span data-i18n="nm.arch_proto">PROTOCOL / REPLICATION</span>
-              <span class="layer-note" data-i18n="nm.arch_proto_sub">Snapshots • ACKs • Delta</span>
-            </div>
-            <div class="arch-arrow">▼</div>
-            <div class="arch-box sub">ITransport (Interface)</div>
-            <div class="arch-arrow">▼</div>
-            <div class="arch-multi">
-              <div class="arch-box sub">UDP</div>
-              <div class="arch-box sub">SFML</div>
-              <div class="arch-box sub">Mock</div>
-            </div>
-          </div>
-          <ul>
+      <!-- ================= CONTENT + TOC ================= -->
+      <div class="wrap case-layout">
+        <nav class="case-toc" aria-label="On this page" data-i18n-aria-label="nm.toc_title">
+          <p class="case-toc__title" data-i18n="nm.toc_title">On this page</p>
+          <ol>
             <li>
-              <strong data-i18n="nm.p2_l1">Dependency Inversion:</strong>
-              <span data-i18n="nm.p2_l1_text">
-                The networking core depends on 'ITransport' rather than directly depending on a specific
-                socket implementation, decoupling core logic from underlying APIs.
-              </span>
+              <a class="toc-link" data-section="problem" href="#problem" data-i18n="nm.toc_problem">
+                The problem
+              </a>
             </li>
             <li>
-              <strong data-i18n="nm.p2_l2">No Singletons:</strong>
-              <span data-i18n="nm.p2_l2_text">
-                Dependencies are injected through constructors instead of being retrieved from global
-                singleton instances, keeping ownership explicit and testable.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="nm.p3_heading">03 | Protocol Design &amp; Reliability</h2>
-          <p data-i18n="nm.p3_desc">
-            UDP provides the low-overhead transport required by the authoritative simulation, but it does not
-            provide delivery, ordering or acknowledgement guarantees. NetworkMiddleware implements reliability
-            at the protocol level.
-          </p>
-          <div class="architecture-diagram architecture-diagram--narrow">
-            <div class="arch-box sub arch-box--full">SEQUENCE</div>
-            <div class="arch-arrow">↓</div>
-            <div class="arch-box sub arch-box--full">ACK &amp; ACK BITMASK (32-bit mask)</div>
-            <div class="arch-arrow">↓</div>
-            <div class="arch-box sub arch-box--full">TYPE &amp; FLAGS</div>
-            <div class="arch-arrow">↓</div>
-            <div class="arch-box sub arch-box--full">TIMESTAMP</div>
-          </div>
-          <ul>
-            <li>
-              <strong data-i18n="nm.p3_l1">Sequence Numbers &amp; ACK Piggybacking:</strong>
-              <span data-i18n="nm.p3_l1_text">
-                Packets carry sequence information and acknowledgements are embedded directly into outgoing
-                gameplay packets via a 32-bit bitmask, eliminating dedicated acknowledgment packets.
-              </span>
+              <a class="toc-link" data-section="architecture" href="#architecture" data-i18n="nm.toc_arch">
+                Architecture
+              </a>
             </li>
             <li>
-              <strong data-i18n="nm.p3_l2">Selective Reliability:</strong>
-              <span data-i18n="nm.p3_l2_text">
-                Time-sensitive state uses unreliable delivery where newer updates supersede older ones, while
-                critical messages use guaranteed ordered delivery.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="nm.p4_heading">04 | State Replication &amp; Compression</h2>
-          <p data-i18n="nm.p4_desc">
-            The server continuously produces authoritative state that needs to be replicated to connected
-            clients. Sending the complete state of every entity on every tick would quickly become expensive,
-            so the replication pipeline progressively reduces the amount of data that needs to be transmitted.
-          </p>
-          <div class="replication-comparison">
-            <div class="rep-row">
-              <div class="rep-meta">
-                <span data-i18n="nm.rep_full">FULL STATE</span>
-                <span>360 bits / 45 bytes</span>
-              </div>
-              <div class="rep-bar-wrap">
-                <div class="rep-bar" style="--w: 100%"></div>
-              </div>
-            </div>
-            <div class="rep-arrow" data-i18n="nm.rep_arrow1">↓ Bit-level serialization</div>
-            <div class="rep-row">
-              <div class="rep-meta">
-                <span data-i18n="nm.rep_comp">COMPRESSED STATE</span>
-                <span>149 bits</span>
-              </div>
-              <div class="rep-bar-wrap">
-                <div class="rep-bar" style="--w: 41.4%"></div>
-              </div>
-            </div>
-            <div class="rep-arrow" data-i18n="nm.rep_arrow2">↓ Delta against baseline</div>
-            <div class="rep-row">
-              <div class="rep-meta">
-                <span data-i18n="nm.rep_unch">UNCHANGED TICK</span>
-                <span data-i18n="nm.rep_unch_val">38 bits for an unchanged tick</span>
-              </div>
-              <div class="rep-bar-wrap">
-                <div class="rep-bar" style="--w: 10.5%"></div>
-              </div>
-            </div>
-          </div>
-          <p class="mt-4" data-i18n="nm.p4_baseline">
-            The key idea is to avoid retransmitting information that the client already knows. A 'baseline' is
-            simply a saved reference point of an entity's last known state. When an entity changes, the server
-            compares its current state against that baseline and only sends the differences. For a tick where
-            nothing changes, the data drops to 38 bits.
-          </p>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="nm.p5_heading">05 | Interest Management &amp; State Estimation</h2>
-          <p data-i18n="nm.p5_desc">
-            Two complementary approaches were explored to control how much state each client needs to process
-            and how movement can be estimated between network updates.
-          </p>
-          <div class="prediction-interest-grid">
-            <div class="pred-box">
-              <span class="pred-box__title" data-i18n="nm.pred_kalman_title">STATE ESTIMATION (KALMAN)</span>
-              <div class="pred-flow-item" data-i18n="nm.pred_step1">Received Network Update</div>
-              <div class="pred-flow-arrow">↓</div>
-              <div class="pred-flow-item">Kalman / Velocity Model</div>
-              <div class="pred-flow-arrow">↓</div>
-              <div class="pred-flow-item" data-i18n="nm.pred_step3">Smoothed Client Estimation</div>
-            </div>
-            <div class="pred-box">
-              <span class="pred-box__title" data-i18n="nm.fow_title">FOG OF WAR (SPATIAL HASH)</span>
-              <div class="pred-box__caption" data-i18n="nm.fow_caption">Uniform Grid ➔ Visibility Lookup</div>
-              <div class="grid-fow">
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell active">P1</div>
-                <div class="fow-cell active">P2</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell active">P3</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-                <div class="fow-cell">0</div>
-              </div>
-              <div class="pred-box__footer" data-i18n="nm.fow_footer">O(1) Grid Visibility &amp; LOD</div>
-            </div>
-          </div>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="nm.p6_heading">06 | Performance Engineering &amp; The I/O Journey</h2>
-          <p data-i18n="nm.p6_desc">
-            Profiling revealed that game logic simulation was stable, while network I/O syscall overhead
-            represented the primary bottleneck under benchmark loads.
-          </p>
-          <div class="performance-chart">
-            <div class="perf-timeline">
-              <div class="perf-bar-group">
-                <div class="perf-bar-label">
-                  <span data-i18n="nm.perf_logic_label">GAME LOGIC (Authoritative Tick)</span>
-                  <span class="perf-value perf-value--baseline">3.77 ms</span>
-                </div>
-                <div class="perf-bar-visual">
-                  <div class="perf-seg logic" title="Game Logic: 3.77 ms">3.77 ms</div>
-                  <div class="perf-seg empty"></div>
-                </div>
-              </div>
-              <div class="perf-bar-group mt-2">
-                <div class="perf-bar-label">
-                  <span data-i18n="nm.perf_io_before">NETWORK I/O (Before sendmmsg)</span>
-                  <span class="perf-value perf-value--bad">7.20 ms</span>
-                </div>
-                <div class="perf-bar-visual">
-                  <div class="perf-seg logic" title="Game Logic: 3.77 ms">3.77 ms</div>
-                  <div class="perf-seg io-before" title="Network I/O syscalls: 7.20 ms">
-                    Network I/O: 7.20 ms
-                  </div>
-                </div>
-              </div>
-              <div class="perf-bar-group mt-2">
-                <div class="perf-bar-label">
-                  <span data-i18n="nm.perf_io_after">NETWORK I/O (After sendmmsg)</span>
-                  <span class="perf-value perf-value--good">0.17 ms (-97.6%)</span>
-                </div>
-                <div class="perf-bar-visual">
-                  <div class="perf-seg logic" title="Game Logic: 3.77 ms">3.77 ms</div>
-                  <div class="perf-seg io-after" title="Network I/O: 0.17 ms"></div>
-                  <div class="perf-seg empty"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <p class="mt-4" data-i18n="nm.p6_desc2">
-            <strong>Key Takeaway:</strong>
-            Replacing individual 'send()' calls with Linux
-            <code>sendmmsg()</code>
-            batched syscalls via an asynchronous dispatcher reduced network I/O from 7.20 ms to 0.17 ms
-            (-97.6%), while game logic remained at ~3.77 ms.
-          </p>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="nm.p7_heading">07 | Testing &amp; Validation Architecture</h2>
-          <p data-i18n="nm.p7_desc">
-            Developed using Test-Driven Development (TDD) backed by
-            <strong>254 automated tests</strong>
-            using Google Test.
-          </p>
-          <div class="metric-highlight mt-6" data-i18n="nm.p7_goals">
-            <strong>MockTransport Integration:</strong>
-            <br />
-            • In-process transport implementation simulating bidirectional networking without real OS sockets.
-            <br />
-            • Deterministic test execution isolated from system network configurations.
-            <br />
-            • Reproducible network conditions (artificial packet loss and delivery delay simulation).
-          </div>
-        </div>
-        <div class="case-block">
-          <h2 data-i18n="nm.p8_heading">08 | Results, CI/CD &amp; Scalability Limit</h2>
-          <p data-i18n="nm.p8_desc">
-            Automated pipelines and stress testing validated production readiness and system limits:
-          </p>
-          <ul>
-            <li>
-              <strong data-i18n="nm.p8_ci">CI/CD &amp; Deployment:</strong>
-              <span data-i18n="nm.p8_ci_text">
-                GitHub Actions automated build/test pipelines, containerized via Docker and pushed to GitHub
-                Container Registry for Azure deployment.
-              </span>
+              <a class="toc-link" data-section="protocol" href="#protocol" data-i18n="nm.toc_protocol">
+                The UDP protocol
+              </a>
             </li>
             <li>
-              <strong data-i18n="nm.p8_wan">WAN Validation:</strong>
-              <span data-i18n="nm.p8_wan_text">
-                Tested with 49 concurrent WAN clients with zero CRC errors observed during recorded tests.
-              </span>
+              <a class="toc-link" data-section="replication" href="#replication" data-i18n="nm.toc_repl">
+                Replication
+              </a>
             </li>
             <li>
-              <strong data-i18n="nm.p8_scale">Scalability Benchmark (99 clients):</strong>
-              <span data-i18n="nm.p8_scale_text">
-                Stress testing reached 99 clients at 14.24 ms loop time, highlighting the need for dynamic
-                relevancy sets in sessions beyond 5v5 MOBA scopes.
-              </span>
+              <a class="toc-link" data-section="tick" href="#tick" data-i18n="nm.toc_tick">The 100 Hz tick</a>
             </li>
-          </ul>
-        </div>
+            <li>
+              <a class="toc-link" data-section="debugging" href="#debugging" data-i18n="nm.toc_debug">
+                Debugging
+              </a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="testing" href="#testing" data-i18n="nm.toc_testing">
+                Testing &amp; deployment
+              </a>
+            </li>
+            <li>
+              <a class="toc-link" data-section="outcome" href="#outcome" data-i18n="nm.toc_outcome">
+                Results
+              </a>
+            </li>
+          </ol>
+        </nav>
 
-        <div class="case-block">
-          <h2 data-i18n="nm.p9_heading">09 | Engineering Takeaways</h2>
-          <p data-i18n="nm.p9_desc1">
-            Building NetworkMiddleware from scratch changed the way I approach systems engineering. The
-            project taught me that designing a networking system is not only about making packets travel
-            between machines. The harder part is defining clear ownership, understanding how state flows
-            through the system and making decisions that remain maintainable as complexity increases.
-          </p>
-          <h3 class="case-subheading" data-i18n="nm.p9_sub1">Design Before Optimization</h3>
-          <p data-i18n="nm.p9_desc2">
-            One of the most important lessons was learning to separate assumptions from measured problems. The
-            performance work initially looked like a problem with the simulation loop, but profiling showed
-            that the main bottleneck was network I/O syscall overhead. That led to a targeted optimization
-            using batched Linux
-            <code>sendmmsg()</code>
-            calls instead of optimizing code that was not actually limiting performance.
-          </p>
-          <h3 class="case-subheading" data-i18n="nm.p9_sub2">State Ownership Matters</h3>
-          <p data-i18n="nm.p9_desc3">
-            The baseline issue showed how important ownership is when designing replicated state. An entity
-            does not have a single universal replication state. Each client can have a different reference
-            point for that entity. Modeling the baseline around the
-            <code>(Client, Entity)</code>
-            relationship made this ownership explicit and eliminated cross-client interference.
-          </p>
-          <h3 class="case-subheading" data-i18n="nm.p9_sub3">Testability Is an Architectural Property</h3>
-          <p data-i18n="nm.p9_desc4">
-            Using
-            <code>ITransport</code>
-            and
-            <code>MockTransport</code>
-            made testing part of the architecture rather than something added afterwards. Being able to
-            reproduce packet loss, delays and protocol behaviour without relying on real sockets made it
-            possible to validate the networking layer in isolation.
-          </p>
-          <h3 class="case-subheading" data-i18n="nm.p9_sub4">Measure the Limits</h3>
-          <p data-i18n="nm.p9_desc5">
-            The scalability benchmark was also an important part of the project. Reaching 99 clients exposed
-            the O(n²) cost of the current replication model. Instead of treating the benchmark only as a
-            performance result, it provided a concrete direction for future work: improving relevancy and
-            avoiding unnecessary state replication.
-          </p>
-          <h3 class="case-subheading" data-i18n="nm.p9_sub5">What I Would Explore Next</h3>
-          <p data-i18n="nm.p9_desc6">
-            The next step would be to evolve the replication and relevancy systems further, particularly
-            through dynamic relevancy sets, and complete the client-side prediction and server reconciliation
-            integration for Unreal Engine. The project gave me a much deeper understanding of multiplayer
-            networking, but more importantly, it taught me how to investigate complex systems, identify their
-            real constraints and make engineering decisions based on evidence rather than assumptions.
-          </p>
+        <div class="project-content-wrap">
+          <!-- TL;DR -->
+          <aside class="tldr" aria-labelledby="tldr-title">
+            <p class="tldr__title" id="tldr-title" data-i18n="nm.tldr_title">// SUMMARY</p>
+            <ul data-i18n="nm.tldr_list">
+              <li>
+                <strong>Project:</strong>
+                a networking middleware for MOBA games that does not depend on any engine, written in C++20
+                with no existing networking library.
+              </li>
+              <li>
+                <strong>My role:</strong>
+                solo developer. I built it to specialise in multiplayer networking, the area I want to work
+                in.
+              </li>
+              <li>
+                <strong>Networking:</strong>
+                a UDP protocol with three reliability channels, bit-level serialization and delta compression
+                against the last state each client confirmed.
+              </li>
+              <li>
+                <strong>Server:</strong>
+                a 100 Hz authoritative tick with fog of war, Kalman prediction for lost inputs and lag
+                compensation.
+              </li>
+              <li>
+                <strong>Engineering:</strong>
+                254 tests that run without real sockets, CI on Windows and Linux, and Docker images deployed
+                to Azure.
+              </li>
+              <li>
+                <strong>Result:</strong>
+                49 clients over the real internet with 0 CRC errors and 0 retransmissions, and the known limit
+                of the design measured at 99 clients.
+              </li>
+            </ul>
+          </aside>
+
+          <!-- 01 THE PROBLEM -->
+          <section class="case-block" id="problem" aria-labelledby="problem-title">
+            <h2 id="problem-title" data-i18n="nm.s1_heading">01 | The Problem</h2>
+            <p data-i18n="nm.s1_desc">
+              The starting point was AA4, a 2D shooter I made in 2023 where the client told the server its own
+              position and the server simply passed it on. That made teleport cheats trivial and players
+              drifted out of sync. NetworkMiddleware fixes it from the architecture up.
+            </p>
+            <div class="compare-grid">
+              <article class="compare-card compare-card--before">
+                <span class="compare-card__tag" data-i18n="nm.before_tag">Before · AA4 (2023)</span>
+                <h3 class="compare-card__title" data-i18n="nm.before_title">The client decides</h3>
+                <ul data-i18n="nm.before_list">
+                  <li>The client sends its position and the server trusts it</li>
+                  <li>No fixed tick rate</li>
+                  <li>Any client can teleport</li>
+                </ul>
+              </article>
+              <article class="compare-card compare-card--after">
+                <span class="compare-card__tag" data-i18n="nm.after_tag">After · NetworkMiddleware</span>
+                <h3 class="compare-card__title" data-i18n="nm.after_title">The server decides</h3>
+                <ul data-i18n="nm.after_list">
+                  <li>The client only sends its intention: a 24-bit input</li>
+                  <li>The server simulates the world 100 times per second</li>
+                  <li>Positions come only from the server, clamped to the map</li>
+                </ul>
+              </article>
+            </div>
+            <p class="note" data-i18n="nm.s1_note">
+              <strong>Why not use an engine's networking?</strong>
+              Unreal's replication, Mirror or Photon work as black boxes tied to their engine. A competitive
+              MOBA needs many lightweight Linux servers, and control over every bit on the wire, so I wrote
+              the middleware with no engine dependency. The plan is for Unreal to be only the client that
+              draws the game.
+            </p>
+          </section>
+
+          <!-- 02 ARCHITECTURE -->
+          <section class="case-block" id="architecture" aria-labelledby="arch-title">
+            <h2 id="arch-title" data-i18n="nm.s2_heading">02 | Architecture</h2>
+            <p data-i18n="nm.s2_desc">
+              Two rules shape every decision: modules only know each other through interfaces, and there are
+              no singletons. The project is split into CMake libraries, and only the executable creates
+              concrete objects and wires them together.
+            </p>
+            <div
+              class="mod-diagram"
+              role="img"
+              aria-label="Module structure"
+              data-i18n-aria-label="nm.mod_alt"
+            >
+              <div class="mod-node mod-node--exe">
+                <span class="mod-node__name">NetServer</span>
+                <span class="mod-node__type" data-i18n="nm.mod_exe">
+                  executable · the only place concrete objects are created
+                </span>
+              </div>
+              <div class="mod-arrow" aria-hidden="true"><span data-i18n="nm.mod_links">links</span></div>
+              <div class="mod-row">
+                <div class="mod-node">
+                  <span class="mod-node__name">MiddlewareCore</span>
+                  <span class="mod-node__type" data-i18n="nm.mod_core">
+                    session, simulation, interest management
+                  </span>
+                  <span class="mod-chips">
+                    <span class="mod-chip">NetworkManager</span>
+                    <span class="mod-chip">RemoteClient</span>
+                    <span class="mod-chip">GameWorld</span>
+                    <span class="mod-chip">SpatialGrid</span>
+                    <span class="mod-chip">VisibilityTracker</span>
+                    <span class="mod-chip">AsyncSendDispatcher</span>
+                  </span>
+                </div>
+                <div class="mod-node">
+                  <span class="mod-node__name">MiddlewareTransport</span>
+                  <span class="mod-node__type" data-i18n="nm.mod_transport">
+                    the only code that touches sockets
+                  </span>
+                  <span class="mod-chips">
+                    <span class="mod-chip">SFMLTransport</span>
+                    <span class="mod-chip">RawUDPTransport</span>
+                    <span class="mod-chip">TransportFactory</span>
+                  </span>
+                </div>
+                <div class="mod-node">
+                  <span class="mod-node__name">Brain</span>
+                  <span class="mod-node__type" data-i18n="nm.mod_brain">
+                    prediction and priorities · no network code
+                  </span>
+                  <span class="mod-chips">
+                    <span class="mod-chip">KalmanPredictor</span>
+                    <span class="mod-chip">PriorityEvaluator</span>
+                  </span>
+                </div>
+              </div>
+              <div class="mod-arrow" aria-hidden="true">
+                <span data-i18n="nm.mod_depends">Core and Transport depend on</span>
+              </div>
+              <div class="mod-node mod-node--shared">
+                <span class="mod-node__name">MiddlewareShared</span>
+                <span class="mod-node__type" data-i18n="nm.mod_shared">
+                  no dependencies · the same bits for the server and a future Unreal client
+                </span>
+                <span class="mod-chips">
+                  <span class="mod-chip mod-chip--accent">ITransport</span>
+                  <span class="mod-chip">BitWriter / BitReader</span>
+                  <span class="mod-chip">PacketHeader</span>
+                  <span class="mod-chip">HeroSerializer</span>
+                  <span class="mod-chip">CRC32</span>
+                </span>
+              </div>
+            </div>
+
+            <h3 class="case-subheading" data-i18n="nm.s2_patterns_title">Design patterns used</h3>
+            <ul class="pattern-grid">
+              <li class="pattern-card">
+                <span class="pattern-card__name">Adapter</span>
+                <span data-i18n="nm.pat_adapter">
+                  <code>SFMLTransport</code>
+                  is the only class that knows SFML exists. Everything above it moves raw bytes through
+                  <code>ITransport</code>
+                </span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">Factory</span>
+                <span data-i18n="nm.pat_factory">
+                  <code>TransportFactory::Create(TransportType)</code>
+                  : adding a new transport needs no change in Core or in main
+                </span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">Dependency Injection</span>
+                <span data-i18n="nm.pat_di">
+                  <code>NetworkManager</code>
+                  receives an
+                  <code>ITransport&amp;</code>
+                  in its constructor. In the tests that reference is a
+                  <code>MockTransport</code>
+                </span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">Callbacks (IoC)</span>
+                <span data-i18n="nm.pat_ioc">
+                  The network layer exposes events as
+                  <code>std::function</code>
+                  , so the Job System could be placed between network and game logic without touching network
+                  code
+                </span>
+              </li>
+            </ul>
+            <p class="metric-highlight" data-i18n="nm.s2_payoff">
+              <strong>The payoff:</strong>
+              when the SFML sockets became the bottleneck, I swapped in a new POSIX transport with zero
+              changes in Core.
+            </p>
+          </section>
+
+          <!-- 03 PROTOCOL -->
+          <section class="case-block" id="protocol" aria-labelledby="protocol-title">
+            <h2 id="protocol-title" data-i18n="nm.s3_heading">03 | The UDP Protocol</h2>
+            <p data-i18n="nm.s3_desc">
+              TCP is reliable, but one lost packet blocks everything behind it: a lost chat message would
+              freeze every hero's position. UDP never waits, but it guarantees nothing, so the protocol adds
+              its own guarantees on top. Every packet starts with the same 104-bit header:
+            </p>
+            <figure class="bitfield-figure">
+              <div
+                class="bitfield"
+                role="img"
+                aria-label="Packet header, 104 bits"
+                data-i18n-aria-label="nm.bf_alt"
+              >
+                <span class="bitfield__cell" style="--bits: 16">
+                  <span class="bitfield__name">sequence</span>
+                  <span class="bitfield__bits">16</span>
+                </span>
+                <span class="bitfield__cell" style="--bits: 16">
+                  <span class="bitfield__name">ack</span>
+                  <span class="bitfield__bits">16</span>
+                </span>
+                <span class="bitfield__cell bitfield__cell--accent" style="--bits: 32">
+                  <span class="bitfield__name">ack_bits</span>
+                  <span class="bitfield__bits">32</span>
+                </span>
+                <span class="bitfield__cell" style="--bits: 8; --bits-sm: 16">
+                  <span class="bitfield__name">
+                    type
+                    <br />
+                    flags
+                  </span>
+                  <span class="bitfield__bits">4 + 4</span>
+                </span>
+                <span class="bitfield__cell" style="--bits: 32">
+                  <span class="bitfield__name">timestamp</span>
+                  <span class="bitfield__bits">32</span>
+                </span>
+              </div>
+              <figcaption data-i18n="nm.bf_caption">
+                Bit widths drawn to scale. A CRC32 trailer goes at the end of the packet, because the checksum
+                can only be computed once the payload is written.
+              </figcaption>
+            </figure>
+            <p data-i18n="nm.s3_ack">
+              <strong>ACKs for free:</strong>
+              <code>ack_bits</code>
+              confirms the 32 packets before
+              <code>ack</code>
+              , one bit each. Every packet a side sends confirms what it has received, so the protocol never
+              sends a packet just to say "got it". Sequence wrap-around (65535 to 0) is handled with signed
+              16-bit arithmetic, without special cases.
+            </p>
+
+            <h3 class="case-subheading" data-i18n="nm.channels_title">Three channels, one socket</h3>
+            <ul class="pattern-grid pattern-grid--3">
+              <li class="pattern-card">
+                <span class="pattern-card__name">Unreliable</span>
+                <span data-i18n="nm.ch_unrel">
+                  Snapshots, inputs, heartbeats. If one is lost, the next tick replaces it.
+                </span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">Reliable Ordered</span>
+                <span data-i18n="nm.ch_ordered">
+                  Purchases, abilities, level-ups. Exactly once and in order.
+                </span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">Reliable Unordered</span>
+                <span data-i18n="nm.ch_unordered">Deaths and chat. Exactly once, order does not matter.</span>
+              </li>
+            </ul>
+            <p data-i18n="nm.s3_resend">
+              Reliable packets are resent at
+              <code>max(30 ms, RTT × 1.5)</code>
+              , with the RTT smoothed by an exponential moving average. Resending fast on a slow connection
+              would only add congestion. Each resend rebuilds the header with fresh ACKs, so retransmissions
+              also report what has arrived.
+            </p>
+
+            <h3 class="case-subheading" data-i18n="nm.hs_title">Connection handshake</h3>
+            <ol class="flow-steps" aria-label="Connection handshake" data-i18n-aria-label="nm.hs_title">
+              <li>
+                <span class="flow-steps__num">1</span>
+                <span>Request</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">2</span>
+                <span>Challenge</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">3</span>
+                <span>Response</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">4</span>
+                <span>Accepted</span>
+              </li>
+            </ol>
+            <p data-i18n="nm.s3_hs">
+              The server answers a connection request with a random 64-bit salt, and the client has to send it
+              back. A client can only know the salt if it really receives packets at that IP and port, which
+              stops address spoofing. The accepted packet carries a reconnection token: for 120 seconds a
+              dropped client can come back, even from another network, and find its session intact.
+            </p>
+          </section>
+
+          <!-- 04 REPLICATION -->
+          <section class="case-block" id="replication" aria-labelledby="repl-title">
+            <h2 id="repl-title" data-i18n="nm.s4_heading">04 | Replication &amp; Compression</h2>
+            <p data-i18n="nm.s4_desc">
+              Every tick the server has to tell each client what changed. Sending the C++ struct as it is
+              would cost 360 bits per hero, so every field is written with only the bits it needs, and then
+              only the fields that changed are sent.
+            </p>
+            <div class="replication-comparison">
+              <div class="rep-row">
+                <div class="rep-meta">
+                  <span data-i18n="nm.rep_full">RAW STRUCT</span>
+                  <span>360 bits</span>
+                </div>
+                <div class="rep-bar-wrap"><div class="rep-bar" style="--w: 100%"></div></div>
+              </div>
+              <div class="rep-arrow" data-i18n="nm.rep_arrow1">↓ bit-level serialization (−59%)</div>
+              <div class="rep-row">
+                <div class="rep-meta">
+                  <span data-i18n="nm.rep_comp">FULL HERO STATE</span>
+                  <span>149 bits</span>
+                </div>
+                <div class="rep-bar-wrap"><div class="rep-bar" style="--w: 41.4%"></div></div>
+              </div>
+              <div class="rep-arrow" data-i18n="nm.rep_arrow2">
+                ↓ delta against the confirmed baseline (−74%)
+              </div>
+              <div class="rep-row">
+                <div class="rep-meta">
+                  <span data-i18n="nm.rep_unch">NOTHING CHANGED</span>
+                  <span>38 bits</span>
+                </div>
+                <div class="rep-bar-wrap"><div class="rep-bar" style="--w: 10.5%"></div></div>
+              </div>
+            </div>
+            <ul class="pattern-grid">
+              <li class="pattern-card">
+                <span class="pattern-card__name" data-i18n="nm.k_quant">Quantization</span>
+                <span data-i18n="nm.k_quant_d">
+                  Positions use 16 bits instead of a 32-bit float. On a 1000 × 1000 map the error is at most
+                  1.53 cm, invisible for characters tens of units tall.
+                </span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name" data-i18n="nm.k_baseline">Baselines</span>
+                <span data-i18n="nm.k_baseline_d">
+                  The delta is computed against the last state the client confirmed through
+                  <code>ack_bits</code>
+                  , never against the last one sent. If a packet is lost, the next delta still starts from
+                  what the client really has.
+                </span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">ZigZag</span>
+                <span data-i18n="nm.k_zigzag_d">
+                  <code>(n &lt;&lt; 1) ^ (n &gt;&gt; 31)</code>
+                  turns small negative deltas into small unsigned numbers, so they also fit in a few bits.
+                </span>
+              </li>
+              <li class="pattern-card">
+                <span class="pattern-card__name">BitWriter</span>
+                <span data-i18n="nm.k_bitwriter_d">
+                  Writes in 32-bit blocks instead of bit by bit: at most 5 iterations per value instead of 32.
+                  I chose it over Protocol Buffers and FlatBuffers to keep control of every bit.
+                </span>
+              </li>
+            </ul>
+          </section>
+
+          <!-- 05 THE 100 HZ TICK -->
+          <section class="case-block" id="tick" aria-labelledby="tick-title">
+            <h2 id="tick-title" data-i18n="nm.s5_heading">05 | The 100 Hz Tick</h2>
+            <p data-i18n="nm.s5_desc">
+              The server has 10 ms per tick. In that time it reads every packet, applies the inputs, simulates
+              the world and prepares, for each client, only what its team can see.
+            </p>
+            <ol class="tick-pipeline">
+              <li>
+                <code>manager.Update()</code>
+                <span data-i18n="nm.tp_1">read every waiting packet: handshakes, ACKs, inputs</span>
+              </li>
+              <li>
+                <code>ForEachEstablished</code>
+                <span data-i18n="nm.tp_2">
+                  apply each input, clamped; predict it with Kalman if it was lost
+                </span>
+              </li>
+              <li>
+                <code>gameWorld.Tick(dt)</code>
+                <span data-i18n="nm.tp_3">
+                  authoritative simulation, and a copy of the state for lag compensation
+                </span>
+              </li>
+              <li>
+                <code>spatialGrid.MarkVision()</code>
+                <span data-i18n="nm.tp_4">recompute what each team can see</span>
+              </li>
+              <li>
+                <code>SerializeSnapshotFor()</code>
+                <span data-i18n="nm.tp_5">every third tick: serialize per client in parallel, then send</span>
+              </li>
+              <li>
+                <code>++tickID</code>
+                <span data-i18n="nm.tp_6">the client will use it to reconcile its prediction</span>
+              </li>
+            </ol>
+            <p class="note" data-i18n="nm.s5_while">
+              <strong>A one-word fix:</strong>
+              the receive step used
+              <code>if</code>
+              and read one packet per tick. With 48 bots that is about 29 packets per tick, so 28 piled up in
+              the kernel buffer and latency kept growing. Changing it to
+              <code>while</code>
+              , the standard pattern in authoritative servers, fixed it.
+            </p>
+
+            <h3 class="case-subheading" data-i18n="nm.systems_title">What the server adds on top</h3>
+            <div class="system-grid">
+              <article class="system-card">
+                <div class="fow-mini" aria-hidden="true">
+                  <span class="fow-mini__vision"></span>
+                  <span class="fow-mini__hero"></span>
+                  <span class="fow-mini__enemy fow-mini__enemy--seen"></span>
+                  <span class="fow-mini__enemy"></span>
+                </div>
+                <h4 class="system-card__title" data-i18n="nm.sys_fow">Fog of war</h4>
+                <p data-i18n="nm.sys_fow_d">
+                  A 20 × 20 grid stored as
+                  <code>std::bitset&lt;400&gt;</code>
+                  per team, 50 bytes. Asking if a cell is visible is O(1), and hidden enemies are never sent.
+                </p>
+              </article>
+              <article class="system-card">
+                <p class="system-card__visual" aria-hidden="true">[ x, y, vx, vy ]</p>
+                <h4 class="system-card__title" data-i18n="nm.sys_kalman">Kalman prediction</h4>
+                <p data-i18n="nm.sys_kalman_d">
+                  When a client's input is lost, the server predicts its movement with a constant-velocity
+                  filter and corrects it silently when the real input arrives. No change on the wire.
+                </p>
+              </article>
+              <article class="system-card">
+                <div class="rewind-mini" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <h4 class="system-card__title" data-i18n="nm.sys_lag">Lag compensation</h4>
+                <p data-i18n="nm.sys_lag_d">
+                  32 past states per entity (320 ms). A hit is checked against the world as the shooter saw
+                  it, using the tick ID in their input.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <!-- 06 DEBUGGING -->
+          <section class="case-block" id="debugging" aria-labelledby="debug-title">
+            <h2 id="debug-title" data-i18n="nm.s6_heading">06 | Debugging</h2>
+            <p data-i18n="nm.s6_desc">
+              Two bugs that taught me the most, and the limit the real internet exposed.
+            </p>
+            <div class="bug-grid">
+              <article class="bug-card">
+                <h3 class="bug-card__title" data-i18n="nm.bug1_title">Zero connections</h3>
+                <dl class="bug-card__steps">
+                  <dt data-i18n="nm.bug_symptom">Symptom</dt>
+                  <dd data-i18n="nm.bug1_symptom">
+                    The first headless bots in Docker never connected to the server.
+                  </dd>
+                  <dt data-i18n="nm.bug_ruled">Ruled out</dt>
+                  <dd data-i18n="nm.bug1_ruled">
+                    The socket was open (
+                    <code>ss -ulnp</code>
+                    ) and packets did arrive (
+                    <code>nc -u</code>
+                    ).
+                  </dd>
+                  <dt data-i18n="nm.bug_cause">Root cause</dt>
+                  <dd data-i18n="nm.bug1_cause">
+                    <code>ParseIpv4</code>
+                    built the address in little-endian, but SFML expects network byte order:
+                    <code>127.0.0.1</code>
+                    became
+                    <code>1.0.0.127</code>
+                    .
+                  </dd>
+                  <dt data-i18n="nm.bug_fix">Fix</dt>
+                  <dd data-i18n="nm.bug1_fix">
+                    Build the address in big-endian. Found in minutes by ruling out one layer at a time.
+                  </dd>
+                </dl>
+              </article>
+              <article class="bug-card">
+                <h3 class="bug-card__title" data-i18n="nm.bug2_title">Delta compression that wasn't</h3>
+                <dl class="bug-card__steps">
+                  <dt data-i18n="nm.bug_symptom">Symptom</dt>
+                  <dd data-i18n="nm.bug2_symptom">
+                    With 46 bots and every hero moving, delta efficiency fell to 0% and the loop took 39.5 ms,
+                    four times the budget.
+                  </dd>
+                  <dt data-i18n="nm.bug_cause">Root cause</dt>
+                  <dd data-i18n="nm.bug2_cause">
+                    The history assumed one entity per sequence number, so only the last entity of each tick
+                    used delta. On top of that, 2,116
+                    <code>send()</code>
+                    calls per tick.
+                  </dd>
+                  <dt data-i18n="nm.bug_fix">Fix</dt>
+                  <dd data-i18n="nm.bug2_fix">
+                    Baselines keyed by (client, entity) and one packet per client per tick: 1.62 ms and 74%
+                    efficiency.
+                  </dd>
+                </dl>
+              </article>
+            </div>
+
+            <h3 class="case-subheading" data-i18n="nm.io_title">The real internet: over budget</h3>
+            <p data-i18n="nm.io_desc">
+              Tested from Spain against Azure with 49 bots, the protocol held up: 0 retransmissions and 0 CRC
+              errors in 60 seconds. The server did not: the full loop took 10.97 ms, over the 10 ms budget,
+              while reading packets took only 3.77 ms of it.
+            </p>
+            <div
+              class="budget-chart"
+              role="img"
+              aria-label="Full loop against the 10 ms budget"
+              data-i18n-aria-label="nm.io_alt"
+            >
+              <div class="budget-row">
+                <span class="budget-row__label" data-i18n="nm.io_recv">Reading packets</span>
+                <span class="budget-row__track">
+                  <span class="budget-seg budget-seg--logic" style="--w: 31.4%">3.77 ms</span>
+                </span>
+              </div>
+              <div class="budget-row">
+                <span class="budget-row__label" data-i18n="nm.io_full">Full loop</span>
+                <span class="budget-row__track">
+                  <span class="budget-seg budget-seg--io" style="--w: 91.4%">10.97 ms</span>
+                </span>
+              </div>
+              <span class="budget-limit" style="--at: 0.833" aria-hidden="true">
+                <span data-i18n="nm.io_budget">10 ms budget</span>
+              </span>
+            </div>
+            <p class="metric-highlight" data-i18n="nm.io_fix">
+              <strong>Fix, in three steps:</strong>
+              a new transport with Linux
+              <code>sendmmsg()</code>
+              that sends every client's packet in one system call instead of 49; an
+              <code>AsyncSendDispatcher</code>
+              on its own
+              <code>std::jthread</code>
+              so the game loop never waits for that call; and snapshots every third tick (about 33 Hz) while
+              the simulation stays at 100 Hz.
+            </p>
+            <p data-i18n="nm.io_after">
+              After the fix I only re-ran the WAN test with 10 bots: a 0.17 ms full loop and 19.7 kbps per
+              client. Repeating it with 49 is the next measurement I owe this project.
+            </p>
+            <figure class="terminal">
+              <div class="terminal__bar" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <pre
+                class="terminal__body"
+              ><code>[PROFILER] Clients: 49 | Avg Tick: 5.23ms | <span class="terminal__hot">Full Loop: 11.63ms</span> | CRC Err: 0
+[PROFILER] Clients: 49 | Avg Tick: 5.33ms | <span class="terminal__hot">Full Loop: 12.56ms</span> | CRC Err: 0
+[PROFILER] Clients: 49 | Avg Tick: 5.00ms | <span class="terminal__hot">Full Loop: 12.50ms</span> | CRC Err: 0
+[PROFILER] Clients: 49 | Avg Tick: 4.56ms | <span class="terminal__hot">Full Loop: 12.09ms</span> | CRC Err: 0
+[PROFILER] Clients: 49 | Avg Tick: 4.13ms | <span class="terminal__hot">Full Loop: 11.54ms</span> | CRC Err: 0
+[PROFILER] Clients: 49 | Avg Tick: 3.77ms | <span class="terminal__hot">Full Loop: 10.97ms</span> | CRC Err: 0</code></pre>
+              <figcaption data-i18n="nm.term_caption">
+                The server log of that run, one line every 10 seconds, before the fix (retries and delta
+                efficiency left out: 0 and 74% on every line). Avg Tick measures only the packet reading step;
+                Full Loop, the whole tick, stays over 10 ms for the whole minute.
+              </figcaption>
+            </figure>
+          </section>
+
+          <!-- 07 TESTING & DEPLOYMENT -->
+          <section class="case-block" id="testing" aria-labelledby="testing-title">
+            <h2 id="testing-title" data-i18n="nm.s7_heading">07 | Testing &amp; Deployment</h2>
+            <p data-i18n="nm.s7_desc">
+              I built the test setup before the protocol. Without it, every new layer could break the previous
+              ones without anyone noticing.
+            </p>
+            <ul class="stat-row">
+              <li>
+                <span class="stat-row__val">254</span>
+                <span data-i18n="nm.st_tests">tests with Google Test</span>
+              </li>
+              <li>
+                <span class="stat-row__val">2</span>
+                <span data-i18n="nm.st_ci">compilers in CI (GCC 13, MSVC)</span>
+              </li>
+              <li>
+                <span class="stat-row__val">37</span>
+                <span data-i18n="nm.st_prs">pull requests in 3 months</span>
+              </li>
+            </ul>
+            <div
+              class="growth-chart"
+              role="img"
+              aria-label="Tests by phase"
+              data-i18n-aria-label="nm.growth_alt"
+            >
+              <div class="growth-col" style="--h: 28%">
+                <span class="growth-col__val">72</span>
+                <span class="growth-col__lbl" data-i18n="nm.g_t1">Test setup</span>
+              </div>
+              <div class="growth-col" style="--h: 62%">
+                <span class="growth-col__val">157</span>
+                <span class="growth-col__lbl" data-i18n="nm.g_p3">Protocol</span>
+              </div>
+              <div class="growth-col" style="--h: 75%">
+                <span class="growth-col__val">190</span>
+                <span class="growth-col__lbl" data-i18n="nm.g_p4">Stress test</span>
+              </div>
+              <div class="growth-col" style="--h: 91%">
+                <span class="growth-col__val">230</span>
+                <span class="growth-col__lbl" data-i18n="nm.g_p5">Server AI</span>
+              </div>
+              <div class="growth-col growth-col--last" style="--h: 100%">
+                <span class="growth-col__val">254</span>
+                <span class="growth-col__lbl" data-i18n="nm.g_p6">I/O</span>
+              </div>
+            </div>
+            <ul data-i18n="nm.s7_list">
+              <li>
+                <strong>MockTransport:</strong>
+                an
+                <code>ITransport</code>
+                that stores packets in memory instead of using sockets. Tests are deterministic and can
+                simulate packet loss and delay.
+              </li>
+              <li>
+                <strong>Route():</strong>
+                a virtual cable between two mocks. A test runs a server and a bot by calling
+                <code>Update()</code>
+                on each and
+                <code>Route()</code>
+                in between, with no threads and no timers.
+              </li>
+              <li>
+                <strong>Load tests:</strong>
+                a HeadlessBot that plays like a client, run with
+                <code>tc netem</code>
+                to add latency and loss: 87 clients with 100 ms and 5% loss, and 0 corrupted packets.
+              </li>
+            </ul>
+            <h3 class="case-subheading" data-i18n="nm.cd_title">On every push to main</h3>
+            <ol
+              class="flow-steps flow-steps--wide"
+              style="--steps: 5"
+              aria-label="Deployment pipeline"
+              data-i18n-aria-label="nm.cd_title"
+            >
+              <li>
+                <span class="flow-steps__num">1</span>
+                <span data-i18n="nm.cd_1">Build Windows + Linux</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">2</span>
+                <span data-i18n="nm.cd_2">GitHub Release</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">3</span>
+                <span data-i18n="nm.cd_3">Docker amd64 + arm64</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">4</span>
+                <span data-i18n="nm.cd_4">Push to GHCR</span>
+              </li>
+              <li>
+                <span class="flow-steps__num">5</span>
+                <span data-i18n="nm.cd_5">Deploy to Azure</span>
+              </li>
+            </ol>
+            <p data-i18n="nm.s7_docker">
+              A multi-stage Dockerfile takes the image from about 800 MB to 120 MB, and the server restarts on
+              its own if the virtual machine reboots.
+            </p>
+          </section>
+
+          <!-- 08 RESULTS -->
+          <section class="case-block" id="outcome" aria-labelledby="outcome-title">
+            <h2 id="outcome-title" data-i18n="nm.s8_heading">08 | Results</h2>
+            <div
+              class="bars"
+              role="img"
+              aria-label="Targets versus results"
+              data-i18n-aria-label="nm.bars_alt"
+            >
+              <div class="bar-row">
+                <span class="bar-row__label" data-i18n="nm.bar_bits">Bits per hero</span>
+                <span class="bar-row__track">
+                  <span class="bar bar--target" style="--w: 100%">
+                    <span data-i18n="nm.bar_raw">raw struct 360</span>
+                  </span>
+                  <span class="bar bar--real" style="--w: 41.4%"><span>149</span></span>
+                </span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-row__label" data-i18n="nm.bar_bw">Bandwidth saved</span>
+                <span class="bar-row__track">
+                  <span class="bar bar--target" style="--w: 80%">
+                    <span data-i18n="nm.bar_target">target 60-80%</span>
+                  </span>
+                  <span class="bar bar--real" style="--w: 74%"><span>74%</span></span>
+                </span>
+              </div>
+            </div>
+
+            <h3 class="case-subheading" data-i18n="nm.cmp_title">Next to commercial games</h3>
+            <div class="table-scroll">
+              <table class="obj-table cmp-table">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="nm.cmp_col_sys">System</th>
+                    <th scope="col" data-i18n="nm.cmp_col_bw">Per client</th>
+                    <th scope="col" data-i18n="nm.cmp_col_tick">Server rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>League of Legends</td>
+                    <td>~10-30 kbps</td>
+                    <td>30 Hz</td>
+                  </tr>
+                  <tr>
+                    <td>Dota 2</td>
+                    <td>~20-50 kbps</td>
+                    <td>30 Hz</td>
+                  </tr>
+                  <tr>
+                    <td>Valorant</td>
+                    <td>~40-80 kbps</td>
+                    <td>128 Hz</td>
+                  </tr>
+                  <tr class="cmp-table__mine">
+                    <td>NetworkMiddleware</td>
+                    <td data-i18n="nm.cmp_mine">19.7 kbps (80.6 if everyone sees everyone)</td>
+                    <td data-i18n="nm.cmp_mine_rate">100 Hz sim · ~33 Hz snapshots</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="credits" data-i18n="nm.cmp_note">
+              Commercial figures are public estimates, not a side-by-side test. They give an order of
+              magnitude, not a ranking.
+            </p>
+
+            <h3 class="case-subheading" data-i18n="nm.obj_title">My objectives</h3>
+            <div class="table-scroll">
+              <table class="obj-table">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="nm.obj_col_goal">Objective</th>
+                    <th scope="col" data-i18n="nm.obj_col_result">Result</th>
+                    <th scope="col" data-i18n="nm.obj_col_why">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-i18n="nm.obj1_goal">Tick under 10 ms at 100 Hz</td>
+                    <td><span class="status status--partial" data-i18n="nm.status_partial">Partial</span></td>
+                    <td data-i18n="nm.obj1_why">
+                      10.97 ms with 49 WAN clients before the I/O work. After it, 0.17 ms with 10 clients; the
+                      49-client run is still to repeat.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td data-i18n="nm.obj2_goal">60-80% less bandwidth</td>
+                    <td><span class="status status--ok" data-i18n="nm.status_ok">Met</span></td>
+                    <td data-i18n="nm.obj2_why">
+                      74% delta efficiency with 49 WAN clients. Serialization alone saves 59%.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td data-i18n="nm.obj3_goal">0 CRC errors under load</td>
+                    <td><span class="status status--ok" data-i18n="nm.status_ok">Met</span></td>
+                    <td data-i18n="nm.obj3_why">
+                      0 errors and 0 retransmissions in every load test, including 99 clients over WAN.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td data-i18n="nm.obj4_goal">Kalman error under 5% with 10% loss</td>
+                    <td><span class="status status--partial" data-i18n="nm.status_partial">Partial</span></td>
+                    <td data-i18n="nm.obj4_why">
+                      A test checks the error stays under 0.5 units after 3 lost inputs, but I never measured
+                      it in a benchmark with 10% loss.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td data-i18n="nm.obj5_goal">Unreal Engine client (optional)</td>
+                    <td><span class="status status--miss" data-i18n="nm.status_miss">Not done</span></td>
+                    <td data-i18n="nm.obj5_why">
+                      Left out for time. The shared module and the tick IDs in every snapshot are ready for
+                      it.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note" data-i18n="nm.limit">
+              <strong>The known limit:</strong>
+              with 99 clients over WAN the tick reached 14.24 ms and kept growing. Every client receives every
+              entity, so the cost is O(n²). It is outside the 5v5 scope the system was designed for, but it
+              tells me exactly what to build next.
+            </p>
+
+            <h3 class="case-subheading" data-i18n="nm.takeaways_title">What I learned</h3>
+            <p data-i18n="nm.learned">
+              The hardest part was not making packets travel, it was deciding who owns each piece of state.
+              The delta bug only went away when baselines belonged to a (client, entity) pair. Building the
+              tests first also paid off: when the full benchmark exposed two silent bugs, 157 existing tests
+              made the fixes safe.
+            </p>
+            <p class="metric-highlight" data-i18n="nm.lesson">
+              Measure before optimizing, and know exactly what each metric measures before quoting it.
+            </p>
+            <h3 class="case-subheading" data-i18n="nm.next_title">What I would build next</h3>
+            <ul data-i18n="nm.next_list">
+              <li>
+                <strong>Relevancy sets:</strong>
+                each client gets only nearby or visible entities, from O(n²) to O(n × k).
+              </li>
+              <li>
+                <strong>Client-side prediction:</strong>
+                the client moves instantly and reconciles with the server using the tick ID.
+              </li>
+              <li>
+                <strong>Unreal bridge:</strong>
+                networking on its own thread inside an ActorComponent.
+              </li>
+              <li>
+                <strong>Encryption:</strong>
+                DTLS or ChaCha20 on top of the transport.
+              </li>
+            </ul>
+          </section>
+          <a class="next-case" href="/projects/lyra.html">
+            <span class="next-case__label" data-i18n="nm.next_label">Next case study</span>
+            <span class="next-case__title">
+              Lyra
+              <span aria-hidden="true">→</span>
+            </span>
+            <span class="next-case__desc" data-i18n="nm.next_desc">
+              Character programming and production for a cozy puzzle adventure in Unreal Engine 5. Best TFG at
+              ENTI DemoDay 2026.
+            </span>
+          </a>
         </div>
       </div>
     </main>

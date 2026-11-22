@@ -1,90 +1,795 @@
-/* NetworkMiddleware case study specifics. */
+/* NetworkMiddleware case study specifics: the network hero diagram, module diagram,
+   packet header, tick pipeline, server systems, budget chart, terminal and test growth.
+   Everything both case studies share lives in case-components.css. */
 
-/* Shared case-study layout first, so this page's rules can override it. */
+/* Shared layout and components first, so this page's rules can override them. */
 @import url('./case-study.css');
+@import url('./case-components.css');
 
-.hero-cta-wrapper {
-  margin-top: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+:root {
+  --danger: #f87171;
+  --danger-dim: rgb(248 113 113 / 12%);
 }
 
-.metrics-ticker-track {
-  display: flex;
-  gap: 3.5rem;
-  width: max-content;
-  animation: tickerScroll 45s linear infinite;
+/* --- Hero: network diagram instead of a video ------------------------------ */
+.hero-media-container--diagram {
+  aspect-ratio: auto;
+  padding: 1.5rem 1rem;
+  background: radial-gradient(circle at 80% 50%, var(--accent-dim), transparent 45%), var(--bg-surface);
 }
 
-.case-block ul {
-  margin-top: 1rem;
-  padding-left: 1.5rem;
-  display: flex;
-  flex-direction: column;
+.net-hero {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.net-bots circle {
+  fill: var(--accent);
+  opacity: 0.75;
+}
+
+.net-server {
+  stroke-width: 2;
+}
+
+.net-server__name {
+  fill: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.net-server__hz {
+  fill: var(--accent);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.net-tick {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: net-pulse 1s ease-out infinite;
+}
+
+/* Packets travel along the two lines; the x offsets are SVG user units. */
+.net-packets rect {
+  animation: net-in 2.4s linear infinite;
+}
+
+.net-packets--in rect {
+  fill: var(--text-muted);
+}
+
+.net-packets--out rect {
+  fill: var(--accent);
+  animation-name: net-out;
+  animation-duration: 1.8s;
+}
+
+.net-packets rect:nth-child(2) {
+  animation-delay: -0.6s;
+}
+
+.net-packets rect:nth-child(3) {
+  animation-delay: -1.2s;
+}
+
+.net-packets rect:nth-child(4) {
+  animation-delay: -1.5s;
+}
+
+@keyframes net-in {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(395px);
+  }
+}
+
+@keyframes net-out {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-390px);
+  }
+}
+
+@keyframes net-pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .net-tick,
+  .net-packets rect {
+    animation: none;
+  }
+
+  .net-packets rect:not(:first-child) {
+    display: none;
+  }
+}
+
+.net-legend {
+  display: none;
+}
+
+/* The diagram shrinks to ~40% on phones: draw the labels bigger in SVG units and move
+   the two line labels out of the SVG, into the legend below it. */
+@media (width <= 600px) {
+  .hero-media-container--diagram {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0.25rem;
+  }
+
+  .net-hero .svg-label {
+    font-size: 30px;
+  }
+
+  .net-line-label {
+    display: none;
+  }
+
+  .net-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .net-legend span::before {
+    content: '';
+    display: inline-block;
+    width: 1.1rem;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+    border-top: 2px dashed var(--text-muted);
+  }
+
+  .net-legend__out {
+    color: var(--accent);
+  }
+
+  .net-legend .net-legend__out::before {
+    border-top: 2px solid var(--accent);
+  }
+
+  .net-server__name {
+    font-size: 26px;
+  }
+
+  .net-server__hz {
+    font-size: 22px;
+  }
+}
+
+/* --- 01 Before / after ------------------------------------------------------- */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  margin: 1.75rem 0 0.5rem;
 }
 
-.arch-box {
+.compare-card {
+  padding: 1.25rem 1.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-top: 3px solid var(--accent);
+  border-radius: 10px;
+}
+
+.compare-card--before {
+  border-top-color: var(--danger);
+}
+
+.compare-card__tag {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.compare-card--before .compare-card__tag {
+  color: var(--danger);
+}
+
+.compare-card__title {
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+
+.case-block .compare-card ul {
+  gap: 0.35rem;
+  margin-top: 0;
+  padding-left: 1.1rem;
+}
+
+.case-block .compare-card li {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* --- 02 Module diagram ------------------------------------------------------- */
+.mod-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 1.75rem 0;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.mod-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.mod-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.9rem 0.75rem;
   background: var(--bg-surface);
   border: 1px solid var(--border-hover);
-  border-radius: 6px;
-  padding: 0.85rem 1rem;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--text-main);
-  width: 100%;
-  max-width: 280px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  overflow-wrap: anywhere;
-}
-
-.hero-cta-buttons {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.code-box {
-  background: var(--bg-code, #090d13);
-  border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  padding: 1.25rem;
+  text-align: center;
+}
+
+.mod-node--exe {
+  align-self: center;
+  min-width: min(100%, 360px);
+}
+
+.mod-node--shared {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.mod-node__name {
+  color: var(--text-main);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  overflow-x: auto;
-  margin: 1rem 0;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  font-weight: 600;
 }
 
-.arch-multi {
-  display: flex;
-  gap: 0.75rem;
-  width: 100%;
-  max-width: 360px;
-  justify-content: center;
-}
-
-.arch-multi .arch-box {
-  padding: 0.65rem 0.5rem;
+.mod-node__type {
+  color: var(--text-muted);
   font-size: 0.78rem;
-  max-width: 110px;
+  line-height: 1.45;
+}
+
+.mod-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.mod-chip {
+  padding: 0.15rem 0.45rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  color: #cad2d9;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.mod-chip--accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Down arrow: a 2px line with a CSS triangle, label beside it. */
+.mod-arrow {
+  position: relative;
+  align-self: center;
+  height: 2.6rem;
+  width: 2px;
+  margin: 0.15rem 0 0.35rem;
+  background: var(--accent);
+}
+
+.mod-arrow::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: -5px;
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+  border-bottom: 0;
+}
+
+.mod-arrow span {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  transform: translateY(-50%);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   white-space: nowrap;
 }
 
+/* --- 03 Packet header (bit field drawn to scale) ---------------------------- */
+.bitfield-figure {
+  margin: 1.5rem 0;
+}
+
+/* One grid column per bit: each cell spans its width. On phones the grid is 64 bits
+   wide, so the header wraps into two rows (16+16+32 and 8+32) with no extra code. */
+.bitfield {
+  display: grid;
+  grid-template-columns: repeat(104, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.bitfield__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  grid-column: span var(--bits);
+  min-height: 4.2rem;
+  padding: 0.5rem 0.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.bitfield__cell--accent {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.bitfield__name {
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  overflow-wrap: anywhere;
+}
+
+.bitfield__bits {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.bitfield-figure figcaption {
+  margin-top: 0.6rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+@media (width <= 600px) {
+  .bitfield {
+    grid-template-columns: repeat(64, minmax(0, 1fr));
+  }
+
+  /* 8 of 64 columns is too narrow for a label: type | flags gets double width here. */
+  .bitfield__cell {
+    grid-column: span var(--bits-sm, var(--bits));
+  }
+}
+
+.pattern-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* --- 05 Tick pipeline -------------------------------------------------------- */
+.case-block .tick-pipeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: tick;
+}
+
+/* The rail that joins the numbered dots. */
+.tick-pipeline::before {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  left: calc(0.9rem - 1px);
+  width: 2px;
+  background: linear-gradient(var(--accent), var(--accent-dim));
+}
+
+.case-block .tick-pipeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  padding: 0.6rem 0.9rem 0.6rem 2.6rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  counter-increment: tick;
+}
+
+.tick-pipeline li::before {
+  content: counter(tick);
+  position: absolute;
+  top: 50%;
+  left: 0.3rem;
+  display: grid;
+  place-items: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  transform: translateY(-50%);
+  background: var(--bg-main);
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+}
+
+.tick-pipeline code {
+  color: var(--accent);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+/* --- 05 What the server adds ------------------------------------------------- */
+.system-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.system-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.system-card__title {
+  color: var(--text-main);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+.case-block .system-card p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.case-block .system-card__visual {
+  display: grid;
+  place-items: center;
+  height: 4.5rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+}
+
+/* Mini fog of war: grid lines, the hero's vision circle and two enemies. */
+.fow-mini {
+  position: relative;
+  height: 4.5rem;
+  overflow: hidden;
+  background-color: var(--bg-surface);
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 0.9rem 0.9rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+}
+
+.fow-mini__vision {
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  width: 3.6rem;
+  height: 3.6rem;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+  border: 1px dashed var(--border-hover);
+  border-radius: 50%;
+}
+
+.fow-mini__hero,
+.fow-mini__enemy {
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.fow-mini__hero {
+  top: calc(50% - 0.25rem);
+  left: calc(35% - 0.25rem);
+  background: var(--accent);
+}
+
+.fow-mini__enemy {
+  top: 22%;
+  left: 80%;
+  border: 1px dashed var(--text-muted);
+}
+
+.fow-mini__enemy--seen {
+  top: 58%;
+  left: 46%;
+  border: none;
+  background: var(--danger);
+}
+
+/* Mini rewind buffer: 32 slots, the newest highlighted. */
+.rewind-mini {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  align-content: center;
+  gap: 3px;
+  height: 4.5rem;
+  padding: 0 0.6rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+}
+
+.rewind-mini span {
+  height: 0.9rem;
+  background: var(--accent-dim);
+  border-radius: 2px;
+}
+
+.rewind-mini span:nth-child(16n) {
+  background: var(--accent);
+}
+
+/* --- 06 Budget chart ------------------------------------------------------- */
+.budget-chart {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin: 1.5rem 0;
+  padding: 2.2rem 1.25rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.budget-row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.budget-row__label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.budget-row__track {
+  position: relative;
+  display: flex;
+  height: 1.7rem;
+}
+
+.budget-seg {
+  display: flex;
+  align-items: center;
+  width: var(--w);
+  padding: 0 0.6rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.budget-seg--logic {
+  background: var(--accent);
+  color: var(--bg-main);
+}
+
+.budget-seg--io {
+  background: linear-gradient(90deg, var(--accent) 0 34.4%, var(--danger) 34.4%);
+  color: var(--bg-main);
+  justify-content: flex-end;
+}
+
+/* The 10 ms line crosses both rows; its position is in the same scale as the bars
+   (12 ms = 100% of the track), offset by the label column. */
+.budget-limit {
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.9rem;
+  left: calc(1.25rem + 8.5rem + 1rem + (100% - 2.5rem - 9.5rem) * var(--at));
+  width: 0;
+  border-left: 2px dashed var(--danger);
+}
+
+.budget-limit span {
+  position: absolute;
+  top: -0.3rem;
+  right: 0.4rem;
+  color: var(--danger);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+/* --- 06 Terminal ------------------------------------------------------------- */
+.terminal {
+  margin: 1.5rem 0 0;
+}
+
+.terminal__bar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  background: #0b1016;
+  border: 1px solid var(--border-subtle);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.terminal__bar span {
+  width: 0.6rem;
+  height: 0.6rem;
+  background: var(--border-hover);
+  border-radius: 50%;
+}
+
+.terminal__body {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  background: #05080b;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0 0 8px 8px;
+  color: #9fb3c4;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.8;
+}
+
+.terminal__hot {
+  color: var(--danger);
+}
+
+.terminal figcaption {
+  margin-top: 0.6rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+/* --- 07 Test growth ---------------------------------------------------------- */
+.growth-chart {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: end;
+  gap: 0.75rem;
+  height: 12rem;
+  margin: 0.5rem 0 1.5rem;
+  padding: 1rem 1rem 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+
+.growth-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: calc(var(--h) * 0.72);
+  background: linear-gradient(var(--accent-glow), var(--accent-dim));
+  border: 1px solid var(--border-hover);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+
+.growth-col--last {
+  background: linear-gradient(var(--accent), rgb(56 189 248 / 35%));
+}
+
+.growth-col__val {
+  position: absolute;
+  top: -1.4rem;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.growth-col__lbl {
+  position: absolute;
+  bottom: -1.6rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.flow-steps--wide li {
+  padding: 0.75rem 0.4rem;
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+/* --- 08 Results -------------------------------------------------------------- */
+.status--miss {
+  background: var(--danger-dim);
+  color: var(--danger);
+}
+
+.cmp-table__mine td {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* --- Replication bars (kept from v1) ----------------------------------------- */
 .replication-comparison {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
   margin: 1.5rem 0;
+  padding: 1.25rem;
+  overflow: hidden;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  padding: 1.25rem;
   border-radius: 8px;
-  width: 100%;
-  overflow: hidden;
 }
 
 .rep-row {
@@ -96,232 +801,107 @@
 
 .rep-meta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 0.25rem;
+  color: var(--text-main);
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--text-main);
-  flex-wrap: wrap;
-  gap: 0.25rem;
 }
 
 .rep-bar-wrap {
+  display: flex;
+  width: 100%;
+  height: 20px;
+  overflow: hidden;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
-  height: 20px;
-  overflow: hidden;
-  display: flex;
-  width: 100%;
 }
 
 .rep-bar {
   /* Bar width is data, set per element: style="--w: 41.4%" */
   width: var(--w, 100%);
-  background: var(--accent);
   height: 100%;
-  transition: width 0.3s ease;
+  background: var(--accent);
 }
 
 .rep-arrow {
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
   margin: 0.1rem 0;
-}
-
-.prediction-interest-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-  width: 100%;
-}
-
-.pred-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  padding: 1.25rem;
-  border-radius: 8px;
+  color: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  overflow: hidden;
-}
-
-.pred-flow-item {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-hover);
-  padding: 0.5rem;
-  text-align: center;
-  border-radius: 4px;
-  color: var(--text-main);
-  overflow-wrap: anywhere;
-}
-
-.grid-fow {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-  background: var(--bg-surface);
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid var(--border-subtle);
-  text-align: center;
-}
-
-.fow-cell {
-  background: var(--bg-card);
-  padding: 10px 0;
   font-size: 0.75rem;
-  color: var(--text-muted);
-  border-radius: 2px;
-}
-
-.fow-cell.active {
-  background: var(--accent-dim);
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  font-weight: bold;
-}
-
-.performance-chart {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 1.5rem 0;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  padding: 1.5rem;
-  border-radius: 8px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.perf-timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-}
-
-.perf-bar-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  width: 100%;
-}
-
-.perf-bar-label {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-}
-
-.perf-bar-visual {
-  height: 28px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  display: flex;
-  overflow: hidden;
-  width: 100%;
-}
-
-.perf-seg {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: #07090d;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 4px;
-}
-
-.perf-seg.logic {
-  background: #38bdf8;
-  width: 34.4%;
-}
-
-.perf-seg.io-before {
-  background: #ef4444;
-  width: 65.6%;
-  color: #edf2f7;
-}
-
-.perf-seg.io-after {
-  background: #10b981;
-  width: 1.5%;
-  color: transparent;
-}
-
-.perf-seg.empty {
-  background: rgba(255, 255, 255, 0.03);
-  width: 64.1%;
-}
-
-/* --- v2: classes that replaced inline styles -------------------------- */
-.layer-note {
-  display: block;
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  margin-top: 0.2rem;
-}
-
-.pred-box__title {
-  color: var(--accent);
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.pred-flow-arrow {
   text-align: center;
-  color: var(--text-muted);
-  font-size: 0.7rem;
 }
 
-.pred-box__caption {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  margin-bottom: 0.3rem;
+/* --- Responsive -------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .pattern-grid--3,
+  .system-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .case-block .tick-pipeline li {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-.pred-box__footer {
-  text-align: center;
-  font-size: 0.7rem;
-  color: var(--accent);
-  margin-top: auto;
-}
+@media (max-width: 700px) {
+  .compare-grid,
+  .mod-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.perf-value {
-  font-weight: 700;
-}
+  .mod-diagram {
+    padding: 1rem;
+  }
 
-.perf-value--baseline {
-  color: var(--accent);
-}
+  .mod-arrow span {
+    width: 9rem;
+    white-space: normal;
+  }
 
-.perf-value--bad {
-  color: #ef4444;
-}
+  /* Five pipeline steps in one row would be ~60 px each: stack them instead. */
 
-.perf-value--good {
-  color: #10b981;
-}
+  /* Two per row (shared rule): no arrow at the end of a row. */
+  .case-block .flow-steps--wide li:nth-child(2n)::after {
+    content: none;
+  }
 
-@media (max-width: 768px) {
-  .prediction-interest-grid {
-    grid-template-columns: 1fr;
+  /* Three short columns stay a real table instead of the stacked objectives cards. */
+  .cmp-table thead {
+    display: table-header-group;
+  }
+
+  .cmp-table tr {
+    display: table-row;
+    padding: 0;
+    border: none;
+  }
+
+  .obj-table.cmp-table td {
+    padding: 0.6rem 0.4rem;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.8rem;
+  }
+
+  .obj-table.cmp-table th {
+    padding: 0.5rem 0.4rem;
+  }
+
+  .budget-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  .budget-limit {
+    display: none;
+  }
+
+  .growth-col__lbl {
+    font-size: 0.58rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
   }
 }
