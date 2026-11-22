@@ -48,3 +48,12 @@
   opacity: 0;
   pointer-events: none;
 }
+
+/* Below 1280px the content reaches the left edge, so a fixed column of buttons would
+   sit on top of text, cards and videos while scrolling. The same links live in the
+   footer and the navbar's "Contact me", so the dock is simply not shown there. */
+@media (width < 1280px) {
+  .social-dock {
+    display: none;
+  }
+}

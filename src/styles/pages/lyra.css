@@ -136,6 +136,34 @@
   }
 }
 
+/* Three facts only (engine, team, duration): role and award live elsewhere. */
+.glance-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Phones: three narrow columns would break every value into 3-4 lines.
+   One row per fact, label on the left and value on the right. */
+@media (width <= 600px) {
+  .glance-grid--3 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .glance-grid--3 .glance-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    text-align: left;
+  }
+
+  .glance-grid--3 .glance-val {
+    text-align: right;
+  }
+}
+
 /* --- Results band (replaces the ticker) ------------------------------------ */
 .results-band {
   padding: 2.5rem 0;
@@ -286,6 +314,12 @@
   flex-direction: column;
   gap: 0.55rem;
   padding-left: 1.1rem;
+}
+
+.tldr a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .tldr li {
@@ -1442,6 +1476,58 @@
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
+}
+
+/* --- Next case study ------------------------------------------------------- */
+.next-case {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding: 1.75rem 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.next-case:hover,
+.next-case:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.next-case__label {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.next-case__title {
+  color: var(--text-main);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.next-case__title span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.next-case:hover .next-case__title span {
+  transform: translateX(4px);
+}
+
+.next-case__desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 /* --- Responsive -------------------------------------------------------------- */

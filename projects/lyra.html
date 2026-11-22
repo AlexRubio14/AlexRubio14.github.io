@@ -48,9 +48,7 @@
           <div class="project-hero-inner">
             <span class="project-tag" data-i18n="lyra.tag">// UNREAL ENGINE 5 • GAMEPLAY • PRODUCTION</span>
             <h1 class="project-title">Lyra</h1>
-            <p class="project-meta" data-i18n="lyra.meta">
-              Character Programmer &amp; Producer • Team of 7 • Best TFG - ENTI DemoDay 2026
-            </p>
+            <p class="project-meta" data-i18n="lyra.meta">Character Programmer &amp; Producer</p>
             <p class="project-lede" data-i18n="lyra.lede">
               A cozy, Ghibli-inspired puzzle adventure built in Unreal Engine 5.6. As Character Programmer
               &amp; Producer, I designed the character architecture and the dragon companion interactions
@@ -76,11 +74,7 @@
                 Technical TFG Memory
               </a>
             </div>
-            <div class="glance-grid">
-              <div class="glance-item">
-                <span class="glance-label" data-i18n="lyra.glance_role">Role</span>
-                <span class="glance-val">Character Programmer &amp; Producer</span>
-              </div>
+            <div class="glance-grid glance-grid--3">
               <div class="glance-item">
                 <span class="glance-label" data-i18n="lyra.glance_engine">Engine</span>
                 <span class="glance-val">Unreal Engine 5.6 · Blueprints</span>
@@ -92,10 +86,6 @@
               <div class="glance-item">
                 <span class="glance-label" data-i18n="lyra.glance_duration">Duration</span>
                 <span class="glance-val">Nov 2025 - Jul 2026</span>
-              </div>
-              <div class="glance-item">
-                <span class="glance-label" data-i18n="lyra.glance_award">Award</span>
-                <span class="glance-val" data-i18n="lyra.glance_award_val">Best TFG (ENTI 2026)</span>
               </div>
             </div>
             <div class="hero-media-container">
@@ -172,9 +162,6 @@
               <a class="toc-link" data-section="game" href="#game" data-i18n="lyra.toc_game">The game</a>
             </li>
             <li>
-              <a class="toc-link" data-section="role" href="#role" data-i18n="lyra.toc_role">My role</a>
-            </li>
-            <li>
               <a class="toc-link" data-section="architecture" href="#architecture" data-i18n="lyra.toc_arch">
                 Character architecture
               </a>
@@ -214,22 +201,33 @@
             <ul data-i18n="lyra.tldr_list">
               <li>
                 <strong>Game:</strong>
-                a cozy puzzle adventure made in UE 5.6 with Blueprints by a team of 7. It won Best TFG at ENTI
-                DemoDay 2026.
+                a cozy puzzle adventure made in Unreal Engine 5.6 by La Mapachanda, a team of 7 students.
+              </li>
+              <li>
+                <strong>My role:</strong>
+                Character Programmer and Producer at the same time: I built the player character and kept the
+                team on track to the final build.
               </li>
               <li>
                 <strong>Programming:</strong>
-                the player character, its state machine, the input setup and the interactions with the
-                dragons.
+                a data-driven state machine for the character, Enhanced Input by context, the dragon
+                interactions and their link with animation.
               </li>
               <li>
                 <strong>Production:</strong>
-                sprint planning, the Perforce workflow, playtests and social media.
+                Scrumban sprints, the Perforce workflow, capacity planning with the CFD, playtests and social
+                media.
               </li>
               <li>
                 <strong>Result:</strong>
                 3 levels instead of the 2 we planned, 38-minute average playtest sessions and a stable 60 FPS
                 with no crashes.
+              </li>
+              <li>
+                <strong>Why Blueprints:</strong>
+                a team decision so designers and artists could read and change the logic. You can find my C++
+                work in
+                <a href="/projects/network-middleware.html">NetworkMiddleware</a>
               </li>
             </ul>
           </aside>
@@ -485,45 +483,9 @@
             </div>
           </section>
 
-          <!-- 02 MY ROLE -->
-          <section class="case-block" id="role" aria-labelledby="role-title">
-            <h2 id="role-title" data-i18n="lyra.s2_heading">02 | My Role</h2>
-            <p data-i18n="lyra.s2_desc">
-              Lyra was developed by La Mapachanda, a seven-person multidisciplinary team. My role combined two
-              areas that had to work closely together: Character Programming and Production.
-            </p>
-            <div class="role-grid">
-              <div class="role-card">
-                <strong class="role-card__title" data-i18n="lyra.role_prog_title">
-                  Character Programming
-                </strong>
-                <ul class="role-card__list" data-i18n="lyra.role_prog_list">
-                  <li>Character controller and movement</li>
-                  <li>Data-driven state machine</li>
-                  <li>Enhanced Input by context</li>
-                  <li>Dragon companion interactions</li>
-                  <li>Animation and gameplay integration</li>
-                </ul>
-              </div>
-              <div class="role-card">
-                <strong class="role-card__title" data-i18n="lyra.role_prod_title">Production</strong>
-                <ul class="role-card__list" data-i18n="lyra.role_prod_list">
-                  <li>Scrumban planning and sprints</li>
-                  <li>Perforce workflow</li>
-                  <li>Capacity planning with CFD and velocity</li>
-                  <li>Playtesting sessions</li>
-                  <li>Social media and marketing</li>
-                </ul>
-              </div>
-            </div>
-            <p class="metric-highlight" data-i18n="lyra.s2_quote">
-              Apart from gameplay, I was in charge of planning and of getting the team to the final build.
-            </p>
-          </section>
-
-          <!-- 03 CHARACTER ARCHITECTURE -->
+          <!-- 02 CHARACTER ARCHITECTURE -->
           <section class="case-block" id="architecture" aria-labelledby="arch-title">
-            <h2 id="arch-title" data-i18n="lyra.s3_heading">03 | Character Architecture</h2>
+            <h2 id="arch-title" data-i18n="lyra.s3_heading">02 | Character Architecture</h2>
             <p data-i18n="lyra.s3_problem">
               <strong>The problem:</strong>
               as interactions grew, movement, companion actions and gameplay states started to depend on each
@@ -705,9 +667,9 @@
             </p>
           </section>
 
-          <!-- 04 DRAGON COMPANIONS -->
+          <!-- 03 DRAGON COMPANIONS -->
           <section class="case-block" id="companions" aria-labelledby="comp-title">
-            <h2 id="comp-title" data-i18n="lyra.s4_heading">04 | Dragon Companions</h2>
+            <h2 id="comp-title" data-i18n="lyra.s4_heading">03 | Dragon Companions</h2>
             <p data-i18n="lyra.s4_desc">
               The companions are Lyra's core mechanic. I built the character side of the interaction: how the
               player calls, carries, aims and throws each dragon.
@@ -889,9 +851,9 @@
             </p>
           </section>
 
-          <!-- 05 CAMERA -->
+          <!-- 04 CAMERA -->
           <section class="case-block" id="camera" aria-labelledby="camera-title">
-            <h2 id="camera-title" data-i18n="lyra.s5_heading">05 | Camera-Relative Movement</h2>
+            <h2 id="camera-title" data-i18n="lyra.s5_heading">04 | Camera-Relative Movement</h2>
             <p data-i18n="lyra.p5_desc">
               Lyra uses fixed cameras placed along rails, with smooth transitions between viewpoints. During a
               camera transition, world-space movement can make the player's controls feel inconsistent with
@@ -1028,9 +990,9 @@
             </p>
           </section>
 
-          <!-- 06 DEBUGGING -->
+          <!-- 05 DEBUGGING -->
           <section class="case-block" id="debugging" aria-labelledby="debug-title">
-            <h2 id="debug-title" data-i18n="lyra.s6_heading">06 | Debugging</h2>
+            <h2 id="debug-title" data-i18n="lyra.s6_heading">05 | Debugging</h2>
             <p data-i18n="lyra.s6_desc">
               Two bugs I ran into during development and how I tracked them down.
             </p>
@@ -1104,9 +1066,9 @@
             </div>
           </section>
 
-          <!-- 07 PRODUCTION -->
+          <!-- 06 PRODUCTION -->
           <section class="case-block" id="production" aria-labelledby="prod-title">
-            <h2 id="prod-title" data-i18n="lyra.s7_heading">07 | Production</h2>
+            <h2 id="prod-title" data-i18n="lyra.s7_heading">06 | Production</h2>
             <p data-i18n="lyra.s7_desc">
               A team of seven (programming, design, art and animation) building a vertical slice in one
               academic year. As producer I planned the sprints and organised how the team worked day to day.
@@ -1177,9 +1139,9 @@
             </div>
           </section>
 
-          <!-- 08 RESULTS & REFLECTION -->
+          <!-- 07 RESULTS & REFLECTION -->
           <section class="case-block" id="outcome" aria-labelledby="outcome-title">
-            <h2 id="outcome-title" data-i18n="lyra.s8_heading">08 | Results</h2>
+            <h2 id="outcome-title" data-i18n="lyra.s8_heading">07 | Results</h2>
 
             <div
               class="bars"
@@ -1310,6 +1272,16 @@
               </li>
             </ul>
           </section>
+          <a class="next-case" href="/projects/network-middleware.html">
+            <span class="next-case__label" data-i18n="lyra.next_label">Next case study</span>
+            <span class="next-case__title">
+              NetworkMiddleware
+              <span aria-hidden="true">→</span>
+            </span>
+            <span class="next-case__desc" data-i18n="lyra.next_desc">
+              Server-authoritative networking for MOBA games, written in C++20.
+            </span>
+          </a>
         </div>
       </div>
 
