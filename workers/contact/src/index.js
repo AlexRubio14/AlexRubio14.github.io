@@ -1,5 +1,5 @@
 /**
- * Portfolio contact API — Cloudflare Worker.
+ * Portfolio contact API (Cloudflare Worker).
  *
  *   POST /contact   { subject, email, message, turnstileToken?, botcheck?, lang?, requestId? }
  *     200 { ok: true }

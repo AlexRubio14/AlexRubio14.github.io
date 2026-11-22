@@ -746,21 +746,23 @@
 }
 
 .award-banner-card {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
   margin-bottom: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, rgb(251 191 36 / 10%), transparent 70%);
-  border: 1px solid rgb(251 191 36 / 30%);
-  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  background: rgb(251 191 36 / 6%);
+  border-left: 3px solid #fbbf24;
+  border-radius: 0 8px 8px 0;
 }
 
-.award-banner-card__icon {
-  font-size: 2rem;
+.case-block .award-banner-card__label {
+  margin-bottom: 0.25rem;
+  color: #fbbf24;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.award-banner-card__title {
+.case-block .award-banner-card__title {
   color: var(--text-main);
   font-family: var(--font-display);
   font-weight: 700;

@@ -1,4 +1,4 @@
-# Alejandro Rubio Plana — Portfolio
+# Alejandro Rubio Plana | Portfolio
 
 Personal portfolio of **Alejandro Rubio Plana**, Game Software Engineer focused on C++ systems,
 multiplayer networking and gameplay programming.
