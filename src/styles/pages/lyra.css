@@ -560,7 +560,7 @@
 /* --- Camera SVG -------------------------------------------------------------- */
 .camera-figure {
   margin: 1.75rem 0;
-  padding: 1.25rem;
+  padding: 1rem 1.25rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
@@ -572,16 +572,36 @@
   height: auto;
 }
 
+/* On phones the whole diagram shrinks to ~40%, so the labels are drawn larger in SVG
+   units to stay readable; svg-pills.js re-fits the pills and the frame afterwards. */
+@media (width <= 600px) {
+  .camera-figure {
+    padding: 0.5rem;
+  }
+
+  .camera-figure .svg-label {
+    font-size: 30px;
+  }
+}
+
 .svg-rail {
   fill: none;
-  stroke: var(--border-hover);
-  stroke-width: 2;
-  stroke-dasharray: 6 6;
+  stroke: var(--accent);
+  stroke-dasharray: 9 9;
+  stroke-linecap: round;
+  stroke-opacity: 0.55;
+  stroke-width: 3;
 }
 
 .svg-box {
-  fill: var(--bg-surface);
+  fill: var(--bg-card);
   stroke: var(--accent);
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+.svg-leader {
+  stroke: var(--border-hover);
   stroke-width: 1.5;
 }
 
@@ -591,13 +611,14 @@
 
 .svg-accent-line {
   stroke: var(--accent);
-  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-width: 3;
 }
 
 .svg-muted-line {
   stroke: var(--text-muted);
-  stroke-width: 2;
-  stroke-dasharray: 4 4;
+  stroke-dasharray: 8 7;
+  stroke-width: 2.5;
 }
 
 .svg-accent-fill {
@@ -608,14 +629,30 @@
   fill: var(--text-muted);
 }
 
-.svg-label {
-  fill: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 12px;
+.svg-pill rect {
+  fill: var(--bg-surface);
+  stroke: var(--border-subtle);
+  stroke-width: 1.5;
 }
 
-.svg-label--accent {
+.svg-pill--accent rect {
+  stroke: rgb(56 189 248 / 35%);
+}
+
+.svg-label {
+  fill: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.svg-pill--muted .svg-label {
+  fill: var(--text-muted);
+}
+
+.svg-pill--accent .svg-label {
   fill: var(--accent);
+  font-weight: 600;
 }
 
 /* --- Debugging --------------------------------------------------------------- */

@@ -455,7 +455,7 @@
               what the player sees.
             </p>
             <figure class="camera-figure">
-              <svg viewBox="0 0 520 220" role="img" aria-labelledby="camera-svg-title">
+              <svg viewBox="40 10 810 350" role="img" aria-labelledby="camera-svg-title" data-fit-pills>
                 <title id="camera-svg-title" data-i18n="lyra.cam_alt">
                   Pushing the stick forward moves Lyra along the camera's forward vector, not the world X
                   axis.
@@ -463,60 +463,92 @@
                 <defs>
                   <marker
                     id="arrow-accent"
-                    viewBox="0 0 10 10"
-                    refX="9"
-                    refY="5"
-                    markerWidth="7"
-                    markerHeight="7"
-                    orient="auto-start-reverse"
+                    viewBox="0 0 12 12"
+                    refX="10"
+                    refY="6"
+                    markerWidth="18"
+                    markerHeight="18"
+                    markerUnits="userSpaceOnUse"
+                    orient="auto"
                   >
-                    <path d="M0 0 10 5 0 10z" class="svg-accent-fill" />
+                    <path d="M0 0 12 6 0 12z" class="svg-accent-fill" />
                   </marker>
                   <marker
                     id="arrow-muted"
-                    viewBox="0 0 10 10"
-                    refX="9"
-                    refY="5"
-                    markerWidth="7"
-                    markerHeight="7"
-                    orient="auto-start-reverse"
+                    viewBox="0 0 12 12"
+                    refX="10"
+                    refY="6"
+                    markerWidth="18"
+                    markerHeight="18"
+                    markerUnits="userSpaceOnUse"
+                    orient="auto"
                   >
-                    <path d="M0 0 10 5 0 10z" class="svg-muted-fill" />
+                    <path d="M0 0 12 6 0 12z" class="svg-muted-fill" />
                   </marker>
                 </defs>
                 <!-- rail -->
-                <path d="M40 190 Q 140 120 250 150 T 480 110" class="svg-rail" />
-                <!-- camera -->
-                <g transform="translate(90 165) rotate(-28)">
-                  <rect x="-16" y="-10" width="26" height="20" rx="3" class="svg-box" />
-                  <path d="M10 -6 22 -12 22 12 10 6z" class="svg-box" />
+                <path
+                  d="M68 297 C 160 240 230 216 312 216 S 450 252 537 252 S 700 226 783 193"
+                  class="svg-rail"
+                />
+                <!-- camera, aimed up-right towards the player -->
+                <line x1="160" y1="276" x2="160" y2="309" class="svg-leader" />
+                <g transform="translate(168 254) rotate(-32)">
+                  <rect x="-30" y="-14" width="40" height="28" rx="6" class="svg-box" />
+                  <path d="M10 -5 28 -16 28 16 10 5z" class="svg-box" />
                 </g>
-                <text x="60" y="210" class="svg-label" data-i18n="lyra.cam_camera">camera on rail</text>
-                <!-- player -->
-                <circle cx="300" cy="80" r="11" class="svg-player" />
-                <text x="318" y="70" class="svg-label" data-i18n="lyra.cam_player">Lyra</text>
-                <!-- world forward -->
+                <g class="svg-pill">
+                  <rect x="92" y="309" width="137" height="33" rx="10" />
+                  <text
+                    x="104"
+                    y="316"
+                    dominant-baseline="hanging"
+                    class="svg-label"
+                    data-i18n="lyra.cam_camera"
+                  >
+                    camera on rail
+                  </text>
+                </g>
+                <!-- world X (what raw world-space input would do) -->
                 <line
-                  x1="300"
-                  y1="80"
-                  x2="420"
-                  y2="80"
+                  x1="541"
+                  y1="141"
+                  x2="729"
+                  y2="141"
                   class="svg-muted-line"
                   marker-end="url(#arrow-muted)"
                 />
-                <text x="428" y="84" class="svg-label" data-i18n="lyra.cam_world">world X</text>
-                <!-- camera forward -->
+                <g class="svg-pill svg-pill--muted">
+                  <rect x="741" y="125" width="80" height="33" rx="10" />
+                  <text
+                    x="753"
+                    y="141"
+                    dominant-baseline="central"
+                    class="svg-label"
+                    data-i18n="lyra.cam_world"
+                  >
+                    world X
+                  </text>
+                </g>
+                <!-- camera forward (what Lyra actually uses) -->
                 <line
-                  x1="300"
-                  y1="80"
-                  x2="372"
-                  y2="22"
+                  x1="522"
+                  y1="141"
+                  x2="638"
+                  y2="48"
                   class="svg-accent-line"
                   marker-end="url(#arrow-accent)"
                 />
-                <text x="380" y="22" class="svg-label svg-label--accent" data-i18n="lyra.cam_forward">
-                  camera forward
-                </text>
+                <g class="svg-pill svg-pill--accent">
+                  <rect x="655" y="32" width="151" height="33" rx="10" />
+                  <text x="667" y="54" class="svg-label" data-i18n="lyra.cam_forward">camera forward</text>
+                </g>
+                <!-- player -->
+                <circle cx="522" cy="141" r="14" class="svg-player" />
+                <g class="svg-pill">
+                  <rect x="477" y="98" width="56" height="33" rx="10" />
+                  <text x="489" y="110" class="svg-label" data-i18n="lyra.cam_player">Lyra</text>
+                </g>
               </svg>
             </figure>
             <p class="metric-highlight" data-i18n="lyra.p5_solution">
