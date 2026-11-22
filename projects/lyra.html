@@ -501,28 +501,45 @@
               data-i18n-aria-label="lyra.fsm_alt"
             >
               <div class="fsm-node fsm-node--owner">
-                <span class="fsm-node__name">BP_LyraCharacter</span>
+                <span class="fsm-node__name">
+                  BP_
+                  <wbr />
+                  LyraCharacter
+                </span>
                 <span class="fsm-node__type" data-i18n="lyra.fsm_character">Character</span>
               </div>
-              <span class="fsm-link" aria-hidden="true" data-i18n="lyra.fsm_owns">owns ▾</span>
-              <div class="fsm-row">
-                <div class="fsm-node fsm-node--core">
-                  <span class="fsm-node__name">BPC_StateMachine</span>
-                  <span class="fsm-node__type" data-i18n="lyra.fsm_component">Actor Component</span>
-                </div>
-                <span class="fsm-link fsm-link--side" aria-hidden="true" data-i18n="lyra.fsm_reads">
-                  ◂ reads
-                </span>
-                <div class="fsm-node">
-                  <span class="fsm-node__name">DA_LyraStateConfiguration</span>
-                  <span class="fsm-node__type" data-i18n="lyra.fsm_data">
-                    Data Asset · state configuration
-                  </span>
-                </div>
+              <div class="fsm-arrow fsm-arrow--down fsm-arrow--owns" aria-hidden="true">
+                <span data-i18n="lyra.fsm_owns">owns</span>
               </div>
-              <span class="fsm-link" aria-hidden="true" data-i18n="lyra.fsm_runs">
-                runs the current state ▾
-              </span>
+              <div class="fsm-node fsm-node--core">
+                <span class="fsm-node__name">
+                  BPC_
+                  <wbr />
+                  StateMachine
+                </span>
+                <span class="fsm-node__type" data-i18n="lyra.fsm_component">Actor Component</span>
+                <!-- Phones only: the Data Asset is shown inside this box instead of beside it. -->
+                <span class="fsm-node__reads">
+                  <span data-i18n="lyra.fsm_reads">reads</span>
+                  DA_
+                  <wbr />
+                  LyraStateConfiguration
+                </span>
+              </div>
+              <div class="fsm-arrow fsm-arrow--right" aria-hidden="true">
+                <span data-i18n="lyra.fsm_reads">reads</span>
+              </div>
+              <div class="fsm-node fsm-node--data">
+                <span class="fsm-node__name">
+                  DA_
+                  <wbr />
+                  LyraStateConfiguration
+                </span>
+                <span class="fsm-node__type" data-i18n="lyra.fsm_data">Data Asset · state configuration</span>
+              </div>
+              <div class="fsm-arrow fsm-arrow--down fsm-arrow--runs" aria-hidden="true">
+                <span data-i18n="lyra.fsm_runs">runs the current state</span>
+              </div>
               <div class="fsm-node fsm-node--states">
                 <span class="fsm-node__name">BP_State*</span>
                 <span class="fsm-node__type" data-i18n="lyra.fsm_states">
@@ -855,11 +872,29 @@
                 Instagram.
               </li>
             </ul>
-            <!-- TODO: replace with the CFD / velocity figure from the TFG memory. -->
-            <figure class="gallery-item gallery-item--placeholder figure-placeholder" data-placeholder>
-              <div class="gallery-placeholder"><span>CFD / velocity chart</span></div>
-              <figcaption>Figure · Cumulative Flow Diagram from Jira</figcaption>
-            </figure>
+            <div class="gallery gallery--single" data-gallery>
+              <figure class="gallery-item gallery-item--wide gallery-item--chart">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge image"
+                  data-i18n-aria-label="lyra.gallery_open"
+                >
+                  <img
+                    alt="Jira cumulative flow diagram for Lyra from November 2025 to May 2026: the Done area grows to about 830 work items while the In Progress band stays thin"
+                    width="1568"
+                    height="478"
+                    loading="lazy"
+                    decoding="async"
+                    src="/src/assets/images/lyra-cfd.webp"
+                  />
+                </button>
+                <figcaption data-i18n="lyra.g_cfd">
+                  Cumulative flow diagram from Jira (November 2025 to May 2026). The In Progress band stays
+                  thin all year: work rarely piled up half done.
+                </figcaption>
+              </figure>
+            </div>
           </section>
 
           <!-- 08 RESULTS & REFLECTION -->
