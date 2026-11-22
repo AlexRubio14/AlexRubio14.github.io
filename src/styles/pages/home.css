@@ -763,8 +763,20 @@
   transition: transform 0.4s ease;
 }
 
-.featured-card:hover .card-clip {
+.featured-visual .card-clip-cover {
+  transition:
+    opacity 0.25s ease,
+    transform 0.4s ease;
+}
+
+.featured-card:hover .card-clip,
+.featured-card:hover .card-clip-cover {
   transform: scale(1.03);
+}
+
+/* Set by pages/home.js once the clip is really playing, so there is never a black frame. */
+.featured-visual.is-playing .card-clip-cover {
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

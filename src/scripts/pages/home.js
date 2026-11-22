@@ -8,8 +8,12 @@ initCardClips();
 
 /**
  * Project card clips play only while a mouse hovers the card. Touch screens and
- * reduced-motion users keep the still poster, and preload="none" means nobody
+ * reduced-motion users keep the still cover, and preload="none" means nobody
  * downloads the video until they hover.
+ *
+ * Every hover starts the clip from the beginning, and leaving the card brings the
+ * cover back. The cover only fades out on the video's `playing` event: hiding it
+ * on mouseenter would show a black frame while the first bytes arrive.
  */
 function initCardClips() {
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -18,10 +22,25 @@ function initCardClips() {
 
   for (const video of document.querySelectorAll('.card-clip')) {
     const card = video.closest('.featured-card');
-    if (!card) continue;
-    card.addEventListener('mouseenter', () => {
-      video.play().catch(() => {}); // autoplay can be refused: the poster stays, nothing breaks
+    const frame = video.closest('.featured-visual');
+    if (!card || !frame) continue;
+    let hovering = false;
+
+    video.addEventListener('playing', () => {
+      if (hovering) frame.classList.add('is-playing');
     });
-    card.addEventListener('mouseleave', () => video.pause());
+
+    card.addEventListener('mouseenter', () => {
+      hovering = true;
+      video.currentTime = 0;
+      video.play().catch(() => {}); // autoplay can be refused: the cover stays, nothing breaks
+    });
+
+    card.addEventListener('mouseleave', () => {
+      hovering = false;
+      frame.classList.remove('is-playing');
+      video.pause();
+      video.currentTime = 0;
+    });
   }
 }

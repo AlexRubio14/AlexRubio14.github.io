@@ -304,13 +304,27 @@
                   loop
                   playsinline
                   preload="none"
-                  poster="/src/assets/images/lyra-cover-800.webp"
                   width="960"
                   height="540"
                   aria-hidden="true"
                 >
                   <source src="/src/assets/video/lyra-clip-throw.mp4" type="video/mp4" />
                 </video>
+                <!-- The cover sits on top of the clip; it fades out only while the clip is playing. -->
+                <img
+                  class="card-clip-cover"
+                  alt=""
+                  decoding="async"
+                  loading="lazy"
+                  srcset="
+                    /src/assets/images/lyra-cover-800.webp  800w,
+                    /src/assets/images/lyra-cover.webp     1600w
+                  "
+                  sizes="(width <= 960px) 100vw, 520px"
+                  src="/src/assets/images/lyra-cover-800.webp"
+                  width="800"
+                  height="520"
+                />
               </div>
             </a>
           </div>
