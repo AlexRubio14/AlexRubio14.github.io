@@ -37,6 +37,9 @@ jobs:
     steps:
       - name: Skip if Cloudflare is not configured yet
         if: env.CLOUDFLARE_API_TOKEN == ''
+        # Without the checkout, workers/contact (the default working directory) does not
+        # exist and the step would fail before echoing: run it from the workspace root.
+        working-directory: ${{ github.workspace }}
         run: echo "::notice::CLOUDFLARE_API_TOKEN secret not set - skipping deploy (deploy manually with 'npm run deploy')."
       - uses: actions/checkout@v4
         if: env.CLOUDFLARE_API_TOKEN != ''
