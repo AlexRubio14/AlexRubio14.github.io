@@ -525,3 +525,24 @@
     display: none;
   }
 }
+
+/* Privacy note under the submit button (GDPR Art. 13). Small and muted: informative, not alarming. */
+.form-privacy {
+  margin-top: 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.form-privacy a,
+.footer-copyright a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.form-privacy a:hover,
+.footer-copyright a:hover {
+  color: var(--accent);
+}

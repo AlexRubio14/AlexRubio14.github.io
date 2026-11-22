@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="privacy.page_title">Privacy | Alejandro Rubio Plana</title>
+    <meta
+      name="description"
+      content="How this portfolio handles your data: no cookies, no tracking, and the contact form email is only used to reply to you."
+    />
+    <meta name="author" content="Alejandro Rubio Plana" />
+    <meta name="theme-color" content="#07090D" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://alexrubio14.github.io/privacy.html" />
+    <!-- CSS as <link> in the head, not imported from JS: the browser waits for it before the
+         first paint, so the page never shows unstyled (in dev or in production). -->
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/pages/case-study.css" />
+    <link rel="stylesheet" href="/src/styles/pages/case-components.css" />
+    <!-- Visitors who picked ES/CA: hide the page until the translation is applied, so they never
+         see the English text swap. i18n.js removes the class; the timeout is a safety net. -->
+    <script>
+      try {
+        var lang = localStorage.getItem('portfolio_lang');
+        if (lang === 'es' || lang === 'ca') {
+          document.documentElement.classList.add('i18n-pending');
+          setTimeout(function () {
+            document.documentElement.classList.remove('i18n-pending');
+          }, 1500);
+        }
+      } catch (e) {}
+    </script>
+    <style>
+      .i18n-pending body {
+        visibility: hidden;
+      }
+      /* Only text links on this page: match the site accent instead of the browser default blue. */
+      .case-block a {
+        color: var(--accent);
+        text-underline-offset: 2px;
+      }
+    </style>
+    <!-- Same entry as the 404 page: it only needs the shared app (nav, i18n, contact drawer). -->
+    <script type="module" src="/src/scripts/pages/not-found.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
+    <!-- @include nav-project.html back="/" -->
+
+    <main id="main">
+      <section class="project-hero">
+        <div class="wrap">
+          <div class="project-hero-inner">
+            <span class="project-tag" data-i18n="privacy.tag">// PRIVACY</span>
+            <h1 class="project-title" data-i18n="privacy.title">Privacy</h1>
+            <p class="project-lede" data-i18n="privacy.lede">
+              What happens to your data on this site. The short version: no cookies, no tracking, and your
+              email is only used to reply to you.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap">
+        <div class="project-content-wrap">
+          <section class="case-block" aria-labelledby="form-title">
+            <h2 id="form-title" data-i18n="privacy.form_title">Contact form</h2>
+            <p data-i18n="privacy.form_p1">
+              When you send a message, the form collects your email address, the subject, the message and the
+              site language. I, Alejandro Rubio Plana (alexrubioplana14@gmail.com), am responsible for this
+              data and I only use it to reply to you.
+            </p>
+            <p data-i18n="privacy.form_p2">
+              <strong>Legal basis:</strong>
+              your consent, given when you send the message (Art. 6(1)(a) GDPR). You can withdraw it at any
+              time by asking me to delete your message.
+            </p>
+            <p data-i18n="privacy.form_p3">
+              <strong>How it travels:</strong>
+              the form goes to a small server of mine on Cloudflare Workers, which forwards it to my inbox
+              through Resend, an email delivery service. That server does not store messages. Cloudflare also
+              processes your IP address to block spam (a limit of 3 messages per minute and its Turnstile
+              check).
+            </p>
+            <p data-i18n="privacy.form_p4">
+              <strong>Outside the EU:</strong>
+              Cloudflare and Resend are US companies, so the data may leave the European Union. Both offer the
+              safeguards the GDPR requires for these transfers, such as standard contractual clauses.
+            </p>
+            <p data-i18n="privacy.form_p5">
+              <strong>How long:</strong>
+              I keep the message in my inbox while we are in touch, and I delete it if you ask me to.
+            </p>
+          </section>
+
+          <section class="case-block" aria-labelledby="site-title">
+            <h2 id="site-title" data-i18n="privacy.site_title">The rest of the site</h2>
+            <ul data-i18n="privacy.site_list">
+              <li>No cookies and no analytics. That is why there is no cookie banner.</li>
+              <li>
+                The site only saves your language choice in your browser (localStorage). It never leaves your
+                device.
+              </li>
+              <li>
+                The site is hosted on GitHub Pages. Like any web server, GitHub receives your IP address when
+                you visit, to serve the pages and keep the service secure.
+              </li>
+              <li>
+                Videos use YouTube's privacy-enhanced mode and only load when you press play. From then on,
+                YouTube (Google) receives your IP address.
+              </li>
+              <li>Fonts are served from this site itself, not from external services.</li>
+            </ul>
+          </section>
+
+          <section class="case-block" aria-labelledby="rights-title">
+            <h2 id="rights-title" data-i18n="privacy.rights_title">Your rights</h2>
+            <p data-i18n="privacy.rights_p">
+              You can ask me to access, correct or delete your data, or to restrict or object to its use, by
+              writing to alexrubioplana14@gmail.com. If you think I have not handled your data properly, you
+              can file a complaint with the Spanish Data Protection Agency (AEPD,
+              <a href="https://www.aepd.es" target="_blank" rel="noopener">aepd.es</a>
+              ).
+            </p>
+            <p data-i18n="privacy.updated">Last updated: 22 November 2026.</p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- @include footer.html -->
+    <!-- @include contact-drawer.html -->
+  </body>
+</html>

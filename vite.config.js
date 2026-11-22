@@ -20,6 +20,7 @@ export default defineConfig({
         networkMiddleware: resolve(root, 'projects/network-middleware.html'),
         lyra: resolve(root, 'projects/lyra.html'),
         notFound: resolve(root, '404.html'),
+        privacy: resolve(root, 'privacy.html'),
       },
     },
   },
