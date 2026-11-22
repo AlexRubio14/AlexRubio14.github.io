@@ -8,10 +8,12 @@ import { initContactDrawer } from '../components/contact-drawer.js';
 import { initContactForms } from '../components/contact-form.js';
 import { initLangSwitcher } from '../components/lang-switcher.js';
 import { initSocialDock } from '../components/social-dock.js';
+import { initAnalytics } from './analytics.js';
 import { initI18n } from './i18n.js';
 
 export function initApp() {
   initI18n();
+  initAnalytics();
   initLangSwitcher();
   initSocialDock();
   const drawer = initContactDrawer();

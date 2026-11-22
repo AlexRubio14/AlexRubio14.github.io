@@ -3,6 +3,19 @@
  * Order matters: tokens -> base -> components. Page styles are linked
  * after this file by each page, so they can override components.
  */
+
+/* Fonts are served by this site (Fontsource packages, Latin subset only): no request to
+   Google, so visitors' IPs are not shared with a third party and there is one less
+   connection before the text can render. Weights match what the design uses. */
+@import url('@fontsource/space-grotesk/latin-500.css');
+@import url('@fontsource/space-grotesk/latin-600.css');
+@import url('@fontsource/space-grotesk/latin-700.css');
+@import url('@fontsource/inter/latin-400.css');
+@import url('@fontsource/inter/latin-500.css');
+@import url('@fontsource/inter/latin-600.css');
+@import url('@fontsource/jetbrains-mono/latin-400.css');
+@import url('@fontsource/jetbrains-mono/latin-500.css');
+@import url('@fontsource/jetbrains-mono/latin-600.css');
 @import url('./base/tokens.css');
 @import url('./base/base.css');
 @import url('./base/utilities.css');
