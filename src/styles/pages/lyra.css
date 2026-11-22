@@ -317,6 +317,22 @@
   margin-top: 1.25rem;
 }
 
+/* Editor screenshots: the two narrow panels sit side by side, tops aligned. */
+.editor-gallery {
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.editor-gallery .gallery-open {
+  background: #1a1a1a;
+}
+
+/* Small UI panels: never upscale past their real pixels (they would blur). */
+.editor-gallery .gallery-item:not(.gallery-item--wide) .gallery-open img {
+  max-width: 290px;
+  margin-inline: auto;
+}
+
 /* Charts are not 16:9 and must never be cropped. */
 .gallery-item--chart .gallery-open img {
   aspect-ratio: auto;
@@ -354,25 +370,6 @@
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.72rem;
-}
-
-/* Dev-only placeholders (removed from production builds by pages/lyra.js) */
-.gallery-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 16 / 9;
-  background:
-    repeating-linear-gradient(-45deg, transparent 0 12px, rgb(56 189 248 / 4%) 12px 24px), var(--bg-card);
-  border: 1px dashed var(--border-hover);
-  border-radius: 8px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-}
-
-.figure-placeholder {
-  margin-top: 1.5rem;
 }
 
 /* --- Carousel ---------------------------------------------------------------- */
@@ -674,7 +671,7 @@
     'owns   .     .'
     'sm     reads da'
     'runs   .     .'
-    'states .     .';
+    'states states states';
   grid-template-columns: 17rem 8rem 19rem;
   justify-content: center;
   margin: 2rem 0;
@@ -725,8 +722,6 @@
 
 .fsm-node--states {
   grid-area: states;
-  justify-self: start;
-  width: min(100%, 17rem);
 }
 
 .case-block .fsm-node__name {
@@ -824,32 +819,38 @@
   text-align: center;
 }
 
-.fsm-lifecycle {
+.fsm-chips {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  margin-top: 0.5rem;
+  margin-top: 0.55rem;
 }
 
-.fsm-lifecycle span {
+.fsm-chips__label {
+  margin-right: 0.2rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fsm-chip {
   padding: 0.25rem 0.55rem;
-  background: var(--accent-dim);
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid var(--border-subtle);
   border-radius: 4px;
-  color: var(--accent);
+  color: var(--text-main);
   font-family: var(--font-mono);
   font-size: 0.78rem;
 }
 
-@media (width <= 1000px) {
-  .fsm-diagram {
-    grid-template-columns: 14rem 5.5rem 16rem;
-    padding: 2rem 1rem;
-  }
-
-  .case-block .fsm-node__name {
-    font-size: 0.82rem;
-  }
+.fsm-chip--accent {
+  background: var(--accent-dim);
+  border-color: transparent;
+  color: var(--accent);
 }
 
 /* Phones: one column. The Data Asset moves inside the state machine box,
@@ -879,10 +880,6 @@
     max-width: calc(50% - 1rem);
     line-height: 1.3;
     white-space: normal;
-  }
-
-  .fsm-node--states {
-    width: 100%;
   }
 
   .fsm-node__reads {
@@ -1381,10 +1378,41 @@
 }
 
 .credits {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.78rem;
+}
+
+.case-block .credits-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.case-block .credits-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.case-block .credits-list li::before {
+  content: none;
+}
+
+.credits-list span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
 }
 
 /* --- Responsive -------------------------------------------------------------- */

@@ -3,11 +3,12 @@
     type="button"
     class="nav-lang-btn"
     id="lang-toggle"
-    aria-label="Language selector"
     aria-haspopup="true"
     aria-expanded="false"
     aria-controls="lang-menu"
   >
+    <!-- The accessible name ("Language EN") must contain the visible text ("EN"). -->
+    <span class="visually-hidden" data-i18n="nav.lang_name">Language</span>
     <span id="lang-label">EN</span>
     <span aria-hidden="true">▾</span>
   </button>

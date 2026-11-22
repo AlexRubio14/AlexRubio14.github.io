@@ -6,7 +6,7 @@
     <title data-i18n="lyra.page_title">Lyra case study | Alejandro Rubio Plana</title>
     <meta
       name="description"
-      content="Character programming and production for Lyra, an award-winning Unreal Engine 5 adventure (Best TFG, ENTI DemoDay 2026): modular FSM, companion system, Perforce and Jenkins pipeline."
+      content="Character programming and production for Lyra, a cozy puzzle adventure made with Unreal Engine 5.6 Blueprints by a team of 7. Best TFG at ENTI DemoDay 2026."
     />
     <meta name="author" content="Alejandro Rubio Plana" />
     <meta name="theme-color" content="#07090D" />
@@ -19,7 +19,7 @@
     <meta property="og:title" content="Lyra case study | Alejandro Rubio Plana" />
     <meta
       property="og:description"
-      content="Character programming and production for Lyra, an award-winning Unreal Engine 5 adventure (Best TFG, ENTI DemoDay 2026): modular FSM, companion system, Perforce and Jenkins pipeline."
+      content="Character programming and production for Lyra, a cozy puzzle adventure made with Unreal Engine 5.6 Blueprints by a team of 7. Best TFG at ENTI DemoDay 2026."
     />
     <meta property="og:url" content="https://alexrubio14.github.io/projects/lyra.html" />
     <meta property="og:image" content="https://alexrubio14.github.io/og/og-lyra.jpg" />
@@ -105,10 +105,13 @@
                 class="yt-facade"
                 data-youtube-id="p2ZFFhlheSs"
                 data-youtube-title="Lyra - Gameplay Showcase (Demoday - 2026)"
-                aria-label="Play the Lyra gameplay showcase video"
-                data-i18n-aria-label="lyra.video_play"
               >
                 <img
+                  srcset="
+                    /src/assets/images/lyra-cover-800.webp  800w,
+                    /src/assets/images/lyra-cover.webp     1600w
+                  "
+                  sizes="(width <= 1200px) 100vw, 1100px"
                   alt=""
                   decoding="async"
                   fetchpriority="high"
@@ -119,6 +122,7 @@
                 <span class="yt-facade__play" aria-hidden="true">
                   <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg>
                 </span>
+                <span class="visually-hidden" data-i18n="lyra.video_play">Play video</span>
                 <span class="yt-facade__label" data-i18n="lyra.video_label">
                   Gameplay showcase · DemoDay 2026
                 </span>
@@ -256,6 +260,11 @@
                   data-i18n-aria-label="lyra.gallery_open"
                 >
                   <img
+                    srcset="
+                      /src/assets/images/lyra-menu-sunlit-hills-800.webp  800w,
+                      /src/assets/images/lyra-menu-sunlit-hills.webp     1600w
+                    "
+                    sizes="(width <= 900px) 100vw, 760px"
                     alt="Lyra main menu over the Sunlit Hills, with Pochi and Mochi on the rocks"
                     width="1600"
                     height="900"
@@ -273,6 +282,11 @@
                   data-i18n-aria-label="lyra.gallery_open"
                 >
                   <img
+                    srcset="
+                      /src/assets/images/lyra-crystal-cave-800.webp  800w,
+                      /src/assets/images/lyra-crystal-cave.webp     1600w
+                    "
+                    sizes="(width <= 900px) 100vw, 760px"
                     alt="Lyra and the dragons riding a mine cart in the Crystal Cave"
                     width="1600"
                     height="868"
@@ -290,6 +304,11 @@
                   data-i18n-aria-label="lyra.gallery_open"
                 >
                   <img
+                    srcset="
+                      /src/assets/images/lyra-mochi-water-800.webp  800w,
+                      /src/assets/images/lyra-mochi-water.webp     1597w
+                    "
+                    sizes="(width <= 900px) 100vw, 760px"
                     alt="Lyra in a water cave next to a giant sleeping creature, with a splash of water"
                     width="1597"
                     height="896"
@@ -307,6 +326,11 @@
                   data-i18n-aria-label="lyra.gallery_open"
                 >
                   <img
+                    srcset="
+                      /src/assets/images/lyra-cinematic-subtitles-800.webp  800w,
+                      /src/assets/images/lyra-cinematic-subtitles.webp     1600w
+                    "
+                    sizes="(width <= 900px) 100vw, 760px"
                     alt="A Lyra cinematic in the ruins, with subtitles at the bottom"
                     width="1600"
                     height="897"
@@ -324,6 +348,11 @@
                   data-i18n-aria-label="lyra.gallery_open"
                 >
                   <img
+                    srcset="
+                      /src/assets/images/lyra-pochi-fire-800.webp  800w,
+                      /src/assets/images/lyra-pochi-fire.webp     1198w
+                    "
+                    sizes="(width <= 900px) 100vw, 760px"
                     alt="Lyra holding Pochi, who breathes fire at a wooden barrier, with the in-game tutorial on screen"
                     width="1198"
                     height="672"
@@ -376,11 +405,11 @@
                   >
                     <img
                       alt=""
-                      width="1600"
-                      height="900"
+                      width="400"
+                      height="225"
                       loading="lazy"
                       decoding="async"
-                      src="/src/assets/images/lyra-menu-sunlit-hills.webp"
+                      src="/src/assets/images/lyra-menu-sunlit-hills-400.webp"
                     />
                   </button>
                 </li>
@@ -393,11 +422,11 @@
                   >
                     <img
                       alt=""
-                      width="1600"
-                      height="868"
+                      width="400"
+                      height="217"
                       loading="lazy"
                       decoding="async"
-                      src="/src/assets/images/lyra-crystal-cave.webp"
+                      src="/src/assets/images/lyra-crystal-cave-400.webp"
                     />
                   </button>
                 </li>
@@ -410,11 +439,11 @@
                   >
                     <img
                       alt=""
-                      width="1597"
-                      height="896"
+                      width="400"
+                      height="224"
                       loading="lazy"
                       decoding="async"
-                      src="/src/assets/images/lyra-mochi-water.webp"
+                      src="/src/assets/images/lyra-mochi-water-400.webp"
                     />
                   </button>
                 </li>
@@ -427,11 +456,11 @@
                   >
                     <img
                       alt=""
-                      width="1600"
-                      height="897"
+                      width="400"
+                      height="224"
                       loading="lazy"
                       decoding="async"
-                      src="/src/assets/images/lyra-cinematic-subtitles.webp"
+                      src="/src/assets/images/lyra-cinematic-subtitles-400.webp"
                     />
                   </button>
                 </li>
@@ -444,11 +473,11 @@
                   >
                     <img
                       alt=""
-                      width="1198"
-                      height="672"
+                      width="400"
+                      height="224"
                       loading="lazy"
                       decoding="async"
-                      src="/src/assets/images/lyra-pochi-fire.webp"
+                      src="/src/assets/images/lyra-pochi-fire-400.webp"
                     />
                   </button>
                 </li>
@@ -507,8 +536,6 @@
               its own lifecycle, and the state configuration lives in a Data Asset instead of being
               hard-coded.
             </p>
-
-            <!-- TODO: replace the generic BP_State* label with the real state names when Alex confirms them. -->
             <div
               class="fsm-diagram"
               role="img"
@@ -546,16 +573,89 @@
                 <span class="fsm-node__type" data-i18n="lyra.fsm_states">
                   one Blueprint per state · implements I_StateEvents
                 </span>
-                <span class="fsm-lifecycle">
-                  <span>OnEnter</span>
-                  <span>OnUpdate</span>
-                  <span>OnExit</span>
+                <span class="fsm-chips">
+                  <span class="fsm-chips__label" data-i18n="lyra.fsm_states_label">States</span>
+                  <span class="fsm-chip">Locomotion</span>
+                  <span class="fsm-chip">Falling</span>
+                  <span class="fsm-chip">Holding</span>
+                  <span class="fsm-chip">Aiming</span>
+                  <span class="fsm-chip">Throwing</span>
+                  <span class="fsm-chip">Locked</span>
+                </span>
+                <span class="fsm-chips">
+                  <span class="fsm-chips__label" data-i18n="lyra.fsm_life_label">Lifecycle</span>
+                  <span class="fsm-chip fsm-chip--accent">OnEnterState</span>
+                  <span class="fsm-chip fsm-chip--accent">OnUpdateState</span>
+                  <span class="fsm-chip fsm-chip--accent">OnExitState</span>
                 </span>
               </div>
             </div>
 
+            <h3 class="case-subheading" data-i18n="lyra.editor_title">From the editor</h3>
+            <div class="gallery editor-gallery" data-gallery>
+              <figure class="gallery-item gallery-item--chart gallery-item--wide">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge image"
+                  data-i18n-aria-label="lyra.gallery_open"
+                >
+                  <img
+                    alt="Unreal Editor showing DA_LyraStateConfiguration: a States Map with six entries, AIMING, HOLDING, THROWING, FALLING, LOCKED and LOCOMOTION, each mapped to its BP_State Blueprint"
+                    width="1060"
+                    height="392"
+                    loading="lazy"
+                    decoding="async"
+                    src="/src/assets/images/lyra-editor-data-asset.webp"
+                  />
+                </button>
+                <figcaption data-i18n="lyra.ed_da">
+                  DA_LyraStateConfiguration: each state of the enum mapped to the Blueprint that implements it
+                </figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--chart">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge image"
+                  data-i18n-aria-label="lyra.gallery_open"
+                >
+                  <img
+                    alt="My Blueprint panel of BPC_StateMachine with the SwitchState function and the variables BP_ActiveState, M_StateConfig, M_StateCache and E_CurrentState"
+                    width="290"
+                    height="490"
+                    loading="lazy"
+                    decoding="async"
+                    src="/src/assets/images/lyra-editor-statemachine.webp"
+                  />
+                </button>
+                <figcaption data-i18n="lyra.ed_sm">
+                  BPC_StateMachine: SwitchState, the config, the state cache (TMap) and the current state
+                </figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--chart">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge image"
+                  data-i18n-aria-label="lyra.gallery_open"
+                >
+                  <img
+                    alt="My Blueprint panel of BP_StateLocomotion listing the events OnEnterState, OnExitState, OnMoveInput, OnCallDragonInput and the I_StateEvents interface functions"
+                    width="290"
+                    height="380"
+                    loading="lazy"
+                    decoding="async"
+                    src="/src/assets/images/lyra-editor-locomotion.webp"
+                  />
+                </button>
+                <figcaption data-i18n="lyra.ed_loco">
+                  BP_StateLocomotion: only the I_StateEvents events this state actually needs
+                </figcaption>
+              </figure>
+            </div>
+
             <h3 class="case-subheading" data-i18n="lyra.s3_patterns_title">Design patterns used</h3>
-            <!-- TODO: add where the Strategy pattern is used once Alex confirms it. -->
             <ul class="pattern-grid">
               <li class="pattern-card">
                 <span class="pattern-card__name">State</span>
@@ -563,23 +663,38 @@
               </li>
               <li class="pattern-card">
                 <span class="pattern-card__name">Observer</span>
-                <span data-i18n="lyra.pat_observer">Integration with Level Sequences</span>
+                <span data-i18n="lyra.pat_observer">
+                  The active state reacts when the Animation Blueprint fires
+                  <code>OnThrowStarted</code>
+                  and
+                  <code>OnThrowCompleted</code>
+                  instead of checking every frame
+                </span>
               </li>
               <li class="pattern-card">
                 <span class="pattern-card__name">Mediator</span>
-                <span data-i18n="lyra.pat_mediator">Character ↔ dragon companion communication</span>
+                <span data-i18n="lyra.pat_mediator">
+                  Holding, Aiming and Throwing never talk to each other or to the dragons directly. Everything
+                  goes through
+                  <code>BPC_DragonHandler</code>
+                </span>
               </li>
               <li class="pattern-card">
                 <span class="pattern-card__name">Strategy</span>
                 <span data-i18n="lyra.pat_strategy">
-                  Interchangeable behaviours behind a common interface
+                  <code>DA_LyraStateConfiguration</code>
+                  maps each state to its class, so
+                  <code>BPC_StateMachine</code>
+                  never references a concrete state
                 </span>
               </li>
             </ul>
             <p data-i18n="lyra.s3_perf">
               <strong>Performance:</strong>
-              states are created lazily the first time they are needed, and Tick only runs where it is
-              required. Lyra held a stable 60 FPS with zero crashes on the documented target hardware.
+              each state is created the first time it is needed and then cached in a
+              <code>TMap</code>
+              , and Tick only runs where it is required. Lyra held a stable 60 FPS with zero crashes on the
+              documented target hardware.
             </p>
             <p class="note" data-i18n="lyra.s3_bp_note">
               <strong>Why Blueprints and not C++?</strong>
@@ -812,6 +927,11 @@
                   data-i18n-aria-label="lyra.gallery_open"
                 >
                   <img
+                    srcset="
+                      /src/assets/images/lyra-cinematic-subtitles-800.webp  800w,
+                      /src/assets/images/lyra-cinematic-subtitles.webp     1600w
+                    "
+                    sizes="(width <= 900px) 100vw, 760px"
                     alt="A Lyra cinematic with the subtitles showing at the bottom"
                     height="897"
                     loading="lazy"
@@ -857,15 +977,15 @@
               </li>
               <li>
                 <strong>Perforce Helix Core:</strong>
-                exclusive checkout for
+                I designed the repository policy: the depot setup, exclusive checkout for
                 <code>.uasset</code>
-                files to avoid conflicting binary edits and make asset ownership explicit. The workflow
-                evolved with the team during the year.
+                files so two people never edit the same binary, and a simpler stream layout.
               </li>
               <li>
                 <strong>Nightly builds:</strong>
-                the team worked against nightly builds from a Jenkins pipeline, so everyone tested the same
-                reproducible version.
+                Marc Climent built the Jenkins pipeline. As producer I defined which pipelines the team
+                needed, wrote some of them and helped set up the build machine. Every night it compiled,
+                cooked and packaged the game, so a broken build was caught within a day.
               </li>
               <li>
                 <strong>Marketing:</strong>
@@ -882,6 +1002,8 @@
                   data-i18n-aria-label="lyra.gallery_open"
                 >
                   <img
+                    srcset="/src/assets/images/lyra-cfd-800.webp 800w, /src/assets/images/lyra-cfd.webp 1568w"
+                    sizes="(width <= 900px) 100vw, 760px"
                     alt="Jira cumulative flow diagram for Lyra from November 2025 to May 2026: the Done area grows to about 830 work items while the In Progress band stays thin"
                     width="1568"
                     height="478"
@@ -979,7 +1101,8 @@
                     <td data-i18n="lyra.obj4_goal">Team management</td>
                     <td><span class="status status--ok" data-i18n="lyra.status_ok">Met</span></td>
                     <td data-i18n="lyra.obj4_why">
-                      All 7 members have their own changelists and there was no systematic delegation of work.
+                      All 7 members spent 92 to 100% of their hours on their own role, and every one of them
+                      submitted their own changelists in Perforce.
                     </td>
                   </tr>
                 </tbody>
@@ -995,10 +1118,40 @@
             <p class="metric-highlight" data-i18n="lyra.lesson">
               Next time I'd check that a tool can actually give me the metrics I need before relying on it.
             </p>
-            <!-- TODO: list teammates and roles once Alex confirms it's OK to name them. -->
+            <h3 class="case-subheading" data-i18n="lyra.credits_title">The team</h3>
             <p class="credits" data-i18n="lyra.credits">
               Made by La Mapachanda, a team of 7 students at ENTI (Universitat de Barcelona).
             </p>
+            <ul class="credits-list">
+              <li>
+                <strong>Alejandro Rubio</strong>
+                <span data-i18n="lyra.cr_alex">Producer · Character programming</span>
+              </li>
+              <li>
+                <strong>Marc Climent</strong>
+                <span data-i18n="lyra.cr_qa">QA · CI/CD</span>
+              </li>
+              <li>
+                <strong>Marcos Ruiz</strong>
+                <span data-i18n="lyra.cr_ai">AI programming</span>
+              </li>
+              <li>
+                <strong>Pau Giró</strong>
+                <span data-i18n="lyra.cr_gameplay">Gameplay programming</span>
+              </li>
+              <li>
+                <strong>Francesc Borràs</strong>
+                <span data-i18n="lyra.cr_level">Level design</span>
+              </li>
+              <li>
+                <strong>Daniel Martinez</strong>
+                <span data-i18n="lyra.cr_art">Art</span>
+              </li>
+              <li>
+                <strong>Marc Andrada</strong>
+                <span data-i18n="lyra.cr_anim">Animation</span>
+              </li>
+            </ul>
           </section>
         </div>
       </div>

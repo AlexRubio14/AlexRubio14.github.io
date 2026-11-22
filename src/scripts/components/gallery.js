@@ -46,6 +46,8 @@ function showInLightbox(i) {
   const clone = items[lightbox.index].cloneNode(true);
   clone.removeAttribute('loading');
   clone.removeAttribute('fetchpriority');
+  // The page's `sizes` describes the small inline slot; full screen needs the big file.
+  if (clone.tagName === 'IMG' && clone.srcset) clone.sizes = '100vw';
   if (clone.tagName === 'VIDEO') {
     clone.controls = true;
     clone.autoplay = !reducedMotion.matches;
@@ -204,9 +206,4 @@ export function initGalleries() {
     initSingles(gallery);
     initVideos(gallery);
   });
-}
-
-/** Dev-only placeholders must never reach visitors. */
-export function removePlaceholders() {
-  document.querySelectorAll('[data-placeholder]').forEach((el) => el.remove());
 }
