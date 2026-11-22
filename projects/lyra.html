@@ -742,6 +742,136 @@
                 <span data-i18n="lyra.comp_throw">THROW</span>
               </li>
             </ol>
+            <h3 class="case-subheading" data-i18n="lyra.clips_title">In the game</h3>
+            <div class="gallery clip-grid" data-gallery>
+              <figure class="gallery-item gallery-item--clip">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge video"
+                  data-i18n-aria-label="lyra.video_open"
+                >
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/src/assets/video/lyra-clip-call-poster.webp"
+                    width="960"
+                    height="540"
+                  >
+                    <source src="/src/assets/video/lyra-clip-call.mp4" type="video/mp4" />
+                  </video>
+                </button>
+                <figcaption data-i18n="lyra.c_call">Calling the dragons</figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--clip">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge video"
+                  data-i18n-aria-label="lyra.video_open"
+                >
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/src/assets/video/lyra-clip-fire-poster.webp"
+                    width="960"
+                    height="540"
+                  >
+                    <source src="/src/assets/video/lyra-clip-fire.mp4" type="video/mp4" />
+                  </video>
+                </button>
+                <figcaption data-i18n="lyra.c_fire">Pochi burns a wooden barricade</figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--clip">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge video"
+                  data-i18n-aria-label="lyra.video_open"
+                >
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/src/assets/video/lyra-clip-water-poster.webp"
+                    width="960"
+                    height="540"
+                  >
+                    <source src="/src/assets/video/lyra-clip-water.mp4" type="video/mp4" />
+                  </video>
+                </button>
+                <figcaption data-i18n="lyra.c_water">Mochi's water grows a leaf bridge</figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--clip">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge video"
+                  data-i18n-aria-label="lyra.video_open"
+                >
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/src/assets/video/lyra-clip-throw-poster.webp"
+                    width="960"
+                    height="540"
+                  >
+                    <source src="/src/assets/video/lyra-clip-throw.mp4" type="video/mp4" />
+                  </video>
+                </button>
+                <figcaption data-i18n="lyra.c_throw">Throwing a dragon to reach another spot</figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--clip">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge video"
+                  data-i18n-aria-label="lyra.video_open"
+                >
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/src/assets/video/lyra-clip-together-poster.webp"
+                    width="960"
+                    height="540"
+                  >
+                    <source src="/src/assets/video/lyra-clip-together.mp4" type="video/mp4" />
+                  </video>
+                </button>
+                <figcaption data-i18n="lyra.c_together">Pochi and Mochi at the same time</figcaption>
+              </figure>
+              <figure class="gallery-item gallery-item--clip">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge video"
+                  data-i18n-aria-label="lyra.video_open"
+                >
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/src/assets/video/lyra-clip-glide-poster.webp"
+                    width="960"
+                    height="540"
+                  >
+                    <source src="/src/assets/video/lyra-clip-glide.mp4" type="video/mp4" />
+                  </video>
+                </button>
+                <figcaption data-i18n="lyra.c_glide">Gliding while holding the dragons</figcaption>
+              </figure>
+            </div>
+
             <p data-i18n="lyra.s4_input">
               <strong>Input by context:</strong>
               instead of keeping every action permanently bound, Input Mapping Contexts are layered by meaning
@@ -862,6 +992,32 @@
                 </g>
               </svg>
             </figure>
+            <div class="gallery gallery--single" data-gallery>
+              <figure class="gallery-item gallery-item--clip gallery-item--wide">
+                <button
+                  type="button"
+                  class="gallery-open"
+                  aria-label="Enlarge video"
+                  data-i18n-aria-label="lyra.video_open"
+                >
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/src/assets/video/lyra-clip-camera-poster.webp"
+                    width="960"
+                    height="540"
+                  >
+                    <source src="/src/assets/video/lyra-clip-camera.mp4" type="video/mp4" />
+                  </video>
+                </button>
+                <figcaption data-i18n="lyra.c_camera">
+                  In motion: the camera travels along its rail while Lyra runs, and "forward" on the stick
+                  stays "forward" on screen
+                </figcaption>
+              </figure>
+            </div>
             <p class="metric-highlight" data-i18n="lyra.p5_solution">
               <strong>Solution:</strong>
               movement input is calculated relative to the active camera (Camera Forward) instead of directly

@@ -333,6 +333,35 @@
   margin-inline: auto;
 }
 
+/* Gameplay clips: 2 per row, small "loop" badge so it reads as video, not a still. */
+.clip-grid {
+  margin-bottom: 1.75rem;
+}
+
+.gallery-item--clip .gallery-open {
+  position: relative;
+}
+
+/* On phones two clips per row would be ~150 px wide: too small to see the action. */
+@media (width <= 600px) {
+  .clip-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.gallery-item--clip .gallery-open::after {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  background: rgb(7 9 13 / 70%);
+  border-radius: 4px;
+  color: var(--text-main);
+  content: '▶';
+  font-size: 0.6rem;
+  pointer-events: none;
+}
+
 /* Charts are not 16:9 and must never be cropped. */
 .gallery-item--chart .gallery-open img {
   aspect-ratio: auto;
